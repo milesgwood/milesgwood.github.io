@@ -1,6 +1,6 @@
 # Get local site running
-Launch site locally
-bundle exec jekyll serve
+###Launch site locally
+`bundle exec jekyll serve`
 [Localhost Port 4000](http://localhost:4000)
 
 1. You should write a script that downloads the changes from GitHub
