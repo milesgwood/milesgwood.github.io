@@ -1,6 +1,6 @@
 # Get local site running
-###Launch site locally
-`bundle exec jekyll serve`
+Launch site locally
+bundle exec jekyll serve
 [Localhost Port 4000](http://localhost:4000)
 
 1. You should write a script that downloads the changes from GitHub
@@ -8,7 +8,7 @@
 3. Starts running jekyll
 4. Opens it in a browser
 
-[Twig Templates](drupal/twig)
+[Twig Templates](pages/drupal/twig)
 
 Update the gemfile to say ruby ‘2.4.1’
 

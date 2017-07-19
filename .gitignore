@@ -45,3 +45,8 @@ script
 Gemfile*
 *.gamespec
 LICENSE
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+jekyll-theme-midnight.gemspec
+thumbnail.png
+.idea/
