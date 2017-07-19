@@ -1,3 +1,17 @@
+# Get local site running
+Launch site locally
+bundle exec jekyll serve
+[Localhost Port 4000](http://localhost:4000)
+
+1. You should write a script that downloads the changes from GitHub
+2. Copies them into a local directory
+3. Starts running jekyll
+4. Opens it in a browser
+
+[Twig Templates](drupal/twig)
+
+Update the gemfile to say ruby ‘2.4.1’
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/milesgwood/milesgwood.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
