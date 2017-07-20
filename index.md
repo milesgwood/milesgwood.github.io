@@ -1,22 +1,40 @@
-# Get local site running
-Launch site locally
-bundle exec jekyll serve
-[Localhost Port 4000](http://localhost:4000)
-
-1. You should write a script that downloads the changes from GitHub
-2. Copies them into a local directory
-3. Starts running jekyll
-4. Opens it in a browser
-
+# Recent Work
 [Twig Templates](pages/drupal/twig)
 
-Update the gemfile to say ruby ‘2.4.1’
+[Bash Scripting](pages/bash/examples)
 
-## Welcome to GitHub Pages
+# Download site and run locally
 
-You can use the [editor on GitHub](https://github.com/milesgwood/milesgwood.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+```bash
+#!/bin/bash
+#Pull this file out outside of this directory and run it ./pull_and_run
+if ! [ -f milesgwood.github.io/_config.yml ]; then
+    echo "_config.yml File not found! Cloning"
+    git clone https://github.com/milesgwood/milesgwood.github.io.git && \
+    git clone https://github.com/pages-themes/midnight.git && \
+    cd midnight && \
+    script/bootstrap && \
+    echo "Changing directory to milesgwood.github.io" && \
+    cd ../milesgwood.github.io/ && \
+    cp -n -R ../midnight/* . && \
+    echo "Copying gem 'github-pages', group: :jekyll_plugins to Gemfile"
+    echo "gem 'github-pages', group: :jekyll_plugins" >> Gemfile && \
+    cd ..
+fi
+cd milesgwood.github.io/ && \
+git pull && \
+python -mwebbrowser http://localhost:4000 && \
+bundle update && \
+bundle exec jekyll serve && \
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+#Commit The Changes
+ git status
+ read -p "Commit description: " desc
+ git add . && \
+ git commit -m "$desc" && \
+ git push
+ ```
+[Localhost Port 4000](http://localhost:4000)
 
 ### Markdown
 
