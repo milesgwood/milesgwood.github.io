@@ -1,4 +1,5 @@
 #!/bin/bash
+#Pull this file out outside of this directory and run it ./pull_and_run
 if ! [ -f milesgwood.github.io/_config.yml ]; then
     echo "_config.yml File not found! Cloning"
     # git clone https://github.com/milesgwood/milesgwood.github.io.git && \
@@ -13,6 +14,7 @@ if ! [ -f milesgwood.github.io/_config.yml ]; then
     cd ..
 fi
 cd milesgwood.github.io/ && \
+git pull && \
 python -mwebbrowser http://localhost:4000 && \
 bundle update && \
 bundle exec jekyll serve && \
