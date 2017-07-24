@@ -3,6 +3,8 @@
 
 [Bash Scripting](pages/bash/examples)
 
+[Sass secrets](sass/Sass)
+
 # Download site and run locally
 
 ```bash
