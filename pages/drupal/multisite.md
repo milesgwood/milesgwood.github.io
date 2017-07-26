@@ -28,7 +28,7 @@ Inside the files folder should be 775 if 755 isn't working
 
 `chmod -R 755 sites/default/files`
 
-I edited the crap out of the http.conf file for Apahce 
+I edited the crap out of the http.conf file for Apahce
 /private/etc/apache2/http.conf
 /private/etc/apache2
 
