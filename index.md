@@ -1,11 +1,16 @@
 # Recent Work
+
+[Jeckyll Setup for Windows](pages/bash/jeckyl-install-ubuntu-bash)
+
+[Shibboleth](pages/drupal/Shibboleth)
+
 [Multisite](pages/drupal/multisite)
 
 [Twig Templates](pages/drupal/twig)
 
 [Bash Scripting](pages/bash/examples)
 
-[Sass secrets](pages/sass/Sass)
+[Sass secrets](pages/sass/sass)
 
 # Download site and run locally
 
