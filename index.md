@@ -1,5 +1,11 @@
 # Recent Work
 
+This site's goal is to provide quality explanation of the work I've been doing. If I or anyone else reads one of these pages and doesn't understand what's going on without clicking a link, I have been lazy and failed to make this a useful resource. Links don't help to understand anything, they just point you to a encyclopedia and tell you to go find the real answer you were looking for. All resources, links, and instructions need to be explained so that they can be useful later.
+
+Don't be a lazy pile of garbage Miles. Write something useful.
+
+[Launching Sites](pages/drupal/launching-sites.md)
+
 [Jeckyll Setup for Windows](pages/bash/jeckyl-install-ubuntu-bash)
 
 [Shibboleth](pages/drupal/Shibboleth)
@@ -12,7 +18,7 @@
 
 [Sass secrets](pages/sass/sass)
 
-# Download site and run locally
+# How to Download site and run locally
 
 ```bash
 #!/bin/bash

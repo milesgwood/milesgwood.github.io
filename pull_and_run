@@ -17,6 +17,7 @@ cd milesgwood.github.io/ && \
 git pull && \
 python -mwebbrowser http://localhost:4000 && \
 bundle update && \
+gem install bundler && \
 bundle exec jekyll serve && \
 
 #Commit The Changes

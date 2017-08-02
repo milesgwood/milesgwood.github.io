@@ -11,6 +11,7 @@ Allow file to execute.
 Then run the script from the command line.
 `./script`
 
+This is the v1 script that I used to automatically clone and install my GitPages Blog
 
 ```bash
 #!/bin/bash
