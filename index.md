@@ -4,6 +4,10 @@ This site's goal is to provide quality explanation of the work I've been doing. 
 
 Don't be a lazy pile of garbage Miles. Write something useful.
 
+[Page Templates](pages/drupal/templates)
+
+[Windows Setup](pages/setup/desktop)
+
 [Launching Sites](pages/drupal/launching-sites.md)
 
 [Jeckyll Setup for Windows](pages/bash/jeckyl-install-ubuntu-bash)
