@@ -53,14 +53,15 @@ Request ID REQ0040191
 Request denied and told to talk with Chris Klein (cdk4f) to find out where I fucked up.
 
 # Questions
-[]  What resources do I need from the idP server? Just the uid / computing ID?
-[]  How do I request idP access for all of our servers (dev and production)
+- [ ] What resources do I need from the idP server? Just the uid / computing ID?
+- [ ] How do I request idP access for all of our servers (dev and production)
 
 # To Do
-[]  Get ITS accept my metadata for the dev server and repeat for the live server.
-[]  Change the storage of session objects to sql storage like the Acquia tutorial states
-[]  Finish simplesaml_auth module setup
-[]  Figure out how to create user accounts on Drupal side with the Netbadge credentials
+- [x] Downlaod library and make it visible
+- [ ] Get ITS accept my metadata for the dev server and repeat for the live server.
+- [ ] Change the storage of session objects to sql storage like the Acquia tutorial states
+- [ ] Finish simplesaml_auth module setup
+- [ ] Figure out how to create user accounts on Drupal side with the Netbadge credentials
 
 This lists the information we'll get as a non UVA non InCommon Federation SP
 http://its.virginia.edu/netbadge/defaultpolicy.html
