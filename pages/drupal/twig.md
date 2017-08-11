@@ -2,6 +2,8 @@
 layout: default
 ---
 
+To even start working with the templates, I need the template engine to tell me what templates are being used to display the page. I want to add a white bar to the top of the homepage with the name of the Unit on it. **Turn on Twid Debugging in sites/default/services.yml** Also turn on auto template reloading by setting **auto_reload to true** . Both of these changes need to be turned off in production as they destroy performance. 
+
 # Overriding the Front page Template
 
 What content do i want to add to the Braindead Designs homepage?
