@@ -84,7 +84,7 @@ Here's some of the variables in the config array:
 ),
 ```
 ## SSL is required
-You must use the https:// URL because simplesaml will not work without it. You can't securely authenticate if you can't securely connect.
+You must use the https:// URL because simplesaml will not work without it. You can't securely authenticate if you can't securely connect. Getting  SSL certificate is easy. Simply make the request on the acquia enterprise account under the SSL tab. They'll give you a key which you send to your SSL provider. In our case, this is UVA service now. They send you back a bunch of certificates and you copy the certificates to Acquia through the same page you got the key to make your request. In the top box put the X509 Certificate only, Base64 encoded. In the intermediaries box put the X509 Intermediates/root only Reverse, Base64 encoded certificate. This is a standard certificate, not a legacy one. Now back to the actual simplesaml work.  
 
  7. Edit the .htaccess file in docroot
   -Add the two lines with + diff to the docroot/.htaccess
