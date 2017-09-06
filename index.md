@@ -4,7 +4,9 @@ This site's goal is to provide quality explanation of the work I've been doing. 
 
 Don't be a lazy pile of garbage Miles. Write something useful.
 
-[Page Templates](pages/drupal/x`)
+[Drupal Updates](pages/drupal/Updates.md)
+
+[Page Templates](pages/drupal/templates.md)
 
 [Windows Setup](pages/setup/desktop)
 
