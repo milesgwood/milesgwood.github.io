@@ -4,25 +4,37 @@ This site's goal is to provide quality explanation of the work I've been doing. 
 
 Don't be a lazy pile of garbage Miles. Write something useful.
 
-[Drupal Updates](pages/drupal/Updates.md)
-
-[Page Templates](pages/drupal/templates.md)
-
-[Windows Setup](pages/setup/desktop)
-
-[Launching Sites](pages/drupal/launching-sites.md)
-
-[Jeckyll Setup for Windows](pages/bash/jeckyl-install-ubuntu-bash)
-
-[Shibboleth](pages/drupal/Shibboleth)
-
-[Multisite](pages/drupal/multisite)
-
-[Twig Templates](pages/drupal/twig)
+## Bash and Scripting
 
 [Bash Scripting](pages/bash/examples)
 
+[Jeckyll Setup for Windows](pages/bash/jeckyl-install-ubuntu-bash)
+
+## Drupal
+
+[Launching Sites](pages/drupal/launching-sites.md)
+
+[Multisite](pages/drupal/multisite)
+
+[Shibboleth](pages/drupal/Shibboleth)
+
+[Page Templates](pages/drupal/templates.md)
+
+[Twig Templates](pages/drupal/twig)
+
+[Drupal Updates](pages/drupal/Updates.md)
+
+## Git
+
+[Setup and Reverting](pages\git\git.md)
+
+## Sass
+
 [Sass secrets](pages/sass/sass)
+
+## Computer Troubleshooting and Setup
+
+[Windows Setup](pages/setup/desktop)
 
 # How to Download site and run locally
 
