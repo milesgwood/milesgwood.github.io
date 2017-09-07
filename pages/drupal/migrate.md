@@ -17,7 +17,7 @@ Using `find / -type d -name "sites" -print 2>/dev/null` I found the location of 
 
 ### Can't connect to the database of the old sites.
 
-I have tried copying the database directly from the live site using the migrate tool. I think the database oly allows localhost access.
+I have tried copying the database directly from the live site using the migrate tool. I think the database only allows localhost access.
 
 I tried downloading a sql-dump and loading that into phpmyadmin. It is too large of a sql dump file.
 
@@ -26,3 +26,46 @@ Now I am trying to use backup migrate like I do with the drupal 8 sites. It inst
 Backup & Migrate also failed so now I am using the command line to attempt to install the mysql dump I got from the live server. Simply using the command `mysql database_target < dumpfile.sql`.
 
 My next idea is to use the backup & migrate to transfer the site over piecemeal. One table of content at a time.
+
+Just found out there is a cache clear button on the performance page...
+
+mysql is located at /Applications/DevDesktop/mysql
+
+you can uninstall modules with drushpm-uninstall name
+
+After all of that I failed to get the content transfered to a drupal 8 site. I got the database imported into a drupal 7 site locally, I just can't get that site to connect to the drupal 8 site migrate. I keep getting some mysql socket error.
+
+It may be that I am using a passwordless root access to the database.
+It could be a mysql install error on my compupter.
+It could be a problem with the migrate modules.
+
+Tomorrow i will message the Drupalize.me people and watch a youtube video on the issue. That way I can see how it is supposed to go.
+
+### Solved mysql socket issue
+
+So Acquia sets up the mysql database but doesn't specify the default socket in the php.ini file. MySQL has been using the default socket but Acquia doesn't install MySQL in the default location. So PHP was looking in the wrong place for the socket to use too build the connection. Go into the Acquia Preferences > Config and then edit the php.ini for 7.0 (since that is the php version i'm using). Set the default socket name for mysql connects to `/Applications/DevDesktop/mysql/data/mysql.sock`. Now the migrate tools should be able to conect to the database of the local drupal 7 site.
+
+`drush migrate-upgrade --configure-only`
+
+# [Migrate Walkthrough](https://drupalize.me/blog/201604/custom-drupal-drupal-migrations-migrate-tools)
+
+[Video Of Example User Migration](https://www.youtube.com/watch?v=_z2FH0efd_g)
+
+Copy this into D8 settings.php and change the database name/ credentials to the database of the D7 site.
+```
+// Database entry for `drush migrate-upgrade --configure-only`
+$databases['upgrade']['default'] = array (
+  'database' => 'd7_database',
+  'username' => 'root',
+  'password' => '',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+```
+
+Enable the migrate_tools migrate_plus migrate_upgrade modules.
+
+```drush en migrate_tools migrate_plus migrate_upgrade```
