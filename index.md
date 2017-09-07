@@ -24,6 +24,8 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 [Drupal Updates](pages/drupal/Updates.md)
 
+[Drupal 7 -> 8 Migrate](pages\drupal\migrate.md)
+
 ## Git
 
 [Setup and Reverting](pages\git\git.md)
