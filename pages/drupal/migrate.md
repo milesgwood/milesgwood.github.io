@@ -17,7 +17,7 @@ Using `find / -type d -name "sites" -print 2>/dev/null` I found the location of 
 
 ### Can't connect to the database of the old sites.
 
-I have tried copying the database directly from the live site using the migrate tool. I think the database only allows localhost access.
+I have tried copying the database directly from the live site using the   tool. I think the database only allows localhost access.
 
 I tried downloading a sql-dump and loading that into phpmyadmin. It is too large of a sql dump file.
 
@@ -68,4 +68,21 @@ $databases['upgrade']['default'] = array (
 
 Enable the migrate_tools migrate_plus migrate_upgrade modules.
 
-```drush en migrate_tools migrate_plus migrate_upgrade```
+```
+drush en migrate_tools migrate_plus migrate_upgrade
+```
+
+Get the configuration files for the D7 site.
+```
+drush config-export --destination=/tmp/migrate
+```
+
+Before migration backup the database of the new site.
+```
+drush -v sql-dump --result-file=d8_fresh.sql
+```
+
+Restoring is as easy as
+```
+mysql database_target < d8_fresh.sql
+```
