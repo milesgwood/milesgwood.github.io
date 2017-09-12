@@ -1,0 +1,88 @@
+---
+layout: default
+---
+
+# Transfer Drupal 7 content into Drupal 8
+
+So I need to transfer the 2k+ pieces of content that the CEPS drupal 7 site contains. I am going to attempt to move it all on a fresh local copy of drupal 8.3.7 before I make the real move. So I'd like to transfer over the content without touching the way it's displayed. The migrate tools will be my first attempt.
+
+To use the migration tools I need the database information. It's stored in the settings.php file of the site i want to copy. So I will SSH to the site using the bitnami key Mary Beth gave me.
+```
+chmod 600 key.pem
+ssh -i key.pem upuntu@ceps.coopercenter.org
+```
+
+Using `find / -type d -name "sites" -print 2>/dev/null` I found the location of the sites. All the sites are stored at /var/www/html/sitename. I made a backup of the ceps database with the command `drush sql-dump > ceps.sql` executed in the ceps docroot. Now copy that file back.
+`scp -i key.pem ubuntu@ceps.coopercenter.org:file_i_want.sql /local/directory`
+
+### Can't connect to the database of the old sites.
+
+I have tried copying the database directly from the live site using the   tool. I think the database only allows localhost access.
+
+I tried downloading a sql-dump and loading that into phpmyadmin. It is too large of a sql dump file.
+
+Now I am trying to use backup migrate like I do with the drupal 8 sites. It installed successfully but is stuck trying to make a Default Database download for me. The database backed up correctly. Now for the files. Then I can re-create the site locally and use that to feed into a local drupal 8 siteusing the migration tutorials.
+
+Backup & Migrate also failed so now I am using the command line to attempt to install the mysql dump I got from the live server. Simply using the command `mysql database_target < dumpfile.sql`.
+
+My next idea is to use the backup & migrate to transfer the site over piecemeal. One table of content at a time.
+
+Just found out there is a cache clear button on the performance page...
+
+mysql is located at /Applications/DevDesktop/mysql
+
+you can uninstall modules with drushpm-uninstall name
+
+After all of that I failed to get the content transfered to a drupal 8 site. I got the database imported into a drupal 7 site locally, I just can't get that site to connect to the drupal 8 site migrate. I keep getting some mysql socket error.
+
+It may be that I am using a passwordless root access to the database.
+It could be a mysql install error on my compupter.
+It could be a problem with the migrate modules.
+
+Tomorrow i will message the Drupalize.me people and watch a youtube video on the issue. That way I can see how it is supposed to go.
+
+### Solved mysql socket issue
+
+So Acquia sets up the mysql database but doesn't specify the default socket in the php.ini file. MySQL has been using the default socket but Acquia doesn't install MySQL in the default location. So PHP was looking in the wrong place for the socket to use too build the connection. Go into the Acquia Preferences > Config and then edit the php.ini for 7.0 (since that is the php version i'm using). Set the default socket name for mysql connects to `/Applications/DevDesktop/mysql/data/mysql.sock`. Now the migrate tools should be able to conect to the database of the local drupal 7 site.
+
+`drush migrate-upgrade --configure-only`
+
+# [Migrate Walkthrough](https://drupalize.me/blog/201604/custom-drupal-drupal-migrations-migrate-tools)
+
+[Video Of Example User Migration](https://www.youtube.com/watch?v=_z2FH0efd_g)
+
+Copy this into D8 settings.php and change the database name/ credentials to the database of the D7 site.
+```
+// Database entry for `drush migrate-upgrade --configure-only`
+$databases['upgrade']['default'] = array (
+  'database' => 'd7_database',
+  'username' => 'root',
+  'password' => '',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+```
+
+Enable the migrate_tools migrate_plus migrate_upgrade modules.
+
+```
+drush en migrate_tools migrate_plus migrate_upgrade
+```
+
+Get the configuration files for the D7 site.
+```
+drush config-export --destination=/tmp/migrate
+```
+
+Before migration backup the database of the new site.
+```
+drush -v sql-dump --result-file=d8_fresh.sql
+```
+
+Restoring is as easy as
+```
+mysql database_target < d8_fresh.sql
+```

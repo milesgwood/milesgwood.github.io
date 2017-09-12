@@ -17,3 +17,16 @@ sudo apt-get install libxml2
 gem install nokogiri -- --use-system-libraries
 sudo apt install nodejs-legacy
 ```
+
+## Installing ruby and adding things to the path
+set PATH=%PATH%;C:\Ruby200-x64\bin
+
+## Fixing Forgotten Bash Password
+Run bashand make a note of your Linux username (this need not match your Windows username)
+In Windows admin command prompt (Super+X, A) change the default user to root:
+`lxrun /setdefaultuser root`
+Now Bash on Ubuntu on Windows logs you in as root without asking password
+Use passwd command in Bash to change the user password:
+`passwd your_username`
+Change the default user back to your normal user in Windows command prompt
+`lxrun /setdefaultuser your_username`

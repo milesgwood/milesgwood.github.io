@@ -13,7 +13,7 @@ $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 
 # phpStorm File Watcher Setup SCSS
 You need to get it to update continuously
-Program: /Users/miles/.rvm/gems/ruby-2.4.1/bin/scss
+**Program: /Users/miles/.rvm/gems/ruby-2.4.1/bin/scss**
 Arguments: --no-cache --update $FileName$:$FileNameWithoutExtension$.css
 Output paths to refresh: $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 

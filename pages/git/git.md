@@ -18,3 +18,24 @@ git merge new-branch
 
 Merge changes from master into current branch deleting the master branch stuff. This is for when you fuck up master.
 git merge -s ours master
+
+## Setting Up Git Push and Pull in atom
+
+I tried setting the global user.name and user.email in the terminal but it didn't work on my windows machine. The solution is to edit the config file. It's located at `docroot/.git/config` . You need to add your user information.
+
+```
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/milesgwood/milesgwood.github.io.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[user]
+	name = milesgwood
+	email = miles.gwood@gmail.com
+```
