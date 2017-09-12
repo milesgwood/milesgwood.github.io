@@ -12,23 +12,23 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 ## Drupal
 
-[Launching Sites](pages/drupal/launching-sites.md)
+[Launching Sites](pages/drupal/launching-sites)
 
 [Multisite](pages/drupal/multisite)
 
 [Shibboleth](pages/drupal/Shibboleth)
 
-[Page Templates](pages/drupal/templates.md)
+[Page Templates](pages/drupal/templates)
 
 [Twig Templates](pages/drupal/twig)
 
-[Drupal Updates](pages/drupal/updates.md)
+[Drupal Updates](pages/drupal/updates)
 
-[Drupal 7 -> 8 Migrate](pages\drupal\migrate.md)
+[Drupal 7 -> 8 Migrate](pages\drupal\migrate)
 
 ## Git
 
-[Setup and Reverting](pages\git\git.md)
+[Setup and Reverting](pages\git\git)
 
 ## Sass
 
