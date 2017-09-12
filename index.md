@@ -22,7 +22,7 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 [Twig Templates](pages/drupal/twig)
 
-[Drupal Updates](pages/drupal/Updates.md)
+[Drupal Updates](pages/drupal/updates.md)
 
 [Drupal 7 -> 8 Migrate](pages\drupal\migrate.md)
 
