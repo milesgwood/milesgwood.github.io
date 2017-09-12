@@ -1,8 +1,17 @@
 ---
 layout: default
 ---
+#SASS phpFileStorm setup Sass
+![Screenshot of setup](assets/images/Screen Shot 2017-09-05 at 3.17.44 PM.png)
+```
+/Users/miles/.rvm/gems/ruby-2.4.1/bin/sass
+$FileName$:$FileNameWithoutExtension$.css
+$FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
+```
 
-# phpStorm File Watcher Setup
+### Make sure that the CSS and JS optimization are off on the Performance page
+
+# phpStorm File Watcher Setup SCSS
 You need to get it to update continuously
 Program: /Users/miles/.rvm/gems/ruby-2.4.1/bin/scss
 Arguments: --no-cache --update $FileName$:$FileNameWithoutExtension$.css
@@ -37,7 +46,5 @@ Get rid of the .header margin
 }
 
 ```
-
-
 
 Here's a great codepen on [getting a footer to actually stick to the bottom of the page](https://codepen.io/cbracco/pen/zekgx). It recommends that you set the foother to absolute bottom and then add bottom padding to the parent element of the footer to equal height of the footer. Without that padding if the content reached the footer they would hide each other instead of pushing the footer lower. The height of the page needs to be at least 100% to push the footer off.
