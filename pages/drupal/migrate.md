@@ -86,3 +86,57 @@ Restoring is as easy as
 ```
 mysql database_target < d8_fresh.sql
 ```
+
+# Cleaner Migration
+
+The Default migration deleted a lot of the content on the D8 site. I want to update the ID's of the incoming data so that they migrate properly. Here's the roadmap as I understand it.
+
+1. Copy the database and content of the D7 site to a local D7 site
+2. Backup the database of that local D7 site so you can reload it after failed migrations
+3. Create a D8 template site with all the Theme content I want
+4. Install the needed plugins on the D8 site
+5. Backup that D8 site database so I can restore it
+6. Create a new migration plugin
+7. Implement hook_migrate_prepare_row
+8. Attempt to migrate and debug it
+9. On failed migrations roll back the D8 database and try again
+
+## Create a local d7 copy of the site
+
+Because the permissions don't allow the ubuntu user to make files or directories, I had to make the drush sql backup in the ubuntu folder and copy it from there.
+```
+cd /Users/miles/Documents
+ssh -i ssh_old_drupal_sites.pem ubuntu@certification.coopercenter.org
+cd /var/www/html/
+ls
+cd certification.coopercenter.org/
+drush -v sql-dump --result-file=/home/ubuntu/migrate/cert_d7.sql
+```
+Now copy the created content back to your local machine.
+```
+scp -i key.pem ubuntu@ceps.coopercenter.org://home/ubuntu/migrate/cert_d7.sql .
+scp -rp -i key.pem ubuntu@ceps.coopercenter.org://var/www/html/certification.coopercenter.org/* cert/files/
+```
+Now I need a fresh Drupal 7 site to import my database and files into. Clone the fresh d7 site and make a new database with a short name. In this case it is cert7. `mysql cert7 < cert_d7.sql` For the files, copy over the sites/all/* contents and the sites/default/files/ folder contents. Don't copy over the settings.php file since that is what tells you what database to use.
+
+## Create a D8 template site.
+
+I am going to use the SEI site since it worked so well last time. Pulled the site from Acquia and creating a SQL dump file using the Backup Migrate tool. Then I created a new multisite using DevDesktop and selected the sql file that Backup Migrate created. This could be done with drush as well but backup migrate is just as fast. Once the site is made, I copied the files from the sei site to the certification site's files folder. Before making a restore point for your backup, make sure that all of the migrate plugins are enabled on the extend page. Make the backup using Backup Migrate. To restore it simply run `mysql certification < pre_migration.sql` from the docroot directory where the migration backup is.
+
+## Create a custom Migration plugin
+
+Copy this to settings.php
+```
+$databases['upgrade']['default'] = array (
+   'database' => 'cert7',
+   'username' => 'root',
+   'password' => '',
+   'prefix' => '',
+   'host' => 'localhost',
+   'port' => '3306',
+   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+   'driver' => 'mysql',
+);
+```
+
+I need to create a new module and add the hook_migrate_prepare_row override to correct the ID numbers for blocks and nodes.
