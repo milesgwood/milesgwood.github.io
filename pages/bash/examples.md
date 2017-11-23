@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## Examples of Bash Scripts
+## Examples of Bash Scripts 
 
 The all start with the same line.
 `#!/bin/bash`
