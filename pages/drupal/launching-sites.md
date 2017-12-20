@@ -29,3 +29,29 @@ The other sites all have the same IP address as they all get directed to a singl
   demographics.coopercenter.org - Demographics
     128.143.21.13
 ```
+
+## Manual Database transfer
+```
+mysqldump -u root certification | gzip > cert1.sql.gz
+scp cert1.sql.gz uvacooper.dev@staging-17490.prod.hosting.acquia.com:./cert1.sql.gz
+drush @uvacooper.dev ah-db-import --db=certification --drop --force cert1.sql.gz
+```
+
+The manual transfer didn't fix the database issues. So I need to add the needed credentials for MySQL to be happy. Change the settings under mysqladmin in the my.cnf file. You get to it in preferences in DevDesktop. I think it is what creates the settings.php file used for imports etc.
+
+[mysqladmin]
+user=root
+port=33067
+socket="/Applications/DevDesktop/mysql/data/mysql.sock"
+
+Change this to the user password in Acquia under the certification database
+[mysqladmin]
+user=*****
+password=****
+port=33067
+socket="/Applications/DevDesktop/mysql/data/mysql.sock"
+
+
+mysql --user=root --password=1f1w@rm@n --database=uvacooperdb158253
+root
+1f1w@rm@n

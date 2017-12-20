@@ -167,16 +167,7 @@ INSERT INTO `8_4`.`node_revision__field_staff_authors` (`bundle`, `deleted`, `en
 INSERT INTO `8_4`.`node__field_publication_types` (`bundle`, `deleted`, `entity_id`, `revision_id`, `langcode`, `delta`, `field_publication_types_target_id`) VALUES ('publications', '0', '333', '1231', 'en', '0', '32');
 
 
-
 Try making a python script to automatically add all of these things to the database.
-
-
-
-
-
-
-
-
 
 
 //This tracks the edits to the actual fields
@@ -184,3 +175,15 @@ Try making a python script to automatically add all of these things to the datab
 INSERT INTO `8_4`.`node_field_data` (`nid`, `vid`, `type`, `langcode`, `status`, `title`, `uid`, `created`, `changed`, `promote`, `sticky`, `revision_translation_affected`, `default_langcode`) VALUES ('333', '1231', 'publications', 'en', '1', 'FAKE PUBLICATION', '1', '1507072960', '1507074177', '1', '0', '1', '1');
 
 INSERT INTO `8_4`.`node_field_revision` (`nid`, `vid`, `langcode`, `status`, `title`, `uid`, `created`, `changed`, `promote`, `sticky`, `revision_translation_affected`, `default_langcode`) VALUES ('333', '1231', 'en', '1', 'FAKE PUBLICATION', '1', '1507072960', '1507074177', '1', '0', '1', '1');
+
+
+<!-- Just For the basic page info -->
+INSERT INTO `8_4`.`node_field_data` (`nid`, `vid`, `type`, `langcode`, `status`, `title`, `uid`, `created`, `changed`, `promote`, `sticky`, `revision_translation_affected`, `default_langcode`) VALUES ('278', '1231', 'page', 'en', '1', 'Miles'' Test', '1', '1508199795', '1508199816', '0', '0', NULL, '1');
+
+
+
+
+
+# Attempt 2
+
+So first I want to insert a very simple piece of content directly into the database of 8_4. Let's start with the basic page. I got that working so now I will work on adding a LOST item.
