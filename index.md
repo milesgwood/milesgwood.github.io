@@ -12,7 +12,7 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 [Bash Scripting](pages/bash/examples)
 
-[Jeckyll Setup for Windows](pages/bash/jeckyl-install-ubuntu-bash)
+[Ubuntu on Windows and Jeckyll Setup](pages\bash\ubuntu-bash-jeckyll-setup.md)
 
 ## Drupal
 
