@@ -5,7 +5,7 @@ git pull && \
 python -mwebbrowser http://localhost:4000 && \
 bundle update && \
 gem install bundler && \
-bundle exec jekyll serve && \
+bundle exec jekyll --no-watch serve && \
 
 #Commit The Changes
  git add . && \

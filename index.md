@@ -12,7 +12,7 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 [Bash Scripting](pages/bash/examples)
 
-[Ubuntu on Windows and Jeckyll Setup](pages\bash\ubuntu-bash-jeckyll-setup.md)
+[Ubuntu on Windows and Jeckyll Setup](pages/bash/ubuntu-bash-jeckyll-setup.md)
 
 ## Drupal
 
@@ -34,19 +34,19 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 [Drupal Updates](pages/drupal/updates)
 
-[General Work notes](pages\drupal\work-notes)
+[General Work notes](pages/drupal/work-notes)
 
 ## Git
 
-[Setup and Reverting](pages\git\git)
+[Setup and Reverting](pages/git/git)
 
 ## Python
 
-[Making a Database Connection](pages\python\database_connection)
+[Making a Database Connection](pages/python/database_connection)
 
 ## React
 
-[First Project](pages\react\getting-started)
+[First Project](pages/react/getting-started)
 
 ## Sass
 
@@ -64,28 +64,28 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 #Pull this file out outside of this directory and run it ./pull_and_run
 if ! [ -f milesgwood.github.io/_config.yml ]; then
     echo "_config.yml File not found! Cloning"
-    git clone https://github.com/milesgwood/milesgwood.github.io.git && \
-    git clone https://github.com/pages-themes/midnight.git && \
-    cd midnight && \
-    script/bootstrap && \
-    echo "Changing directory to milesgwood.github.io" && \
-    cd ../milesgwood.github.io/ && \
-    cp -n -R ../midnight/* . && \
+    git clone https://github.com/milesgwood/milesgwood.github.io.git && /
+    git clone https://github.com/pages-themes/midnight.git && /
+    cd midnight && /
+    script/bootstrap && /
+    echo "Changing directory to milesgwood.github.io" && /
+    cd ../milesgwood.github.io/ && /
+    cp -n -R ../midnight/* . && /
     echo "Copying gem 'github-pages', group: :jekyll_plugins to Gemfile"
-    echo "gem 'github-pages', group: :jekyll_plugins" >> Gemfile && \
+    echo "gem 'github-pages', group: :jekyll_plugins" >> Gemfile && /
     cd ..
 fi
-cd milesgwood.github.io/ && \
-git pull && \
-python -mwebbrowser http://localhost:4000 && \
-bundle update && \
-bundle exec jekyll serve && \
+cd milesgwood.github.io/ && /
+git pull && /
+python -mwebbrowser http://localhost:4000 && /
+bundle update && /
+bundle exec jekyll serve && /
 
 #Commit The Changes
  git status
  read -p "Commit description: " desc
- git add . && \
- git commit -m "$desc" && \
+ git add . && /
+ git commit -m "$desc" && /
  git push
  ```
 [Localhost Port 4000](http://localhost:4000)

@@ -24,9 +24,13 @@ gem install bundler
 gem install pkg-config -v "~> 1.1.7"
 apt-get install libxslt-dev libxml2-dev
 apt-get install libxml2
+apt-get install build-essential
 gem install nokogiri -- --use-system-libraries
 apt install nodejs-legacy
 ```
+
+apt-get install libgmp-dev
+
 
 Throw in a `apt update && apt upgrade` if it fails at any point.
 
