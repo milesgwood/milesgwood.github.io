@@ -8,23 +8,31 @@ You need to download a linux disto from the Windows store by running
 ```
 lxrun /install
 ```
-After enabling it, type bash in the search and run it.
+After following the article linked to enable bash, type bash in the search and run it. The home of your linux distro will be in AppData and can't interact with your windows explorer browser. You can see Windows files though in bash. Windows is linked at `/mnt/c`.
 
 `cd /mnt/c/Users/miles/Documents`
 
 [Installing Ruby](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-and-set-up-a-local-programming-environment-on-windows-10)
 
-```bash
-sudo apt-get install python
+Install python and Ruby and these libraries one time
+
+```
+sudo -i
+apt-get install python
+apt-get install ruby-all-dev
 gem install bundler
 gem install pkg-config -v "~> 1.1.7"
-sudo apt-get install libxslt-dev libxml2-dev
-sudo apt-get install libxml2
+apt-get install libxslt-dev libxml2-dev
+apt-get install libxml2
 gem install nokogiri -- --use-system-libraries
-sudo apt install nodejs-legacy
+apt install nodejs-legacy
 ```
 
-## Installing ruby and adding things to the path
+Throw in a `apt update && apt upgrade` if it fails at any point.
+
+Then you can run the run script in this repo which does the rest of the jeckyll serving and hosting of the local version of these pages.
+
+## Adding things to the path
 set PATH=%PATH%;C:\Ruby200-x64\bin
 
 ## Fixing Forgotten Bash Password

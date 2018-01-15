@@ -1,6 +1,6 @@
 #!/bin/bash
 #Run this file after downloading the repo from git to view it while you work ./run
-#Only works on Mac
+#Only works on Windows Bash
 git pull && \
 python -mwebbrowser http://localhost:4000 && \
 bundle update && \
