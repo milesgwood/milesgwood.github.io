@@ -27,4 +27,9 @@ This command installs apache php7 mysql server and a php mysql connector.
 sudo yum install -y httpd24 php70 mysql56-server php70-mysqlnd
 sudo service httpd start
 sudo chkconfig httpd on
+chkconfig --list httpd
 ```
+
+The last command checks that the server is running. Keep going with the tutorial linked.
+1. Change Security settings to allow web traffic
+2. 
