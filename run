@@ -1,0 +1,15 @@
+#!/bin/bash
+#Run this file after downloading the repo from git to view it while you work ./run
+#Only works on Mac
+git pull && \
+python -mwebbrowser http://localhost:4000 && \
+bundle update && \
+gem install bundler && \
+bundle exec jekyll serve && \
+
+#Commit The Changes
+ git add . && \
+ git status && \
+ read -p "Commit description: " desc
+ git commit -m "$desc" && \
+ git push

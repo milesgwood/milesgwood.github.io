@@ -4,6 +4,10 @@ This site's goal is to provide quality explanation of the work I've been doing. 
 
 Don't be a lazy pile of garbage Miles. Write something useful.
 
+## AWS work
+
+[phpMyAdmin on AWS](/pages/AWS/phpMyAdmin)
+
 ## Bash and Scripting
 
 [Bash Scripting](pages/bash/examples)
@@ -12,7 +16,13 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 ## Drupal
 
+[Using Composer](pages/drupal/composer)
+
+[Manual Database Inserts](pages/drupal/database)
+
 [Launching Sites](pages/drupal/launching-sites)
+
+[Drupal 7 -> 8 Migrate](pages/drupal/migrate)
 
 [Multisite](pages/drupal/multisite)
 
@@ -24,19 +34,28 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 [Drupal Updates](pages/drupal/updates)
 
-[Drupal 7 -> 8 Migrate](pages\drupal\migrate)
+[General Work notes](pages\drupal\work-notes)
 
 ## Git
 
 [Setup and Reverting](pages\git\git)
 
+## Python
+
+[Making a Database Connection](pages\python\database_connection)
+
+## React
+
+[First Project](pages\react\getting-started)
+
 ## Sass
 
-[Sass secrets](pages/sass/sass)
+[Sass](pages/sass/sass)
 
-## Computer Troubleshooting and Setup
+## Computer Troubleshooting and Pages Setup
 
 [Windows Setup](pages/setup/desktop)
+[Atom KeyBindings](pages/setup/keybindings)
 
 # How to Download site and run locally
 
