@@ -163,3 +163,5 @@ sudo vim /etc/php-7.0.ini
 I -for insert
 :wq
 ```
+
+## Install Wordpress on the site

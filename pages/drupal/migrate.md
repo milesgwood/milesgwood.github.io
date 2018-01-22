@@ -118,7 +118,7 @@ scp -i bitnamidrupal.pem ubuntu@ceps.coopercenter.org://home/ubuntu/migrate/cert
 scp -rp -i bitnamidrupal.pem ubuntu@ceps.coopercenter.org://var/www/html/certification.coopercenter.org/* cert/files/
 ```
 
-Now I need a fresh Drupal 7 site to import my database and files into. Clone the fresh d7 site and make a new database with a short name. In this case it is cert7. `mysql cert7 < cert_d7.sql` For the files, copy over the sites/all/* contents and the sites/default/files/ folder contents. Don't copy over the settings.php file since that is what tells you what database to use.
+Now I need a fresh Drupal 7 site to import my database and files into. Clone the fresh d7 site and make a new database with a short name. In this case it is cert7. `mysql cert7 < cert_d7.sql` For the files, copy over the sites/all/* contents and the sites/default/files/ folder contents. Don't copy over the settings.php file since that is what tells you what database to use. MAKE SURE THE TARGET SITE IS USING THE SAME PHP VERSION.
 
 ## Create a D8 template site.
 
@@ -330,8 +330,3 @@ We have four fields to transfer over :
 - field_mandatory_elective
 - field_prerequisites
 - field_target_audience
-
-
-## Create calendar
-
-I have a calendar so I'll need [this training guide.](https://www.ostraining.com/blog/drupal/d8-calendar/)
