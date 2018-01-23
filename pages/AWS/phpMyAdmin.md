@@ -164,9 +164,6 @@ I -for insert
 :wq
 ```
 
-<<<<<<< HEAD
-## Install Wordpress on the site
-=======
 ## Getting Wordpress SSL to work
 
 Put this line near the top of wp-config to fix the mixed content error.
@@ -200,4 +197,3 @@ Then I got a failure on the dashboard and changed the wp-content directory owner
 ```
 sudo chown -R apache:apache /var/www/html/shop/wp-content
 ```
->>>>>>> 8734ec0f28307cd8030ad7a67cea9a041a6515cd
