@@ -163,3 +163,37 @@ sudo vim /etc/php-7.0.ini
 I -for insert
 :wq
 ```
+
+## Getting Wordpress SSL to work
+
+Put this line near the top of wp-config to fix the mixed content error.
+```
+if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') $_SERVER['HTTPS']='on';
+```
+
+I want to host multiple sites on the same website so I will need to redirect from the root directory. Add this to .htaccess
+```
+sudo find / -name ".htaccess"
+```
+http://www.zymphonies.com/blog/how-redirect-domain-subdirectory-without-changing-url
+```
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(www.)?buyledgerusa.com$
+RewriteRule ^(/)?$ shop [L]
+```
+This directs the buyledgerusa.com traffic to the shop folder. `/var/www/html/shop/`
+
+I initialized a git repo to keep track of all of the file changes that will be made.
+
+`sudo apt-get install git-all`
+
+## Can't isntall plugins because of premission issues
+In wp-config I added this
+```
+define('FS_METHOD', 'direct');
+```
+
+Then I got a failure on the dashboard and changed the wp-content directory owner to apache. Some online tutorials say to use www-data but I didn't create that user. I created apache as the AWS docs recommended.
+```
+sudo chown -R apache:apache /var/www/html/shop/wp-content
+```
