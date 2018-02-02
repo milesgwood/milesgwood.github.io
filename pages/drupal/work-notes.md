@@ -100,3 +100,232 @@ https://www.drupal.org/docs/8/api/migrate-api/migrate-source-plugins/migrating-d
 
 Possible use for migration from previous SQL database.
 https://www.drupal.org/docs/8/api/migrate-api/migrate-source-plugins/migrating-data-from-a-sql-source
+
+
+### IE CSS fixes
+
+So the sites look awful in IE. No surprise there really. So I need to fix the css since 12% of our users are still using IE. I added this code to the html.html.twig file.
+
+```
+<!--[If IE]>
+    <link rel="stylesheet" type="text/css" href="themes/coopercenter_units/css/ie.css">
+<![endif]-->
+```
+
+SO to test my CSS fixes, I am going to install Windows 10 on a virtual machine hosted on this work computer.
+1. Install VirtualBox
+
+[Activating Windows](http://its.virginia.edu/software/mslicenses/activate.html)
+```
+Windows 7 and Server 2008 R2 Activation
+Connect your computer to the UVA network (if on Grounds, via a wired or wireless connection to the UVA network; if remotely, via the UVA Anywhere VPN).
+Verify your computer has the correct date, time, and time zone (Eastern).
+Navigate to Start, then All Programs, then Accessories.
+Right-click on the Command Prompt icon and click Run as administrator.
+Click the Continue or Yes button on the dialog window that appears.
+The path (e.g., C:\Windows\system32) should contain the word “Windows” and not “Users”. If it contains “Users”, close the window and repeat the two previous steps, being sure to open the Command Prompt as an administrator.
+Copy and paste (or type) the command slmgr.vbs /skms skms.eservices.virginia.edu and press the Enter key.
+Either “Key Management Service machine name set to skms.eservices.virginia.edu successfully” or an error message will be returned.
+If not successful, ensure you typed the command correctly. There is a space between slmgr.vbs and /skms and between /skms and skms.eservices.virginia.edu
+Copy and paste (or type) the command slmgr.vbs /ato and press the Enter key.
+Either “Product activated successfully” or an error message will be returned. If you receive an error, contact the UVA Help Desk.
+Exit the command prompt window by typing exit followed by pressing the Enter key.
+Click the Start button.
+Right-click on Computer and click Properties. Under Windows activation:
+You should see “Windows is activated.” If you see “Product Activation Required” instead, contact the UVA Help Desk for assistance.
+```
+
+### Demographics Zoom Lense
+
+https://demographics.coopercenter.org/node/7256
+
+[Getting JQuery](https://stackoverflow.com/questions/7474354/include-jquery-in-the-javascript-console)
+```
+var jq = document.createElement('script');
+jq.src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js";
+document.getElementsByTagName('head')[0].appendChild(jq);
+// ... give time for script to load, then type (or see below for non wait option)
+jQuery.noConflict();
+```
+
+### Getting Data into drupal from csv
+
+So I want to get a couple sources of data directly into the Drupal database. I have to get LOST data in the CEPS site, Sorensen Alumni into the sorensen site, and Survey Research Data in to the CSR site.
+
+[Here's the drupalize.me walkthrough for the Migrate API.](https://drupalize.me/topic/import-data-migrate-api)
+
+Ultimaetly I'd like to import content from MySQL databases directly.
+
+[From a mySQL database](https://drupalize.me/tutorial/set-migrate-demo-site-and-source-data?p=2578)
+
+1. Define external database in settings.php
+2. Create a source Plugin
+3. Create Process plugin
+4. Create destination plugin
+5. Run the plugin with drush
+
+[Source From CSV Plugin](https://drupal.org/project/migrate_source_csv)
+[Example Use of CSV Plugin](https://www.mtech-llc.com/blog/lucas-hedding/migrating-using-csv)
+
+#### Running the plugin with drush
+
+ `drush ms` status of migration
+ `drush mi <name>` import a site migration (which field is this?)
+ `drush mr` rollback the migration
+
+
+ ```
+ drush --version
+ Drush Version   :  8.1.10
+
+PHP Fatal error:  Declaration of Drush\Command\DrushInputAdapter::hasParameterOption($values) must be compatible with Symfony\Component\Console\Input\InputInterface::hasParameterOption($values, $onlyParams = false) in /Applications/DevDesktop/tools/vendor/drush/drush/lib/Drush/Command/DrushInputAdapter.php on line 27
+```
+
+
+
+#### Actually creating the module for install
+
+[tutorial for CSV module making](https://www.mtech-llc.com/blog/ada-hernandez/how-migrate-images-drupal-8-using-csv-source)
+
+1. Create a module folder `lost_csv_import`
+2. In that folder make a `lost_csv_import.info.yml`
+```
+name: My first migration
+description: With this module I will migrate a csv file.
+type: module
+core: 8.x
+package: Migration
+dependencies:
+  - migrate
+  - migrate_plus
+  - migrate_source_csv
+  - migrate_tools
+  - node
+```
+3. Create `config/install` and in that make `migrate_plus.migration.migration_lost_test.yml` (you use the id in the name of the file)
+4. Fill that file with the actual migration plugin information
+```
+dependencies:
+  module:
+    - migrate_source_csv
+id: migration_lost_test
+migration_tags:
+  - CSV
+migration_group: null
+label: Lost Migration
+source:
+  plugin: csv
+  path: modules/custom/lost-test.csv
+  header_row_count: 1
+  keys:
+    - locality
+  column_names:
+    -
+      month: Month
+    -
+      year: Year
+    -
+      tax: Tax
+    -
+      locality: Locality
+process:
+  type:
+    plugin: default_value
+    default_value: lost
+  title:
+    plugin: concat
+    source:
+      - locality
+      - month
+      - year
+    delimiter: ' '
+  field_lost_month: month
+  field_lost_year: year
+  field_lost_tax: tax
+  field_lost_locality:
+    plugin: entity_generate
+    source: locality
+destination:
+  plugin: 'entity:node'
+migration_dependencies:
+  required: {  }
+  optional: {  }
+```
+4. Import and run the migration
+```
+drush mi migration_lost_test
+```
+My drush version isn't working so I'll try to update it to see if that will help.
+```
+ drush --version
+ Drush Version   :  8.1.10
+
+ composer require drush/drush:9.*
+ drush --version
+ Drush Commandline Tool 9.0.0
+
+```
+
+Now I get this error where mi isn't defined.
+```
+drush mi migration_lost_test
+
+[Symfony\Component\Console\Exception\CommandNotFoundException]  
+  Command "mi" is not defined.                                    
+  Did you mean this?                                              
+      pmi      
+```
+I'm going to try to enable all of the migrate modules to make sure I'm not missing them.
+```
+drush en migrate_tools
+drush en migrate_plus
+```
+I ended up actually enabling them from the Admin UI because drush en wasn't working properly. mi is still not defined in Drush 9 so I'm going to use drush 8 to see if that helps. `drush list` didn't show any options for migration. It also didn't show any extra module commands.
+```
+composer require drush/drush:8.*
+Drush Version   :  8.1.15
+drush cache-clear drush
+drush help
+```
+This shows the migrate commands I need to use.
+```
+drush help
+All commands in migrate_tools: (migrate_tools)
+ migrate-fields-sourc  List the fields available for mapping in a source.
+ e (mfs)                                                                  
+ migrate-import (mi)   Perform one or more migration processes.           
+ migrate-messages      View any messages associated with a migration.     
+ (mmsg)                                                                   
+ migrate-reset-status  Reset a active migration's status to idle.         
+ (mrs)                                                                    
+ migrate-rollback      Rollback one or more migrations.                   
+ (mr)                                                                     
+ migrate-status (ms)   List all migrations with current status.           
+ migrate-stop (mst)    Stop an active migration operation.
+```
+
+Now that I am in drush 8.1.15 instead of 8.1.10, the migrate import seems to be working.
+```
+drush mi migration_lost_test
+No migrations Found
+I renamed the migration.yml to the correct name and reinstalled the custom module.
+```
+
+Import the configuration
+```
+drush config-import --partial --source=modules/lost_csv_import/config/install/
+
+```
+
+Now I have the migration configuration imported but when I run migrate-status I get an error that the csv plugin doesn't exist. I fixed it by uninstalling the migrate_source_csv module, then updating composer, and then installing and re enabling the migrate_source_csv module.
+```
+composer update
+drush en migrate_source_csv
+drush cr
+drush config-import --partial --source=modules/lost_csv_import2/config/install/
+drush mi migration_lost_test2
+```
+
+Once the yaml config is imported, this can be run by cron at various times using System cron.
+
+ATTEMPT TO RUN THE CUSTOM MIGRATION WITH THE EXAMPLE DATA!!!
