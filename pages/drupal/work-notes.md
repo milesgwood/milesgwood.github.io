@@ -323,9 +323,64 @@ composer update
 drush en migrate_source_csv
 drush cr
 drush config-import --partial --source=modules/lost_csv_import2/config/install/
+drush config-import --partial --source=modules/custom/lost/config/install/
 drush mi migration_lost_test2
 ```
 
 Once the yaml config is imported, this can be run by cron at various times using System cron.
 
 ATTEMPT TO RUN THE CUSTOM MIGRATION WITH THE EXAMPLE DATA!!!
+
+https://www.mtech-llc.com/blog/lucas-hedding/migrating-using-csv
+https://www.mtech-llc.com/blog/ada-hernandez/how-migrate-images-drupal-8-using-csv-source
+
+### Running Example Custom MIGRATION
+
+1. Install Drupal site new Drupal 8.4
+2. Install Migrate, Migrate Source CSV, Migrate Plus, Migrate Tools
+```
+drush en -y  migrate_plus migrate_tools migrate_source_csv
+drush en -y admin_toolbar
+```
+3. Make sure drush is installed
+```
+drush --version
+Drush Version   :  8.1.10
+
+WE NEED SOMETHING ELSE
+composer require drush/drush:8.*
+drush --version
+Drush Version   :  8.1.15
+```
+4. Create your content type for Profile type as described
+First Name - Text(plain)
+Last Name - Text(plain)
+Email - Email
+Language - Taxonomy Term
+5. Create a custom module in the custom module folder
+  - create the cuustom_migrate.info.yml that hadles the installation of the module
+  - Create the migrate_plus.migration.profile.yml file that describes the migration for our Profile type
+6. Enable the custom migrate module in drush
+7. Create the CSV file in excel and make sure you save it in WINDOWS CSV FORMAT
+8. Run `drush cex` and `drush ms`
+```
+Group: Default (default)  Status  Total  Imported  Unprocessed  Last imported
+profile                   Idle    1      0         1
+```
+8. Run drush mim profile
+```
+drush mim profile
+```
+9. If it fails then make sure that you roll it back and import the fixed configuration
+```
+drush mr profile
+drush config-import --partial --source=modules/custom_migrate/config/install
+drusm migrate-import profile
+```
+
+## Attempt 2 at getting LOST migrations
+
+```
+drush config-import --partial --source=modules/custom/lost/config/install/
+
+```
