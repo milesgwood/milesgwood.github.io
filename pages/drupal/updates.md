@@ -40,9 +40,9 @@ $config_directories = array(
 
 # Updating Drush Itself
 
-For the upgrade from 8.3 to 8.4 I need to update drush otherwise the Drupal Cord Update will fail.
+For the upgrade from 8.3 to 8.4 I need to update drush otherwise the Drupal Core Update will fail.
 
-Check your drush version with `drush version` I am running 8.1.10. I have Composer installed globally so I wil use that to update drush. Composer version 1.5.2
+Check your drush version with `drush version` I am running 8.1.10. I have Composer installed globally so I will use that to update drush. Composer version 1.5.2
 
 From docroot add drush to the composer file with `composer require drush/drush`. Running `composer update` just updates composer. I don't know if it updates drush because after running require drush drush I already had drush version 8.1.14. I can now run the drupal update process as I have listed above.
 
