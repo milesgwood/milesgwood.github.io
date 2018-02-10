@@ -360,7 +360,7 @@ Language - Taxonomy Term
 5. Create a custom module in the custom module folder
   - create the cuustom_migrate.info.yml that hadles the installation of the module
   - Create the migrate_plus.migration.profile.yml file that describes the migration for our Profile type
-6. Enable the custom migrate module in drush
+6. Enable the custom migrate module in drush `drush en custom_migrate`
 7. Create the CSV file in excel and make sure you save it in WINDOWS CSV FORMAT
 8. Run `drush cex` and `drush ms`
 ```
@@ -384,3 +384,74 @@ drusm migrate-import profile
 drush config-import --partial --source=modules/custom/lost/config/install/
 
 ```
+
+## Sorensen Alumni Directory
+
+So we have some seperate users who can see seperate things.
+Alumni Profile
+1. Name (First Middle Last Suffix Preferred)
+2. Image
+3. Program (Program and Year multiple) `ELP 2016`
+4. DOB
+5. Gender
+6. Political Party
+7. Race
+8. Region
+9. Mobile Phone
+10. Home Phone
+11. Work Phone
+12. Preferred email
+13. Alt Email
+14. Title
+15. Organization (Organization and Department)
+
+I created the basic migration with all of the CSV fields now I want to enable and run the migration. Enable all of the needed migration modules before importing the migration configuration.
+```
+drush --version
+Drush Version   :  8.1.16
+
+drush en sorensen_alum -y
+drush config-import --partial --source=modules/custom/sorensen_alum/config/install/
+drush ms
+ Group: sorensen (sorensen)         Status    Total  Imported  Unprocessed  Last imported       
+ alum_2                             Idle      124    0         124                       
+
+drush migrate-import alum_2
+ Processed 124 items (124 created, 0 updated, 0 failed, 0 ignored) - done with 'alum_2'
+```
+
+To run this migration on a specific site, make sure you are in the site directory so drush runs into your settings.php file.
+
+List of the process plugins I'll be using.
+https://www.drupal.org/docs/8/api/migrate-api/migrate-process-plugins
+https://www.drupal.org/docs/8/api/migrate-api/migrate-process-plugins/list-of-core-process-plugins
+
+If you use more than one plugin then you need to use an associative array to show the order of the plugins.
+
+## Migrate the Users
+
+https://agencychief.com/blog/drupal-8-csv-migration
+
+You can define the source database connection in setting php and then specify which database connection to use as source in your source plugin. The default key is the migrate key so `$databases[migrate][default]`
+
+https://www.drupal.org/docs/8/api/migrate-api/migrate-source-plugins/migrating-data-from-a-sql-source
+
+## Install xDebug for Drupal [https://docs.acquia.com/dev-desktop/sites/phpstorm](Guide)
+
+I've reached a point where I need to be able to step through code and see a fall stack to really understand what is going on. I want to get a debugging tool for php. I know this will be painful to install but I have to try. I had to switch to PHP 5.6.29 to get the xdebug utility built into Acquia Dev Desktop.
+
+Uncomment this line by removing the semi colon in the right php.ini
+```
+zend_extension="/Applications/DevDesktop/php5_6/ext/xdebug.so"
+
+Add this line too
+xdebug.remote_enable=1
+```
+
+#### Fix the xdebug issue of it breaking on the first line no matter what.
+
+To get it to stop I did this (on OS X):
+Go to Preferences > Languages & Frameworks > PHP > Debug
+Uncheck both of the 'force break at the first line...' options
+Apply and close
+In the Run menu, uncheck 'Break at the first line in PHP scripts'

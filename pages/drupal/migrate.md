@@ -44,6 +44,12 @@ Tomorrow i will message the Drupalize.me people and watch a youtube video on the
 ### Solved mysql socket issue
 
 So Acquia sets up the mysql database but doesn't specify the default socket in the php.ini file. MySQL has been using the default socket but Acquia doesn't install MySQL in the default location. So PHP was looking in the wrong place for the socket to use too build the connection. Go into the Acquia Preferences > Config and then edit the php.ini for 7.0 (since that is the php version i'm using). Set the default socket name for mysql connects to `/Applications/DevDesktop/mysql/data/mysql.sock`. Now the migrate tools should be able to conect to the database of the local drupal 7 site.
+```
+; Default socket name for local MySQL connects.  If empty, uses the built-in
+; MySQL defaults.
+; http://php.net/pdo_mysql.default-socket
+pdo_mysql.default_socket=/Applications/DevDesktop/mysql/data/mysql.sock
+```
 
 `drush migrate-upgrade --configure-only`
 
