@@ -428,6 +428,48 @@ https://www.drupal.org/docs/8/api/migrate-api/migrate-process-plugins/list-of-co
 
 If you use more than one plugin then you need to use an associative array to show the order of the plugins.
 
+Rather than stress about getting the terms into the correct list during the initial migration, I'll just merge the separate fields with a module later.
+
+[Example of updating nodes with a module](https://docs.acquia.com/tutorials/fast-track-drupal-8-coding/attach-terms-another-entity-programmatically)
+
+```
+D8 Code
+Place the following in lotus.module
+
+<?php
+use Drupal\node\Entity\Node;
+
+/**
+ * Before attaching a term(s) to a term reference field,
+ * Must know:
+ *   - field_example_name: the full name of the term reference field
+ *   - tid: the term ID(s) to attach
+ *
+ * Keep in mind that this example uses Node::load()
+ * but you can use any Entity::load()
+ * e.g. User::load(), Term::load(), etc.
+ */
+
+
+// Example 1: attaching a single term
+$node = \Drupal\node\Entity\Node::load($nid);
+
+// Attach only one term
+$tid = 1; // The ID of the term to attach.
+$node->set('field_example_name', $tid);
+$node->save();
+// End of Example 1 />
+
+// Example 2: attaching multiple terms
+$node2 = \Drupal\node\Entity\Node::load($nid2);
+
+// To attach multiple terms, the term IDs must be in an array.
+$multiple_tids = array(1, 2, 3); // Each is Term ID of an existing term.
+$node2->set('field_example_name', $multiple_tids);  // Note that field_example_name must allow multiple terms.
+$node2->save();
+// End of Example 2 />
+```
+
 ## Migrate the Users
 
 https://agencychief.com/blog/drupal-8-csv-migration
@@ -455,3 +497,45 @@ Go to Preferences > Languages & Frameworks > PHP > Debug
 Uncheck both of the 'force break at the first line...' options
 Apply and close
 In the Run menu, uncheck 'Break at the first line in PHP scripts'
+
+## Install Drupal Console
+
+These two tutorials failed to work. DEAD END.
+
+[Install overview](https://drupalize.me/tutorial/drupal-console?p=2766)
+
+[How to install](https://drupalconsole.com/articles/how-to-install-drupal-console)
+
+## Manually create a module and use it to update all of the Alumni profiles
+
+First I need to read up on Drupalize.me to find out how to make a module. Then I need to learn how to invoke it and test it with a debugger.
+
+git clone https://github.com/sidharrell/D8HWexample.git
+
+[Drupal Docs for creating modules.](https://www.drupal.org/docs/8/creating-custom-modules) Make sure you enable the module with drush and also install it through the Extend screen.
+
+So using xdebug on this basic request for a specific node, I was able to find the core class that is responsible for getting my Node entity.
+```
+$node = \Drupal\node\Entity\Node::load(119167);
+
+core/lib/Drupal/Core/Entity/Entity.php
+```
+
+There is a load multiple option that would allow me to load a lot of them if I could get ahold of the ids for all of the Alumni Profile content. So how do I get ahold of all of those node IDs?
+
+```
+$nids = \Drupal::entityQuery('node')->condition('type','my_custom_type')->execute();
+$nodes =  \Drupal\node\Entity\Node::loadMultiple($nids);
+
+$tid = $node->get('field_class')->target_id;
+$term_id = \Drupal\taxonomy\Entity\Term::load($tid)->get('tid')->value;
+$term_name = \Drupal\taxonomy\Entity\Term::load($tid)->get('name')->value;
+```
+
+So I kept getting these Objects that had lists and arrays in them. I couldn't get what I wanted so I used the get method to go all the way to the data.
+
+
+Updated the Alumni after checking for admin role.
+```
+if (\Drupal\user\Entity\User::load(\Drupal::currentUser()->id())->hasRole('administrator'))
+```
