@@ -539,3 +539,43 @@ Updated the Alumni after checking for admin role.
 ```
 if (\Drupal\user\Entity\User::load(\Drupal::currentUser()->id())->hasRole('administrator'))
 ```
+
+## Extract the photos from filemaker
+
+That export field contents can be done from a script that loops through the records of your found set to export all the images to a specified location all in one go.
+
+This will export the images to your desktop. Variations of it would export to other locations:
+
+Perform after you have found your records
+```
+Go To Record [First]
+Loop
+   Set Variable [$Path ; value: Get ( DesktopPath ) & YourTable::ImageName & ".jpg"]
+   Export Field Contents [YourTable::YourcontainerField ; $Path ]
+   Go To Record [ next ; exit after last ]
+End Loop
+```
+This script assumes that you have one image per record, that each record also has a field that can be used to unique name the file and that all of the images are JPEGs.
+
+## Create Users in Druapl
+
+[Example Usre Migration from CSV](http://valuebound.com/resources/blog/how-to-migrate-users-from-a-csv-file-drupal-8)
+
+```
+drush config-import -y --partial --source=modules/custom/sorensen_alum/config/install/
+drush ms
+drush migrate-import alumni_users
+```
+
+Now that I have the users, I need to connect them to the actual Alumni Profiles as the author. I need to make a [custom process plugin.](https://drupalize.me/tutorial/write-custom-process-plugin?p=2578)
+
+There may be an easier way. There is a MigratioLookup plugin that can look up the uid of our recently migrated Users. the alumni_users migrateion which has to happen before this data migration created 4 users with uids. So in process I need to add the following.
+```
+process:
+  uid:
+    plugin: migration_lookup
+    migration: alumni_users
+    source: sid
+```
+
+This looks at the key for the user migration and finds the user that was created with that key.
