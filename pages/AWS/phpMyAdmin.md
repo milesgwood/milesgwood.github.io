@@ -197,3 +197,20 @@ Then I got a failure on the dashboard and changed the wp-content directory owner
 ```
 sudo chown -R apache:apache /var/www/html/shop/wp-content
 ```
+
+## Cache the Ledger Site for faster serve times
+
+https://stackoverflow.com/questions/447014/website-image-caching-with-apache
+
+```
+# enable the directives - assuming they're not enabled globally
+ExpiresActive on
+
+# send an Expires: header for each of these mimetypes (as defined by server)
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType image/gif "access plus 1 month"
+ExpiresByType image/jpeg "access plus 1 month"
+
+# css may change a bit sometimes, so define shorter expiration
+ExpiresByType text/css "access plus 1 days"
+```

@@ -19,4 +19,30 @@ C:\Users\<USERNAME>\AppData\Roaming\MediaMonkey\MetadataCache\
 5. Make Chrome default browser
 6. Install Focusbrite USB audio driver
 7. Install Geforce Nvidia Drivers
-8. 
+
+
+# phpStorm on Windows
+
+Download and install it from jetbrains.
+
+### Getting SASS Working on Windows
+
+https://www.jetbrains.com/help/phpstorm/compiling-sass-less-and-scss-to-css.html
+
+#### Install Ruby from Ruby Installer v 2.4.3
+
+```
+C:\Users\miles>ruby -v
+ruby 2.4.3p205 (2017-12-14 revision 61247) [i386-mingw32]
+
+C:\Users\miles>gem install sass
+Fetching: rb-fsevent-0.10.2.gem (100%)
+```
+
+Use the below info in the File Watcher settings.
+
+```
+C:/Ruby24/bin/sass.bat
+$FileName$:$FileNameWithoutExtension$.css
+$FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
+```

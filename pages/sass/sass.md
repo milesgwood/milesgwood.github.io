@@ -50,4 +50,27 @@ Get rid of the .header margin
 Here's a great codepen on [getting a footer to actually stick to the bottom of the page](https://codepen.io/cbracco/pen/zekgx). It recommends that you set the foother to absolute bottom and then add bottom padding to the parent element of the footer to equal height of the footer. Without that padding if the content reached the footer they would hide each other instead of pushing the footer lower. The height of the page needs to be at least 100% to push the footer off.
 
 
+### Getting SASS Working on Windows
+
 http://ceps.dd:8083/sites/ceps/files/default_images/3-2_0073_samuel-zeller-34751.png
+https://www.jetbrains.com/help/phpstorm/compiling-sass-less-and-scss-to-css.html
+
+1. Install Ruby from Ruby Installer v 2.4.3
+
+```
+C:\Users\miles>ruby -v
+ruby 2.4.3p205 (2017-12-14 revision 61247) [i386-mingw32]
+
+C:\Users\miles>gem install sass
+Fetching: rb-fsevent-0.10.2.gem (100%)
+```
+
+2. Install sass using gem from ruby
+
+Use the below info in the File Watcher settings.
+
+```
+C:/Ruby24/bin/sass.bat
+$FileName$:$FileNameWithoutExtension$.css
+$FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
+```
