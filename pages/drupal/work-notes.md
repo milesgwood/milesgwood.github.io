@@ -478,6 +478,68 @@ You can define the source database connection in setting php and then specify wh
 
 https://www.drupal.org/docs/8/api/migrate-api/migrate-source-plugins/migrating-data-from-a-sql-source
 
+## Migrate Headshots
+
+https://www.mtech-llc.com/blog/ada-hernandez/how-migrate-images-drupal-8-using-csv-source
+
+Create another migration and use the name of that migration as the plugin for your photo field.
+
+So the photos migration is not actually assigning the image to the Alumni Profile. It is creating the file entity in the database though. I will create a custom plugin to manually attach that file entity to the field.
+
+In the migrate_map_photo field, we get the destination ID of the photo. For my example it is 67199. I want to attach that ID to my Alumni Profiles. The filename is generated from the name of the client so it shouldn't be hard to get the value of the FID by searching the file_managed table with SQL.
+
+I started by setting the image to a default value like this. The default is a File I know exists in the database.
+```
+field_image:
+  plugin: default_value
+  default_value: 67199
+```
+
+So I want to make my own process plugin and use the name from the CSV file to find the file. I'll need to concat the name and then pass that value to my process plugin. Use Bethal Abraham for the name of the file.
+
+So first you need to export all of the images from filemaker. Then you import all of them into the database using the ICME file browser. It automatically creates all of the images.
+
+I'm using the same /update-alumni url to cause the alumni object fixes.
+
+Ms. Bethal  Abraham
+Ms. Bethal Abraham.jpg
+
+Here is the php code that attaches the image to the alumni profile. 
+
+```
+function attachHeadshotToAlumniProfile($node)
+{
+    $title = $node->getTitle();
+    $explode = explode(' ', $title);
+    $title_normalized = '';
+    foreach($explode as $word)
+    {
+        if($word != ''){
+            $title_normalized .= $word . ' ';
+        }
+    }
+    $title_normalized = trim($title_normalized);
+    $jpg = $title_normalized . ".jpg";
+    $png = $title_normalized . ".png";
+    $jpgfile = \Drupal::entityQuery('file')->condition('filename', $jpg)->execute();
+    $pngfile = \Drupal::entityQuery('file')->condition('filename', $png)->execute();
+    if($pngfile)
+    {
+        $node->set('field_image', $pngfile);
+        $node->save();
+        drupal_set_message( "Node with nid " . $node->id() . " got a headshot! ". $png . "\n");
+    }
+    if($jpgfile)
+    {
+        $node->set('field_image', $jpgfile);
+        $node->save();
+        drupal_set_message( "Node with nid " . $node->id() . " got a headshot! ". $jpg . "\n");
+    }
+    return;
+}
+```
+
+
 ## Install xDebug for Drupal [https://docs.acquia.com/dev-desktop/sites/phpstorm](Guide)
 
 I've reached a point where I need to be able to step through code and see a fall stack to really understand what is going on. I want to get a debugging tool for php. I know this will be painful to install but I have to try. I had to switch to PHP 5.6.29 to get the xdebug utility built into Acquia Dev Desktop.
@@ -579,3 +641,10 @@ process:
 ```
 
 This looks at the key for the user migration and finds the user that was created with that key.
+
+## Rough friday - migration for LOST content
+
+```
+drush en -y migrate_tools
+drush en -y lost
+drush config-import -y --partial --source=modules/custom/lost/config/install/
