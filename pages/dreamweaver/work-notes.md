@@ -30,3 +30,5 @@ Next Steps
 
 F12  - opens up the browser live preview
 CNTRL + E - Quick edit the stylesheet from within the HTML  
+
+I was really hopeful for the quick edit function for sass. Unfortunatley quick edit only lets you edit the compiled css and not the sass. That sucks.

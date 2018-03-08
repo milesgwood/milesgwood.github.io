@@ -74,3 +74,5 @@ C:/Ruby24/bin/sass.bat
 $FileName$:$FileNameWithoutExtension$.css
 $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 ```
+
+3. Make sure that the ruby folder is added to the path. You can get to the windows path through start > Environment Variables 

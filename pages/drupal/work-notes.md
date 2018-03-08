@@ -504,7 +504,7 @@ I'm using the same /update-alumni url to cause the alumni object fixes.
 Ms. Bethal  Abraham
 Ms. Bethal Abraham.jpg
 
-Here is the php code that attaches the image to the alumni profile. 
+Here is the php code that attaches the image to the alumni profile.
 
 ```
 function attachHeadshotToAlumniProfile($node)
@@ -648,3 +648,14 @@ This looks at the key for the user migration and finds the user that was created
 drush en -y migrate_tools
 drush en -y lost
 drush config-import -y --partial --source=modules/custom/lost/config/install/
+```
+
+## Colorbox code
+
+```
+<script>
+window.onload = function clickbox(e) {
+    jQuery('.colorbox').append("<div>Click to Enlarge</div>");
+}
+</script>
+```
