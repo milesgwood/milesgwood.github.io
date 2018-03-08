@@ -50,25 +50,21 @@ Get rid of the .header margin
 Here's a great codepen on [getting a footer to actually stick to the bottom of the page](https://codepen.io/cbracco/pen/zekgx). It recommends that you set the foother to absolute bottom and then add bottom padding to the parent element of the footer to equal height of the footer. Without that padding if the content reached the footer they would hide each other instead of pushing the footer lower. The height of the page needs to be at least 100% to push the footer off.
 
 
-### Getting SASS Working on Windows
-
 http://ceps.dd:8083/sites/ceps/files/default_images/3-2_0073_samuel-zeller-34751.png
-https://www.jetbrains.com/help/phpstorm/compiling-sass-less-and-scss-to-css.html
 
-1. Install Ruby from Ruby Installer v 2.4.3
+## Flexbox
 
-```
-C:\Users\miles>ruby -v
-ruby 2.4.3p205 (2017-12-14 revision 61247) [i386-mingw32]
+[Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Typical_Use_Cases_of_Flexbox)
 
-C:\Users\miles>gem install sass
-Fetching: rb-fsevent-0.10.2.gem (100%)
-```
+### Properties of parent
 
-2. Install sass using gem from ruby
+display: flex
+justify-content: space-between - puts space between all items
 
-Use the below info in the File Watcher settings.
+justify-content: center; - Centers it on primary axis
+align-items: center; - Centers on y axis
 
+<<<<<<< HEAD
 ```
 C:/Ruby24/bin/sass.bat
 $FileName$:$FileNameWithoutExtension$.css
@@ -76,3 +72,14 @@ $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 ```
 
 3. Make sure that the ruby folder is added to the path. You can get to the windows path through start > Environment Variables 
+=======
+align-items: flex-start -puts item at top  
+align-items: flex-end  - puts item at bottom
+
+flex-direction: column; - which direction do the items stretch - good for switching to mobile or cards
+flex-direction: row-reverse; - for putting content in reverse order on main axis
+
+### Properties of child
+
+flex: auto - which means flex: 1 1 auto - which means all item grow and shrink at same rate.
+>>>>>>> 6b8d2066651bd9d95dfd4f38dd0aaa3f96bcc1a1

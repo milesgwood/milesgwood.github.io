@@ -650,8 +650,13 @@ drush en -y lost
 drush config-import -y --partial --source=modules/custom/lost/config/install/
 ```
 
+<<<<<<< HEAD
 ## Colorbox code
 
+=======
+
+## Add click to enlarge to all colorboxes
+>>>>>>> 6b8d2066651bd9d95dfd4f38dd0aaa3f96bcc1a1
 ```
 <script>
 window.onload = function clickbox(e) {
@@ -659,3 +664,272 @@ window.onload = function clickbox(e) {
 }
 </script>
 ```
+<<<<<<< HEAD
+=======
+
+## Fresh run of the migration on a unfucked datatype set
+
+1. Create the Alumni Profile Content Type
+2. Create the Alumni Directory Page Content Type
+3. Create the Alumni User Type
+4. Transfer all of the photos to the correct directory
+5. Enable Migration modules
+6. Enable Custom Modules
+7. Run the migration
+8. Run the update that follows migration  /update-alumni
+9. Style the Alumni Content
+
+
+I get failure when I try to install the alumni_profile module. I don't really need it so hopefully the problem will stop. This error seems to have come from bad indent on alumni.content. I FUCKED UP ONE SINGLE INDENT!!!!
+```
+exception 'Symfony\Component\Yaml\Exception\ParseException' with message 'Indentation problem at line 3 (near "  defaults:").' in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/symfony/yaml/Parser.php:492                                                                   [error]
+Stack trace:
+#0 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/symfony/yaml/Parser.php(276): Symfony\Component\Yaml\Parser->getNextEmbedBlock()
+#1 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/symfony/yaml/Parser.php(103): Symfony\Component\Yaml\Parser->doParse('alumni.content:...', 2)
+#2 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Serialization/YamlSymfony.php(37): Symfony\Component\Yaml\Parser->parse('alumni.content:...', 2)
+#3 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Serialization/Yaml.php(35): Drupal\Component\Serialization\YamlSymfony::decode('alumni.content:...')
+#4 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Discovery/YamlDiscovery.php(19): Drupal\Component\Serialization\Yaml::decode('alumni.content:...')
+#5 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Discovery/YamlDiscovery.php(64): Drupal\Core\Discovery\YamlDiscovery->decode('/Users/miles/Si...')
+#6 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Routing/RouteBuilder.php(230): Drupal\Component\Discovery\YamlDiscovery->findAll()
+#7 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Routing/RouteBuilder.php(135): Drupal\Core\Routing\RouteBuilder->getRouteDefinitions()
+#8 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/ProxyClass/Routing/RouteBuilder.php(83): Drupal\Core\Routing\RouteBuilder->rebuild()
+#9 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/includes/common.inc(1157): Drupal\Core\ProxyClass\Routing\RouteBuilder->rebuild()
+#10 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/includes/utility.inc(52): drupal_flush_all_caches()
+#11 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/commands/core/cache.drush.inc(302): drupal_rebuild(Object(Composer\Autoload\ClassLoader), Object(Symfony\Component\HttpFoundation\Request))
+#12 [internal function]: drush_cache_rebuild()
+#13 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/command.inc(422): call_user_func_array('drush_cache_reb...', Array)
+#14 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/command.inc(231): _drush_invoke_hooks(Array, Array)
+#15 [internal function]: drush_command()
+#16 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/command.inc(199): call_user_func_array('drush_command', Array)
+#17 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/lib/Drush/Boot/BaseBoot.php(67): drush_dispatch(Array)
+#18 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/preflight.inc(66): Drush\Boot\BaseBoot->bootstrap_and_dispatch()
+#19 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/drush.php(12): drush_main()
+#20 {main}
+
+Next exception 'Drupal\Component\Serialization\Exception\InvalidDataTypeException' with message 'Indentation problem at line 3 (near "  defaults:").' in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Serialization/YamlSymfony.php:40
+Stack trace:
+#0 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Serialization/Yaml.php(35): Drupal\Component\Serialization\YamlSymfony::decode('alumni.content:...')
+#1 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Discovery/YamlDiscovery.php(19): Drupal\Component\Serialization\Yaml::decode('alumni.content:...')
+#2 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Discovery/YamlDiscovery.php(64): Drupal\Core\Discovery\YamlDiscovery->decode('/Users/miles/Si...')
+#3 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Routing/RouteBuilder.php(230): Drupal\Component\Discovery\YamlDiscovery->findAll()
+#4 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Routing/RouteBuilder.php(135): Drupal\Core\Routing\RouteBuilder->getRouteDefinitions()
+#5 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/ProxyClass/Routing/RouteBuilder.php(83): Drupal\Core\Routing\RouteBuilder->rebuild()
+#6 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/includes/common.inc(1157): Drupal\Core\ProxyClass\Routing\RouteBuilder->rebuild()
+#7 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/includes/utility.inc(52): drupal_flush_all_caches()
+#8 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/commands/core/cache.drush.inc(302): drupal_rebuild(Object(Composer\Autoload\ClassLoader), Object(Symfony\Component\HttpFoundation\Request))
+#9 [internal function]: drush_cache_rebuild()
+#10 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/command.inc(422): call_user_func_array('drush_cache_reb...', Array)
+#11 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/command.inc(231): _drush_invoke_hooks(Array, Array)
+#12 [internal function]: drush_command()
+#13 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/command.inc(199): call_user_func_array('drush_command', Array)
+#14 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/lib/Drush/Boot/BaseBoot.php(67): drush_dispatch(Array)
+#15 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/includes/preflight.inc(66): Drush\Boot\BaseBoot->bootstrap_and_dispatch()
+#16 /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/vendor/drush/drush/drush.php(12): drush_main()
+#17 {main}
+```
+
+Since I wasted a bunch of time with trying to restore when it was just a simple indent, now my drush version is fucked up too.
+```
+Performed from docroot
+
+composer require drush/drush:8.1.15
+
+Failed
+
+Problem 1
+  - Installation request for drush/drush 8.1.15 -> satisfiable by drush/drush[8.1.15].
+  - Conclusion: remove phpdocumentor/reflection-docblock 3.3.2
+  - Conclusion: don't install phpdocumentor/reflection-docblock 3.3.2
+  - drush/drush 8.1.15 requires phpdocumentor/reflection-docblock ^2.0 -> satisfiable by phpdocumentor/reflection-docblock[2.0.0, 2.0.0a1, 2.0.0a2, 2.0.0a3, 2.0.1, 2.0.2, 2.0.3, 2.0.4, 2.0.5].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.0, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.0a1, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.0a2, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.0a3, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.1, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.2, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.3, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.4, 3.3.2].
+  - Can only install one of: phpdocumentor/reflection-docblock[2.0.5, 3.3.2].
+  - Installation request for phpdocumentor/reflection-docblock (locked at 3.3.2) -> satisfiable by phpdocumentor/reflection-docblock[3.3.2].
+
+composer require phpdocumentor/reflection-docblock:2.*
+composer require drush/drush:8.1.15
+
+drush --version
+ Drush Version   :  8.1.15
+```
+
+Backed up the database and made a commit with all the drush vendor crap. Getting rid of commas changed the number of rows i mmigrated to fewer. I know I'm definitley still missing some rows too.
+
+I am getting messages saying that the csv line endings are all wrong. That is why i am not getting as many rows as I would expect.
+
+Before I publish I need to restrict permissions possibly using this Group Module.
+[Instructions](https://drupal.stackexchange.com/questions/249393/how-to-restrict-access-to-specific-content-types-by-role)
+
+## Updating Drupal to 8.5.0-rc1
+
+Updating to the release candidate since it doesn't seem to be causing issues
+
+Error on drush cr after the replacing of the core files. Replaced everything except modules profiles sites and themes. Delete everything else that the new core offers.
+
+```
+drush cr
+
+PHP Fatal error:  Declaration of Drush\Command\DrushInputAdapter::hasParameterOption() must be compatible with Symfony\Component\Console\Input\InputInterface::hasParameterOption($values, $onlyParams = false) in /Applications/DevDesktop/tools/vendor/drush/drush/lib/Drush/Command/DrushInputAdapter.php on line 27
+
+composer require drush/drush:8.1.16
+```
+
+After uninstalling the backup migrate plugin I got this error. Solution is to run the database updates BEFORE uninstalling any plugins or anything. Run updates as an atomic action.
+
+```
+Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
+Drupal\Component\Plugin\Exception\PluginNotFoundException: The "file_uri" plugin does not exist. in Drupal\Core\Plugin\DefaultPluginManager->doGetDefinition() (line 52 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php).
+```
+
+Another Error after running the database updates
+```
+views module
+Update #8500
+Failed: Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
+```
+
+The site seems to still work despite this error on the views module database update. After a second run of update.php the site seems to have completed all of the core updates correctly.
+
+A bunch of the modules required the contribute module to perform their database updates so I copied it to the modules directory.
+
+The site is running really slow after this update. It's really struggling to bring up the admin pages.
+
+Secondary update of migrate tools and migrate plus was needed.
+
+Sorensen looks great but the rest of the sites are broken now. I don't know if it is the drupal update or the modules that caused but I expect it is the core update that did it. I'm going to attempt to update the sei site with drush instead of the regular gui. If this all fails then I will just revert to the site on Stage which is pre-update.
+
+So to update drush I have to get composer the right kind of drush. My global install of composer is using drush/drush dev-master. So maybe if I update drush there I will get it inside my project. The global composer file is stored at `composer global update`
+
+```
+composer global update
+```
+
+I edited the global composer file to have this in it.
+```
+{
+    "require": {
+        "drush/drush": "8.1.16"
+    }
+}
+```
+
+I am failing to update drush with composer. [Tutorial](https://drupal.stackexchange.com/questions/222188/updating-drush-with-composer). Requiring a newer version of drush worked to get `drush cr` working. I want to see if it will work with updating drupal.
+
+```
+composer require drush/drush
+drush --version
+9.2.1
+```
+In this version the update command is deprecated.
+```
+drush ups
+
+The pm-updatestatus command was deprecated. Please see `composer show` and `composer outdated`. For security release notification, see `drush pm:security`.  
+```
+
+## Update Drupal and Modules with Drush
+
+With drush 9.2.1 I can now downgrade to drush 8.1.16 [Here's how to actually preform the update.](https://www.drupal.org/docs/8/update/update-core-via-drush-option-3)
+```
+composer require drush/drush:8.1.16  
+
+drush --version
+ Drush Version   :  8.1.16
+
+cd sites/sei
+drush ups
+drush updb
+drush entup
+```
+
+Error on sorensen after sei update
+```
+exception 'Drupal\Component\Plugin\Exception\PluginNotFoundException' with message 'The "group_permission" plugin does not exist.' in  [error]
+/Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php:52
+Stack trace:
+
+drush cr
+drush en group_permission
+```
+
+I messed up my modules directory so now I'm going to perform an update on Sorensen again using the bakcup I made on Stage.
+
+1. Pull database from live environment
+2. Make sure you have drush 8.1.16 (if not `composer require drush/drush` and `composer require drush\drush:8.1.16`)
+3. Run ` drush cr and drush ups` to make sure drush is working
+4. Copy Core files over  (this may revert you back to the previous version of drush and you'll need to repeat previous steps)
+5. cd into sites/sorensen
+6. Run `drush updb` to get the database updates for the core update
+7. Run `drush entup`
+8. Run `drush up` for the module updates
+9. Run `drush updb`
+10. Run `drush entup`
+
+```
+Local site is fine but live site gives this Error - FIXED BY ANOTHER DEV DEXKTOP PUSH
+
+The website encountered an unexpected error. Please try again later.</br></br><em class="placeholder">Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException</em>:  in <em class="placeholder">Drupal\Core\Routing\AccessAwareRouter-&gt;checkAccess()</em> (line <em class="placeholder">114</em> of <em class="placeholder">core/lib/Drupal/Core/Routing/AccessAwareRouter.php</em>).
+```
+
+Had to enable contribute module before last database update
+```
+drush en -y contribute
+drush updb
+```
+
+
+## CSR migrations
+
+```
+drush en -y csr_projects_refresh
+drush config-import -y --partial --source=modules/custom/csr_projects_refresh/config/install/
+drush ms
+drush migrate-import csr_projects_refresh
+```
+
+```
+field_external_principal_investi‎:
+  plugin: entity_generate
+  entity_type: taxonomy_term
+  source: outside_principal_investigator
+
+NO CONFIG FOR THE TRANSFERRED TAXONOMY TERMS
+```
+
+After making it live I have some issues to correct. Mainly the problem is the CSRData field which means Surveys and Data Collection vs. Consulting services. For some reason the field did not map properly and is now in error.
+
+Fatal error again
+`Fatal error: Call to a member function getConfig() on null in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/migrate_plus/src/Plugin/migrate/process/EntityLookup.php on line 191`
+
+```
+field_project_type‎:
+  plugin: entity_generate
+  entity_type: taxonomy_term
+  source: project_type
+```
+
+After typing that same information in, I got the migration to success. THEY AREN'T THE SAME! In the top one there is a U+200E mark before the colon. That is a Left to Right mark or cairage return! WHAT THE FUCK
+```
+field_project_type:
+  plugin: entity_generate
+  entity_type: taxonomy_term
+  source: project_type
+```
+
+## Support Site for Cooper Center
+
+I have a bunch of projects that are all over the place. Next big one is the support.cooperceter site with a trello ticketing system. I'll build one for myself and then create one for everybody else. Smaller projects if I get bored...
+
+1. Get LOST data out of the database in CSV format and then use migration to import it back into the site
+2. Import data from CSV on the web side
+3. LEAD/SEI landing page
+4. Google SEO
+
+So this SUPPORT site needs SSO access, a ticketing system, and training materials. This project could take all the way until september to make for real.  
+>>>>>>> 6b8d2066651bd9d95dfd4f38dd0aaa3f96bcc1a1
