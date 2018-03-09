@@ -17,8 +17,17 @@ Mary Beth directed me to [another walkthrough](http://valuebound.com/resources/b
 3. Make a symbolic link to the www folder of the simplesaml library so it is visible to the webserver.
 `cd docroot; ln -s ../simplesamlphp/www simplesaml`
 4. Install the Externalauth module and the simplesamlphp_auth modules. When trying to enable the simplesamlphp_auth module, I get an error that the SimpleSAMLphp library isn't installed or configured.
+
+Install and enable the externauth and simplesamlphp modules. You get this error from the simplesaml enabling because the php library still needs to be set up according to [this documentation.](https://simplesamlphp.org/docs/stable/simplesamlphp-sp)
+```
+Warning: include_once(/lib/_autoload.php): failed to open stream: No such file or directory in simplesamlphp_auth_check_library() (line 82 of modules/simplesamlphp_auth/simplesamlphp_auth.install).
+Warning: include_once(): Failed opening '/lib/_autoload.php' for inclusion (include_path='.:/Applications/DevDesktop/common/pear:/usr/lib/php') in simplesamlphp_auth_check_library() (line 82 of modules/simplesamlphp_auth/simplesamlphp_auth.install).
+SimpleSAMLphp module requires the simplesamlphp library. See README file for installation instructions.
+```
+
 ## Get the SimpleSAMLphp library configured
 5. Edit the config.php file
+I just copied all of the data from the 1.14 version that I already had. Edits to config php will go at the bottom of this
  - You need to add where the information about authenticated users will be stored. It goes into the netbadge database that you created on Acquia Cloud. Set a $sqldsn , $sqlusername, and $sqlpassword for each of the possible environments.
  - Inside of the config array
     - baseurlpath
@@ -32,8 +41,7 @@ Mary Beth directed me to [another walkthrough](http://valuebound.com/resources/b
     - database.dsn => '$sqldsn'  <-- This was set outside of config array in previous bullet
     - database.username => $sqlusername
     - database.password => $sqlpassword
-
-    ```php
+```php
     if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
     switch ($_ENV['AH_SITE_ENVIRONMENT']) {
         case 'dev':
@@ -55,7 +63,9 @@ Mary Beth directed me to [another walkthrough](http://valuebound.com/resources/b
     }
 }
 ```
+
 Here's some of the variables in the config array:
+
 ```php    
 'baseurlpath' => 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/',
     'certdir' => 'cert/',
@@ -72,6 +82,11 @@ Here's some of the variables in the config array:
     ```
 
  6. Edit config/authsources.php
+ I just straight up copied the data from the old authsources too. I changed the entityID to https://supportdev1.coopercenter.org/
+
+ For the privatekey and the certificate I am going to use the UVA supplied one instead of the senf signed one I tried this with initially. I did not add any of the CA chain certificates.
+
+
   ```php
   //Duplicate these Miles for more SP on each server using different entity ID
   'cooper-dev-sp' => array(
@@ -85,6 +100,8 @@ Here's some of the variables in the config array:
 ```
 ## SSL is required
 You must use the https:// URL because simplesaml will not work without it. You can't securely authenticate if you can't securely connect. Getting  SSL certificate is easy. Simply make the request on the acquia enterprise account under the SSL tab. They'll give you a key which you send to your SSL provider. In our case, this is UVA service now. They send you back a bunch of certificates and you copy the certificates to Acquia through the same page you got the key to make your request. In the top box put the X509 Certificate only, Base64 encoded. In the intermediaries box put the X509 Intermediates/root only Reverse, Base64 encoded certificate. This is a standard certificate, not a legacy one. Now back to the actual simplesaml work.  
+
+So I got a SSL certificate that covers sigle level subdomains of coopercenter.org. The support dev site I want to get SSO working for is https://supportdev1.coopercenter.org. So I need to follow the acquia tutorial on how to get SimpleSAMLphp working.
 
  7. Edit the .htaccess file in docroot
   -Add the two lines with + diff to the docroot/.htaccess
@@ -126,6 +143,8 @@ Get the URL for the metadata from the simplesaml web interface. domain/simplesam
 - [ ] Finish simplesaml_auth module setup
 - [ ] Figure out how to create user accounts on Drupal side with the Netbadge credentials
 
+## Reference Docs
+
 [Description of UVA info from idP ](http://its.virginia.edu/netbadge/defaultpolicy.html)
 
 [Garbage UVA walkthrough that you can't use since you can't access Apache.](http://its.virginia.edu/netbadge/unixdevelopers.html) It does have a link to the needed XML metadata of the UVA idP
@@ -135,3 +154,16 @@ Get the URL for the metadata from the simplesaml web interface. domain/simplesam
 [Acquia Walkthrough](https://docs.acquia.com/articles/using-simplesamlphp-acquia-cloud-site)
 
 [Another walkthrough that is Drupal 8 specific](http://valuebound.com/resources/blog/how-to-configure-single-sign-on-across-multiple-drupal-8-platforms-or-websites)
+
+[UVA Dev docs](http://its.virginia.edu/netbadge/developers.html)
+[UVA Shibboleth No good for SimpleSaml]http://its.virginia.edu/netbadge/unixdevelopers.html)
+
+
+
+SWITCHED DEV branch to SSO. TO just work on site use the support branch instead.
+
+Questions.
+1. Why does support.dd:8083/simplesaml not work but https://supportdev1.coopercenter.org/simplesaml does?
+2. Should the cert directory have my self signed cert and private key OR the UVA supplied cert and private key? (It's purpose is to identify the SP-supportdev1.cooperceter.org to the idp-urn:mace:incommon:virginia.edu)
+3. What data should I be sending to UVA ITS?
+4. Are the CA chain certs needed too? or just the main cert and private key.

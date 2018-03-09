@@ -16,6 +16,8 @@ The Acquia documentation provides a lot of useful information but it is all hand
 2. Input the site name and select create new database. ceps in this case.
 3. Go to the launched site locally and start the install.php process.
 4. Enter the Configure site info password, site name, email `coopercenter-webmaster@virginia.edu`,  time zone etc.
+5. Include the new site URL for your dev environment in the sites php file like this `$sites['newsite.coopercenter.org'] = 'newsite';`
+6. Make sure acqui cloud dev has your domain from the sites.php file declared in the dev environment too 
 5. Now that the site is live locally try to launch it to Acquia before more migration of files. Before launching it you shouldn't get the vanilla drupal site when you go to the site URL. (Note: the site  URL must be included in the sites.php file). Trying to push the database from Acquia Desktop Fails but it does add a much needed line to the end of the settings.php file.
 6. Using terminal manually commit and push the changes made to the settings.php file onto the active branch on Acquia. You should make a new branch for this site creation and deploy it on acquia. So for ceps make a ceps branch and deploy it on Acquia.
 7. With the settings.php file successfully committed and live on Acquia, the Dev Desktop push should work now. So go to the Dev environment site after a second attempt at using Dev Desktops push database and code to Acquia.

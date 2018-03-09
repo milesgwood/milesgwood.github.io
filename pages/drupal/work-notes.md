@@ -931,5 +931,23 @@ I have a bunch of projects that are all over the place. Next big one is the supp
 3. LEAD/SEI landing page
 4. Google SEO
 
-So this SUPPORT site needs SSO access, a ticketing system, and training materials. This project could take all the way until september to make for real.  
->>>>>>> 6b8d2066651bd9d95dfd4f38dd0aaa3f96bcc1a1
+So this SUPPORT site needs SSO access, a ticketing system, and training materials. This project could take all the way until september to make for real. First step is to make the blank site. I'll use the current Sorensen site as a template because I want to be able to use Groups.
+
+1. Add `support.dev1.coopercenter.org` to the domains on Acquia Cloud. You can add the other ones too for Stage and Prod.
+2. Use Backup Migrate to copy the Sorensen Site
+3. Launch the site to Dev to make sure it works.
+4. Make a decent looking homepage with far less content
+5. Delete all content programmatically
+6. Delete all the content types too
+
+
+### Trying to delete all content types
+
+Run arbitrary php in the drupal devel interface. It says Execute PHP.
+```
+$nids = \Drupal::entityQuery('node')->condition('type','person')->execute();
+$nodes =  \Drupal\node\Entity\Node::loadMultiple($nids);
+foreach ($nodes as $node){
+  $node->delete();
+}
+````
