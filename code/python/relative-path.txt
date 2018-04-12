@@ -1,0 +1,12 @@
+sites/sorensen/files/dem-caucus.png
+sites/sorensen/files/Governor's Office.png
+sites/sorensen/files/republican-party-of-va-2.png
+sites/sorensen/files/republican-party-of-va.png
+sites/sorensen/files/richmond-sunlight.png
+sites/sorensen/files/va-democrats.png
+sites/sorensen/files/va-senate-republican-caucus.png
+sites/sorensen/files/va-young-democrats.png
+sites/sorensen/files/VA21.png
+sites/sorensen/files/Virginia-department-of-elections.png
+sites/sorensen/files/virginiageneralassembly.png
+sites/sorensen/files/young-republican-federation-of-va.png

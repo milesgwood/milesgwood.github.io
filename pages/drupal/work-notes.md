@@ -552,6 +552,9 @@ Add this line too
 xdebug.remote_enable=1
 ```
 
+To make sure it is running properly, start your site locally, then click the start debugger scriptlet in the browser. You should be able to turn on the red phone icon with the PHP Remote Debug configuration named Drupal Debug. NOTE: You may need to change the server each time you want to debug a different local site.
+
+
 #### Fix the xdebug issue of it breaking on the first line no matter what.
 
 To get it to stop I did this (on OS X):
@@ -559,6 +562,7 @@ Go to Preferences > Languages & Frameworks > PHP > Debug
 Uncheck both of the 'force break at the first line...' options
 Apply and close
 In the Run menu, uncheck 'Break at the first line in PHP scripts'
+
 
 ## Install Drupal Console
 
@@ -621,7 +625,7 @@ This script assumes that you have one image per record, that each record also ha
 
 ## Create Users in Druapl
 
-[Example Usre Migration from CSV](http://valuebound.com/resources/blog/how-to-migrate-users-from-a-csv-file-drupal-8)
+[Example User Migration from CSV](http://valuebound.com/resources/blog/how-to-migrate-users-from-a-csv-file-drupal-8)
 
 ```
 drush config-import -y --partial --source=modules/custom/sorensen_alum/config/install/
@@ -844,6 +848,7 @@ drush --version
 
 cd sites/sei
 drush ups
+drush up
 drush updb
 drush entup
 ```
@@ -951,3 +956,398 @@ foreach ($nodes as $node){
   $node->delete();
 }
 ````
+
+## Trello Webform Integration
+
+I want to build a plugin/powerup that allows for a Drupal Webform to add cards to my Trello Baords for the website work. Ideally people would add the card directly to the board but people aren't always willing to use a new tool.
+
+I'm playing around with the developer sandbox.
+https://developers.trello.com/page/sandbox/
+
+Here is the javascript that posts a new card to my Incoming Request Board.
+```
+// Set the destination list for the new card
+var destinationList = "5ab160ed2e906a4f06871e9b";
+
+var success = function(successMsg) {
+  asyncOutput(successMsg);
+};
+
+var error = function(errorMsg) {
+  asyncOutput(errorMsg);
+};
+
+var newCard =
+  {name: "I just created a new card!",
+  desc: "Using the Trello API is fun and easy!",
+  pos: "top",
+  due: null,
+  idList: destinationList
+  };
+
+Trello.post('/cards/', newCard, success, error);
+```
+
+Getting the label ID's using the api.
+
+https://api.trello.com/1/boards/vmMUiJkb/?labels=all&label_fields=all&fields=id
+```
+{
+"id": "5ab15d365cf1b99537d2c0a3",
+"labels": [
+{
+"id": "5ab1692e11eda5e4dd4f6c23",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "Support Site",
+"color": null,
+"uses": 2
+},
+{
+"id": "5ab15d36841642c2a8da3f5c",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "CEPS Site",
+"color": "orange",
+"uses": 1
+},
+{
+"id": "5ab15d36841642c2a8da3f5d",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "Main Cooper Center Site",
+"color": "green",
+"uses": 1
+},
+{
+"id": "5ab15d36841642c2a8da3f5e",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "SEI/LEAD Sites",
+"color": "yellow",
+"uses": 1
+},
+{
+"id": "5ab15d36841642c2a8da3f65",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "Certification Site",
+"color": "purple",
+"uses": 1
+},
+{
+"id": "5ab15d36841642c2a8da3f66",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "Demographics Site",
+"color": "blue",
+"uses": 1
+},
+{
+"id": "5ab15eaa2808419cc7edd0e9",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "VIG Site",
+"color": "sky",
+"uses": 1
+},
+{
+"id": "5ab15ec14b8e8a87d266d7dd",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "Sorensen Site",
+"color": "lime",
+"uses": 1
+},
+{
+"id": "5ab15ed1dce18a4276d200c3",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "VDOT Site",
+"color": "pink",
+"uses": 1
+},
+{
+"id": "5ab15d36841642c2a8da3f62",
+"idBoard": "5ab15d365cf1b99537d2c0a3",
+"name": "CSR Site",
+"color": "red",
+"uses": 0
+}
+]
+}
+```
+
+Creating the Card with a list specified. Use the above ids to specify which site labels to use.
+```
+// Set the destination list for the new card
+var destinationList = "5ab160ed2e906a4f06871e9b";
+var labels = "5ab1692e11eda5e4dd4f6c23";
+
+var success = function(successMsg) {
+  asyncOutput(successMsg);
+};
+
+var error = function(errorMsg) {
+  asyncOutput(errorMsg);
+};
+
+var newCard =
+  {name: "I just created a new card!",
+  desc: "Using the Trello API is fun and easy!",
+  pos: "top",
+  due: null,
+  idList: destinationList,
+  idLabels: labels
+  };
+
+Trello.post('/cards/', newCard, success, error);
+```
+
+
+## Making a flexbox grid of website cards
+
+I need to make a flexbox grid of website cards. I want them to display the name of the site above an image of something related to the site.
+
+
+## Interactive maps Stephen
+
+What python version are you running to get your simple server up. python3 didn't like it.
+
+```
+<link href="/sites/demographics/files/va_maps_minimal_test/css/interactive-map.css" rel="stylesheet" title="Interactive Maps Stylesheet">
+<script src="/sites/demographics/files/va_maps_minimal_test/js/d3.min.js"></script>
+<script src="/sites/demographics/files/va_maps_minimal_test/js/topojson.min.js"></script>
+<script src="/sites/demographics/files/va_maps_minimal_test/js/wcc.maps.js"></script>
+
+
+<div id="map-01" class="interactive-map-target"></div>
+
+<script>
+usMapParams = {
+  target: "map-01",
+  area: "US",
+  topography: "states",
+  title: "United States Population",
+  subtitle: "Estimates & Projections",
+  data: {
+    file: "2016-11-13-us-estimates-projections.csv",
+    geo: {
+      idColumn: "fips",
+      nameColumn: "name"
+    },
+    variables: [{
+        column: "pop2010",
+        label: "2010 Estimate"
+      },
+      {
+        column: "pop2020",
+        label: "2020 Projection"
+      },
+      {
+        column: "pop2030",
+        label: "2030 Projection"
+      },
+      {
+        column: "pop2040",
+        label: "2040 Projection"
+      }
+    ],
+    legend: {
+      title: "Population",
+      limits: [0, 10000000],
+      colors: [{
+          red: 255,
+          green: 255,
+          blue: 255
+        },
+        {
+          red: 229,
+          green: 114,
+          blue: 0
+        }
+      ],
+      category: "quantitative"
+    }
+  }
+}
+
+interactiveMap(usMapParams);
+</script>
+```
+
+[Link to the current progress](http://demographics.dd:8083/node/7451)
+
+We should maybe make the overflow visible so the map continuese to show up.
+
+.interactive-map-box svg
+overflow: visible;
+
+## Getting Shonel iframes to display properly
+
+```
+<style>.embed-container {position: relative; padding-bottom: 67%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><small><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=d3b3eadb06214567a6a7bce83d12c26f&amp;extent=-81.6122,35.9981,-77.2289,39.6756&home=true&zoom=true&scale=true&disable_scroll=true&theme=light" style="color:#0000FF;text-align:left" target="_blank">View larger map</a></small><br><iframe width="300" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Breast_Website" src="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=d3b3eadb06214567a6a7bce83d12c26f&amp;extent=-81.6122,35.9981,-80.2289,39.6756&home=true&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe></div>
+
+
+&extent=-81.6122,35.9981,-76.2289,39.6756
+
+extent=-81.6122,35.9981,-77.2289,39.6756
+gives me the 60 mile on the argis site and 100 on the embed
+
+extent=-81.6122,35.9981,-80.2289,39.6756
+gives me 20mi on the arcgis site
+
+------
+
+
+<style>.embed-container {position: relative; padding-bottom: 67%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><small><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=65bc1890f1b740419372cb39d9a872d1&amp;extent=-84.9493,33.9731,-74.1827,41.3377&home=true&zoom=true&scale=true&disable_scroll=true&theme=light" style="color:#0000FF;text-align:left" target="_blank">View larger map</a></small><br><iframe width="300" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Lung_Website" src="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=65bc1890f1b740419372cb39d9a872d1&amp;extent=-84.9493,33.9731,-74.1827,41.3377&home=true&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe></div>
+
+
+<style>.embed-container {position: relative; padding-bottom: 67%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><small><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=003b1aea35514a55bfc855e4b311e182&amp;extent=-85.0153,33.8956,-74.2486,41.2676&home=true&zoom=true&scale=true&disable_scroll=true&theme=light" style="color:#0000FF;text-align:left" target="_blank">View larger map</a></small><br><iframe width="300" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Prostate_Website" src="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=003b1aea35514a55bfc855e4b311e182&amp;extent=-85.0153,33.8956,-74.2486,41.2676&home=true&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe></div>
+
+
+<style>.embed-container {position: relative; padding-bottom: 67%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><small><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=3b9a86a66cc44156a3cd3df1c53f4b46&amp;extent=-84.9521,33.9184,-74.1854,41.2882&home=true&zoom=true&scale=true&disable_scroll=true&theme=light" style="color:#0000FF;text-align:left" target="_blank">View larger map</a></small><br><iframe width="300" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="All Sites_Website"
+
+<a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=3b9a86a66cc44156a3cd3df1c53f4b46&amp;extent=-84.9521,33.9184,-74.1854,41.2882&home=true&zoom=true&scale=true&disable_scroll=true&theme=light" style="color:#0000FF;text-align:left" target="_blank">View larger map</a> src="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=3b9a86a66cc44156a3cd3df1c53f4b46&amp;extent=-84.9521,33.9184,-74.1854,41.2882&home=true&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe></div>
+```
+
+There is the embed code. I want to test it all out and make sure it works on mobile screens correctly. So I really just want the links to the argis maps. I don't need to edit the current iframes because I'm going to hide them on mobile.
+
+extent=-81.6122,35.9981,-77.2289,39.6756
+
+Here are the working links for what to show on mobile screens. It would be nice for them to also have pictures of the maps above them.
+```
+<img class="show-only-under-500" src="/sites/demographics/files/breast-cancer.png" href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=d3b3eadb06214567a6a7bce83d12c26f&amp;extent=-81.6122,35.9981,-77.2289,39.6756&home=true&zoom=true&scale=true&disable_scroll=true&theme=light">
+<span class="bbb show-only-under-500"><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=d3b3eadb06214567a6a7bce83d12c26f&amp;extent=-81.6122,35.9981,-77.2289,39.6756&home=true&zoom=true&scale=true&disable_scroll=true&theme=light">View Breast Cancer map</a></span>
+<span class="bbb show-only-under-500"><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=65bc1890f1b740419372cb39d9a872d1&amp;extent=-81.6122,35.9981,-77.2289,39.6756&home=true&zoom=true&scale=true&disable_scroll=true&theme=light">View Lung Cancer map</a></span>
+<span class="bbb show-only-under-500"><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=003b1aea35514a55bfc855e4b311e182&amp;extent=-81.6122,35.9981,-77.2289,39.6756&home=true&zoom=true&scale=true&disable_scroll=true&theme=light">View Prostate Cancer map</a></span>
+<span class="bbb show-only-under-500"><a href="//uvalibrary.maps.arcgis.com/apps/Embed/index.html?webmap=3b9a86a66cc44156a3cd3df1c53f4b46&amp;extent=-81.6122,35.9981,-77.2289,39.6756&home=true&zoom=true&scale=true&disable_scroll=true&theme=light">View map of All Cancer</a></span>
+```
+
+## Exporting to CSV file
+
+So I want to export all of the CEPS LOST data to a csv file so that I can possibly re-import it later and get rid of all of the extra content types that are attached to it. There are 30,686 nodes. That's over 30000 data points to deal with. I can't get all of that data into one CSV file. This is not possible in one go. I was figuring it was a lot fewer data-points than that.
+
+## Importing CSV to site
+
+The export is not as useful so I'm going to work on importing a single month worth through an admin interface instead. The first piece I needed was the routing for this module. Instead of creating a new module, I am using the lost_to_csv module and just adding an additional [route to the .routing.yml file](https://www.drupal.org/docs/8/api/routing-system/structure-of-routes). The other really important piece is the return type of the controller I specified in routing. The controller returns a reder array which is a Drupal representation of the HTML that will display to the user. I want a form to display with a single Upload CSV file form element.
+
+```
+use \Drupal\node\Entity\Node;
+$month = 3;
+$year = 857;
+$locality = 'Loudoun County';
+$tax = 857;
+$node = Node::create([
+    'type'        => 'lost',
+    'title'       => 'LOST-' . $month . '-' . $year,
+    'field_lost_locality' => 857,
+    'field_lost_month' => $month,
+    'field_lost_tax' => $tax,
+    'field_lost_year' => $year,
+]);
+$node->save();
+```
+
+You have to specify the exact term id for locality since it is an entity reference. So use the string to get the tid.
+
+```
+$term_name = 'Loudoun County';
+$term = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(['name' => $term_name,
+                          'vid' => 'local_option_sales_tax_localitie']);
+$keys = array_keys($term);
+var_dump( $keys);
+echo 'Here is the tid ' . $keys[0];
+```
+
+This test code now works.
+```
+create_new_lost_node(55, 56, 'Loudoun County', 66.66);
+```
+
+So now I need to pass a csv file through a form and process it for the values this create_new_lost_node function needs. [Here is a good tutorial on how to abstract this taxonomy term fetching function so you can use it with any vocabulary.](https://www.btmash.com/article/2016-04-26/saving-and-retrieving-taxonomy-terms-programmatically-drupal-8)
+
+I want to take a short cut and just process the data as a regular text entry. This way I don't have to deal with the uploading of a csv file yet.
+I've been looking forever for a list of example code snippets. Finally found them through Drupalize.me. [Code tutorials](https://www.drupal.org/project/examples/releases/8.x-1.x-dev)
+
+Sanitizing inputs with a regular expression seems like an easy option. It's more restrictive than checking for html or mysql.
+
+```
+([0-9]){1,2},([0-9])*.([0-9.])*,([A-Za-z ])+
+```
+
+https://regexr.com/
+
+Now I just need to figure out how to filter Regex with php on the form validation step. [The preg_match seems to be a good option.](http://php.net/manual/en/function.preg-match.php)
+
+
+## Python distraction
+
+So I wanted a simple way to get all of the image paths so I output them using python.I've gone down the rabbit hole of new tools and python integration.
+
+Tool name - autocomplete-python
+Kite is a tool for autocomplete of text.
+https://kite.com/blog/faq-autocomplete-python?source=autocomplete-python
+
+There is a how to tool for the Kite plugin. https://help.kite.com/category/43-atom-integration
+
+It looks like Kite costs money eventually so I may need to turn it off in 30 days.
+
+Tool name atom-python-run
+Use F5 or F6 to just run the python on your screen. No more terminal needing to be open.
+
+Tool name python-tools
+It allows refactoring and goto definition.
+
+I'm looking for a syntax checker.
+
+Tool name python-indent
+Handles the indentation automatically
+
+There is a full ide that has a syntax checker but it requires some actual installation of Python Language Server. No more tools.
+https://atom.io/packages/ide-python
+
+## VA Politics page
+
+So here are a bunch of images for the politics page.
+
+```
+<div id="politics-wrapper">
+
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/538-logo-fivethirtyeight.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/bloomberg.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cnn.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cookpoliticalreport.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/crystal-ball.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/dem-caucus.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/demographics-CED.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/fox.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/fredricksburg.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Governors-Office.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/insidenova.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/london-times-mirror.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/msnbc-logo-card-twitter.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-advance.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-bristol.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-daily-press.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-daily-record.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-progress.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/NewYorkTimes.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/NSNClogo.jpg'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Politico.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/PollingReport.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/RealClearPolitics.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/republican-party-of-va-2.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-free-press.jpeg'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-sunlight.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-times-dispatch-logo-feat.jpg'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/thehill-logo-big.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-democrats.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-repub-caucus.jpg'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-young-democrats.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/VA21.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Virginia-department-of-elections.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/virginia-pilot.jpg'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/virginiageneralassembly.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/WashingtonPost.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/wason-center.png'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/wsj.jpeg'/></a>
+<a class='politics-link' href='/' ><img class='grow' src='sites/sorensen/files/va_politics_page/young-republican-federation-of-va.png'/></a>
+
+
+</div>
+```

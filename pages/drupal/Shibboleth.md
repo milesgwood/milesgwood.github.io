@@ -167,3 +167,97 @@ Questions.
 2. Should the cert directory have my self signed cert and private key OR the UVA supplied cert and private key? (It's purpose is to identify the SP-supportdev1.cooperceter.org to the idp-urn:mace:incommon:virginia.edu)
 3. What data should I be sending to UVA ITS?
 4. Are the CA chain certs needed too? or just the main cert and private key.
+
+
+So I have the simplesaml interface working on the dev site. I am going to parse the XML metadata from `https://shibidp.its.virginia.edu/shibboleth/uva-idp-metadata.xml` in the parser on the simplesaml admin interface here `:8083/simplesaml/admin/metadata-converter.php`.
+
+This makes me think that the metadata is not correct for the dev site simplesaml. I was told I need a saml20-idp-remote.php file and a shib13-idp-remote.php file.
+
+So I got it working with the old version, now I just need to get the site registered as an authorized SP.
+
+## Success!!!
+
+After going to the `supportdev1.coopercenter.org/simplesaml` url and entering the old password for the admin account, I went to the test configured SP. I got directed to netbadge which allowed me to login and returned values for my user account's session. How do I use these values to actually sake and sign in to a drupal account?
+
+```
+Your attributes
+urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+staff@virginia.edu
+employee@virginia.edu
+member@virginia.edu
+urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+member
+staff
+employee
+urn:oid:2.5.4.4	Greatwood
+urn:oid:2.5.4.42	Miles
+urn:oid:1.3.6.1.4.1.5923.1.5.1.1
+cn=WEB_NAS,ou=Groups,o=University of Virginia,c=US
+cn=vprgs,ou=Groups,o=University of Virginia,c=US
+cn=fm_registrations,ou=Groups,o=University of Virginia,c=US
+cn=fm_clients,ou=Groups,o=University of Virginia,c=US
+cn=CCPS_NAS,ou=Groups,o=University of Virginia,c=US
+cn=ccps_shared_mailbox,ou=Groups,o=University of Virginia,c=US
+cn=fm_csr_admin,ou=Groups,o=University of Virginia,c=US
+cn=fm_readonly,ou=Groups,o=University of Virginia,c=US
+urn:oid:0.9.2342.19200300.100.1.3	mg9jd@Virginia.EDU
+SAML Subject
+NameId	_1ddda62656c77db3b323d43e1b13d5da
+Format	urn:oasis:names:tc:SAML:2.0:nameid-format:transient```
+```
+
+Even though the idP worked correctly. When I tried to install the simplesaml drupal module it failed.
+```
+Warning: include_once(/lib/_autoload.php): failed to open stream: No such file or directory in simplesamlphp_auth_check_library() (line 82 of modules/simplesamlphp_auth/simplesamlphp_auth.install).
+
+Warning: include_once(): Failed opening '/lib/_autoload.php' for inclusion (include_path='.:/var/www/html/uvacooperdev/library/:/usr/share/php:/usr/share/pear') in simplesamlphp_auth_check_library() (line 82 of modules/simplesamlphp_auth/simplesamlphp_auth.install).
+
+SimpleSAMLphp module requires the simplesamlphp library. See README file for installation instructions.
+```
+
+### Failed Ideas
+1. I tried manually setting the location of the simplesamlphp library in autoload and that caused 500 server issues.
+2. I tried requiring composer to add simplesamlphp/simplesamlphp and that failed because it doesn't import the configurations I painfully setup.
+
+So since I had moved the simplesamlphp library files it wasn't finding them. The symlink that acquia requires I do made the `lib/_autoload.php` file and the config file impossible for the drupal module to find. I need to add some info according to the part 13 of [this tutorial](https://simplesamlphp.org/docs/stable/simplesamlphp-install#section_13)
+
+Now, we need to make a few configuration changes. First, let's edit `~/public_html/simplesaml/_include.php:`
+
+Change the two lines from:
+```
+require_once(dirname(dirname(__FILE__)) . '/lib/_autoload.php');
+```
+to something like:
+```
+require_once('/var/www/html/uvacooperdev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
+```
+And then at the end of the file, you need to change another line from:
+```
+$configdir = dirname(dirname(__FILE__)) . '/config';
+to:
+$configdir = '/var/www/html/uvacooperdev/old-attempt-simplesamlphp-1.14.15/config';
+```
+
+I found that those changes didn't solve the missing library problem which makes sense since they are inside the library files that I can't seem to get the module to find. I went to the module's README and found this.
+
+```
+## INSTALLATION WITHOUT COMPOSER
+
+1. Make sure you have a working SimpleSAMLphp installation. It needs to be a
+standalone installation, which has a "vendor" folder in the root of the project.
+2. Download the simplesamlphp_auth module
+3. Uncompress it
+4. Move it to the appropriate modules directory (usually, /modules)
+5. In your settings.php file, add the location of your SimpleSAMLphp
+installation (no trailing slashes):
+```
+So I need to edit my settings.php file by adding this to the support site's settings.php file.
+```
+$settings['simplesamlphp_dir'] = '/var/www/html/uvacooperdev/old-attempt-simplesamlphp-1.14.15';
+```
+
+SUCCESS!!!!! From now on if you see a variable is missing like this variable `$dir = Settings::get('simplesamlphp_dir');`, you should code it into the site's settings.php file. That code is querying the settings array for that specific website.
+
+Now you can enable SimpleSaml SSO [through the account settings page!!!!](https://supportdev1.coopercenter.org/admin/config/people/accounts)
+
+Now the module is active but I don't know how to connect it to the actual login for the site. Also, I can't seem to logout of the site anymore either. 
