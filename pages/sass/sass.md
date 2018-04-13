@@ -64,15 +64,6 @@ justify-content: space-between - puts space between all items
 justify-content: center; - Centers it on primary axis
 align-items: center; - Centers on y axis
 
-<<<<<<< HEAD
-```
-C:/Ruby24/bin/sass.bat
-$FileName$:$FileNameWithoutExtension$.css
-$FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
-```
-
-3. Make sure that the ruby folder is added to the path. You can get to the windows path through start > Environment Variables 
-=======
 align-items: flex-start -puts item at top  
 align-items: flex-end  - puts item at bottom
 
@@ -82,4 +73,11 @@ flex-direction: row-reverse; - for putting content in reverse order on main axis
 ### Properties of child
 
 flex: auto - which means flex: 1 1 auto - which means all item grow and shrink at same rate.
->>>>>>> 6b8d2066651bd9d95dfd4f38dd0aaa3f96bcc1a1
+
+```
+C:/Ruby24/bin/sass.bat
+$FileName$:$FileNameWithoutExtension$.css
+$FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
+```
+
+3. Make sure that the ruby folder is added to the path. You can get to the windows path through start > Environment Variables

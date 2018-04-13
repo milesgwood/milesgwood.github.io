@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## Examples of Bash Scripts 
+## Examples of Bash Scripts
 
 The all start with the same line.
 `#!/bin/bash`
@@ -14,7 +14,7 @@ Then run the script from the command line.
 This is the v1 script that I used to automatically clone and install my GitPages Blog
 
 ```bash
-#!/bin/bash
+# !/bin/bash
 #Pull this file out outside of this directory and run it ./pull_and_run
 if ! [ -f milesgwood.github.io/_config.yml ]; then
     echo "_config.yml File not found! Cloning"
