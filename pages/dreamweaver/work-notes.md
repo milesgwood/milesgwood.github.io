@@ -117,3 +117,12 @@ Glad Cheryl seems happy. I'll definitely focus on getting more pages out faster.
 - On the content of the News Page. I will look into the UVA Daily site to see if there is a similar rss feed I could grab and populate our news with. For now, I'll leave it as the mailchimp rss feed.
 
 ## Start on homepage fixes
+
+So you need to create a dwt template for all of the home pages.
+1. Create new template
+2. Create the child pages from template
+3. Edit the templates with correct links
+4. Tools > Templates > Update Pages with new template
+5. Make sidemenu links with Windows > Properties window and the Design View
+6. Click HTML and then drag the target to the html page you want to edit
+7. Make Editable regions (Select the area > Insert > Template > Editable Region)

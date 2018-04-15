@@ -50,3 +50,56 @@ options: {
 }
 ```
 I can see that some javascript file is running some main.py python script and then running my script from that python process. It detaches the process and it runs successfully.
+
+
+## Write Music tags
+
+So I want to move the Title into the correct tag for all files I download with the youtube script.
+
+[Python Magic](https://github.com/ahupp/python-magic#dependencies) identifies the file types.
+
+It is looking for the file here `C:\Users\miles\AppData\Local\Programs\Python\Python36\lib\site-packages\magic.py`
+
+[Had to download another file](https://stackoverflow.com/questions/18374103/exception-valuefailed-to-find-libmagic-check-your-installation-in-windows-7) and run `pip install pip install python_magic_bin-0.4.14-py2.py3-none-win_amd64.whl` Downloaded that file from [here.](https://pypi.python.org/pypi/python-magic-bin/0.4.14)
+
+To pass strings filenames you need to put a [r in front of the string so it gets read as a raw string](https://stackoverflow.com/questions/37400974/unicode-error-unicodeescape-codec-cant-decode-bytes-in-position-2-3-trunca?rq=1)
+```
+mp3 = r"C:\Users\miles\Dropbox\New Music\00-20CTa043IA.mp3"
+```
+
+Read up on Python lambda Expressions. What are they good for?
+
+http://www.secnetix.de/olli/Python/lambda_functions.hawk
+
+```
+>>> foo = [2, 18, 9, 22, 17, 24, 8, 12, 27]
+>>>
+>>> print filter(lambda x: x % 3 == 0, foo)
+[18, 9, 24, 12, 27]
+>>>
+>>> print map(lambda x: x * 2 + 10, foo)
+[14, 46, 28, 54, 44, 58, 26, 34, 64]
+>>>
+>>> print reduce(lambda x, y: x + y, foo)
+139
+```
+
+Also have list comprehensions.
+
+```
+mylist = [x*x for x in range(3)]
+```
+
+I had a lot of trouble with newlines getting in the way.
+```
+print(mysterytext.encode('UTF-8'))
+```
+
+Check if directory exists
+```
+import os
+print(os.path.isdir("/home/el"))
+
+To get the path this file is in use This
+dir_path = os.path.dirname(os.path.realpath(__file__))
+```

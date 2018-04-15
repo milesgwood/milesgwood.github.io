@@ -1,5 +1,19 @@
 from __future__ import unicode_literals
-import youtube_dl, sys, pyperclip, threading
+import youtube_dl, sys, pyperclip, threading, os, eyed3
+
+# 1. Use Python 36 from CMD using python command or F5 in Atom
+# 2. `pip install youtube_dl`
+# 3. `pip install pyperclip`
+# 4. [Install FFmpeg windows](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)
+# 5. Add ffmpeg to path `C:\Program Files\ffmpeg-20180412-8d381b5-win64-static\bin`
+
+# Getting this working on Mac Machines
+# You'll may need to upgrade TLS to v1.2 - best to just use python3 https://news.ycombinator.com/item?id=13539034
+# 1. Install HomeBrew ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# 2. brew install youtube-dl
+# 3. pip3.6 install youtube-dl
+# 4. pip3.6 install pyperclip
+# 5. brew install ffmpeg
 
 def get_all_command_line_ars():
     if len(sys.argv) > 1:
@@ -32,6 +46,66 @@ def download_audio(url):
     mp3_downloaded_already.append(url)
     print("Already downloaded these videos: ")
     print(mp3_downloaded_already)
+    add_tags_to_files()
 
+def add_tags_to_files():
+    print("Adding Tags")
+    walk_through_new_music()
+
+# You can manually check the tags from cmd
+# eyeD3 "D:\Music\Tenacious D\Wonderboy ( with lyrics )\00-ACiA1TX0tvA.mp3"
+# eyeD3 "C:\Users\miles\Dropbox\New Music\00-20CTa043IA.mp3"
+
+# When I download songs from youtube they lack all the tags they should have.
+# This walks through just downloaded songs and corrects the missing tags.
+# For tags to work correctly, this must be run from the New Music folder the files were downloaded to
+def walk_through_new_music():
+    global mp3path
+    for path, subdirs, files in os.walk(current_working_directory):
+       for filename in files:
+         mp3path = os.path.join(path, filename)
+         if mp3path[-4:] == ".mp3":
+             print(filename)
+             decide_where_parsed_song_data_goes(parse_song_data(filename))
+
+# Adds the song data assuming the structure of Artist - Song
+def decide_where_parsed_song_data_goes(song_data):
+    # As a default, set the title
+    set_title(song_data[0])
+    set_artist(song_data[0])
+    set_album("Youtube Downloads")
+    # Check if we have more than one piece of data
+    if len(song_data) > 1:
+        set_artist(song_data[0])
+        set_title(song_data[1])
+    # We have artist and more
+    if len(song_data) > 2:
+        set_title((" ".join(song_data)))
+
+# Gets the song data from the filename
+def parse_song_data(filename):
+    song_data = filename.split("-") #Split on the -
+    song_data = [x.strip(' ') for x in song_data] #Remove the white space
+    song_data = song_data[:-1] #Get rid of the youtube url at the end of the file
+    print(song_data)
+    return song_data
+
+def set_title(title):
+    audiofile = eyed3.load(mp3path)
+    audiofile.tag.title = title
+    audiofile.tag.save()
+
+def set_album(album):
+    audiofile = eyed3.load(mp3path)
+    audiofile.tag.album = album
+    audiofile.tag.save()
+
+def set_artist(artist):
+    audiofile = eyed3.load(mp3path)
+    audiofile.tag.artist = artist
+    audiofile.tag.save()
+
+current_working_directory = os.path.dirname(os.path.realpath(__file__))
+mp3path = "Default File Path"
 mp3_downloaded_already = []
 check_clipboard_for_youtube_url()
