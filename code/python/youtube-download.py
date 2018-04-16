@@ -7,27 +7,16 @@ import youtube_dl, sys, pyperclip, threading, os, eyed3
 # 4. [Install FFmpeg windows](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)
 # 5. Add ffmpeg to path `C:\Program Files\ffmpeg-20180412-8d381b5-win64-static\bin`
 
-# Getting this working on Mac Machines
+# Getting this working on Mac Machines - must run with python3
 # You'll may need to upgrade TLS to v1.2 - best to just use python3 https://news.ycombinator.com/item?id=13539034
 # 1. Install HomeBrew ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # 2. brew install youtube-dl
 # 3. pip3.6 install youtube-dl
 # 4. pip3.6 install pyperclip
 # 5. brew install ffmpeg
-
-# 1. Use Python 36 from CMD using python command or F5 in Atom
-# 2. `pip install youtube_dl`
-# 3. `pip install pyperclip`
-# 4. [Install FFmpeg windows](https://github.com/adaptlearning/adapt_authoring/wiki/Installing-FFmpeg)
-# 5. Add ffmpeg to path `C:\Program Files\ffmpeg-20180412-8d381b5-win64-static\bin`
-
-# Getting this working on Mac Machines
-# You'll may need to upgrade TLS to v1.2 - best to just use python3 https://news.ycombinator.com/item?id=13539034
-# 1. Install HomeBrew ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-# 2. brew install youtube-dl
-# 3. pip3.6 install youtube-dl
-# 4. pip3.6 install pyperclip
-# 5. brew install ffmpeg
+# 6. pip3.6 install eyeD3
+# 6. pip 3.6 install libmagic
+# 7. brew install libmagic
 
 def get_all_command_line_ars():
     if len(sys.argv) > 1:
@@ -40,6 +29,8 @@ def get_all_command_line_ars():
 
 def check_clipboard_for_youtube_url():
     url = pyperclip.paste()
+    if len(url) > 200 :
+        url = "Default URL"
     if "https://www.youtube.com" in url:
         if url not in mp3_downloaded_already:
             download_audio(url)
