@@ -54,7 +54,7 @@ def download_audio(url):
     add_tags_to_files()
 
 def add_tags_to_files():
-    print("Adding Tags")
+    print("Checking For Files Needing Tags")
     walk_through_new_music()
 
 # You can manually check the tags from cmd
@@ -65,13 +65,27 @@ def add_tags_to_files():
 # This walks through just downloaded songs and corrects the missing tags.
 # For tags to work correctly, this must be run from the New Music folder the files were downloaded to
 def walk_through_new_music():
-    global mp3path
     for path, subdirs, files in os.walk(current_working_directory):
        for filename in files:
-         mp3path = os.path.join(path, filename)
-         if mp3path[-4:] == ".mp3":
-             print(filename)
-             decide_where_parsed_song_data_goes(parse_song_data(filename))
+           set_mp3_path(os.path.join(path, filename))
+           if tagging_is_needed():
+               print("Adding Tags")
+               decide_where_parsed_song_data_goes(parse_song_data(filename))
+
+def set_mp3_path(path):
+    global mp3path
+    mp3path = path
+
+def tagging_is_needed():
+    if isMp3():
+        return hasTitle() == False
+
+def isMp3():
+    return mp3path[-4:] == ".mp3"
+
+def hasTitle():
+    audiofile = eyed3.load(mp3path)
+    return audiofile.tag.title != None
 
 # Adds the song data assuming the structure of Artist - Song
 def decide_where_parsed_song_data_goes(song_data):
@@ -111,6 +125,7 @@ def set_artist(artist):
     audiofile.tag.save()
 
 current_working_directory = os.path.dirname(os.path.realpath(__file__))
+print("Working In: " + current_working_directory)
 mp3path = "Default File Path"
 mp3_downloaded_already = []
 check_clipboard_for_youtube_url()
