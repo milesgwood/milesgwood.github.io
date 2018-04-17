@@ -1351,3 +1351,89 @@ So here are a bunch of images for the politics page.
 
 </div>
 ```
+
+State Government
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='https://governor.virginia.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Governors-Office.png'/></a>
+<a class='politics-link' href='https://virginiageneralassembly.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/virginiageneralassembly.png'/></a>
+<a class='politics-link' href='https://www.elections.virginia.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Virginia-department-of-elections.png'/></a>
+</div>
+```
+
+Party Sites
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='http://virginia.gop/' ><img class='grow' src='sites/sorensen/files/va_politics_page/republican-party-of-va-2.png'/></a>
+<a class='politics-link' href='https://vademocrats.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-democrats.png'/></a>
+<a class='politics-link' href='https://www.dems.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/dem-caucus.png'/></a>
+<a class='politics-link' href='https://www.senators4va.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-repub-caucus.jpg'/></a>
+</div>
+
+```
+
+Organizations for Young People
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='http://www.vayd.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-young-democrats.png'/></a>
+<a class='politics-link' href='https://www.virginia21.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/VA21.png'/></a>
+<a class='politics-link' href='https://yrfv.gop/' ><img class='grow' src='sites/sorensen/files/va_politics_page/young-republican-federation-of-va.png'/></a>
+</div>
+```
+
+
+State & Local News
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='https://www.loudountimes.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/london-times-mirror.png'/></a>
+<a class='politics-link' href='http://www.newsadvance.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-advance.png'/></a>
+<a class='politics-link' href='http://www.dailypress.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-daily-press.png'/></a>
+<a class='politics-link' href='http://www.fredericksburg.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/fredricksburg.png'/></a>
+<a class='politics-link' href='http://www.insidenova.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/insidenova.png'/></a>
+<a class='politics-link' href='http://www.heraldcourier.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-bristol.png'/></a>
+<a class='politics-link' href='http://www.dnronline.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-daily-record.png'/></a>
+<a class='politics-link' href='http://www.dailyprogress.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-progress.png'/></a>
+<a class='politics-link' href='https://www.richmondsunlight.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-sunlight.png'/></a>
+<a class='politics-link' href='http://www.richmond.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-times-dispatch-logo-feat.jpg'/></a>
+<a class='politics-link' href='http://richmondfreepress.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-free-press.jpeg'/></a>
+<a class='politics-link' href='https://pilotonline.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/virginia-pilot.jpg'/></a>
+</div>
+```
+
+
+National news
+
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='https://www.nytimes.com/section/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/NewYorkTimes.png'/></a>
+<a class='politics-link' href='http://www.columnists.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/NSNClogo.jpg'/></a>
+<a class='politics-link' href='https://www.wsj.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/wsj.jpeg'/></a>
+<a class='politics-link' href='https://fivethirtyeight.com/politics/' ><img class='grow' src='sites/sorensen/files/va_politics_page/538-logo-fivethirtyeight.png'/></a>
+<a class='politics-link' href='https://cookpolitical.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cookpoliticalreport.png'/></a>
+<a class='politics-link' href='https://www.bloomberg.com/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/bloomberg.png'/></a>
+<a class='politics-link' href='https://www.realclearpolitics.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/RealClearPolitics.png'/></a>
+<a class='politics-link' href='http://www.msnbc.com/place-for-politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/msnbc-logo-card-twitter.png'/></a>
+<a class='politics-link' href='https://www.washingtonpost.com/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/WashingtonPost.png'/></a>
+<a class='politics-link' href='https://www.cnn.com/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/cnn.png'/></a>
+<a class='politics-link' href='https://www.politico.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Politico.png'/></a>
+<a class='politics-link' href='http://www.foxnews.com/politics.html' ><img class='grow' src='sites/sorensen/files/va_politics_page/fox.png'/></a>
+<a class='politics-link' href='http://thehill.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/thehill-logo-big.png'/></a>
+
+
+
+</div>
+```
+
+
+Research & Demographics
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='http://www.pollingreport.com/index.html' ><img class='grow' src='sites/sorensen/files/va_politics_page/PollingReport.png'/></a>
+<a class='politics-link' href='http://wasoncenter.cnu.edu/' ><img class='grow' src='sites/sorensen/files/va_politics_page/wason-center.png'/></a>
+<a class='politics-link' href='http://www.centerforpolitics.org/crystalball/' ><img class='grow' src='sites/sorensen/files/va_politics_page/crystal-ball.png'/></a>
+<a class='politics-link' href='http://ced.uab.es/en/' ><img class='grow' src='sites/sorensen/files/va_politics_page/demographics-CED.png'/></a>
+<a class='politics-link' href='https://cooperceter.org' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
+<a class='politics-link' href='https://csr.cooperceter.org' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
+<a class='politics-link' href='http://statchatva.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
+</div>
+```
