@@ -1437,3 +1437,248 @@ Research & Demographics
 <a class='politics-link' href='http://statchatva.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
 </div>
 ```
+
+So I have two last goals for this politics page. I need to edit the Governors' images so they are unique and I need to make the jump links.
+
+[Codepen with great example](https://codepen.io/jooleearr/pen/gpooKj)
+```
+<ul id="jump-nav">
+  <li><a href="#section-1" class="js-anchor-link">Research & Demographics</a></li>
+  <li><a href="#section-2" class="js-anchor-link">State & Local News</a></li>
+  <li><a href="#section-3" class="js-anchor-link">National News</a></li>
+  <li><a href="#section-4" class="js-anchor-link">Organizations for Young People</a></li>
+  <li><a href="#section-5" class="js-anchor-link">Party Sites</a></li>
+  <li><a href="#section-6" class="js-anchor-link">State Government</a></li>
+</ul>
+```
+
+## Test out how you add a custom field to a card in trello
+
+I want to create two custom fields fields for my trello cards. A date created and a date completed field. I also need to create a email field that is autopopulated by the Drupal account email.
+
+I'm realizing that creating this application as a client side app will make this board vulnerable.
+
+key - KEY
+token - TOKEN
+board id - 5ad7d8b0af86ba9895891ab7
+New Requests List Id - 5ad7da0dab91022ea25796da
+
+Here is the script that adds a global Trello object to make calls on.
+<script src="https://api.trello.com/1/client.js?key=6617bebb8d1e9ddd8ab682977cf8d6a2"></script>
+
+```
+var data = null;
+
+var xhr = new XMLHttpRequest();
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://api.trello.com/1/cards?name=New%20Card&desc=Please%20Fix%20My%20Computer&pos=top&idList=5ad7da0dab91022ea25796da&urlSource=https%3A%2F%2Fsupport.coopercenter.org%2Ftickets&keepFromSource=all&key={YOUR-API-KEY}&token={AN-OAUTH-TOKEN}");
+
+xhr.send(data);
+```
+
+https://api.trello.com/1/cards?name=New%20Card&desc=Please%20Fix%20My%20Computer&pos=top&idList=5ad7da0dab91022ea25796da&urlSource=https%3A%2F%2Fsupport.coopercenter.org%2Ftickets&keepFromSource=all&key=KEY&token=TOKEN
+
+So the issue I am running into is that making this a client side app leaves the trello boards vulnerable to attack since the API ket and token would be exposed. If I make the HTTP Requests from the server through PHP then the API key is protected. Unfortunatley that means I'd need to use PHP to send the data to Trello and I am not nearly as clear on how to do that.
+
+It looks like the httpClient() method is my solution to sending values through cURL - https://www.drupal.org/project/filefield_sources/issues/2840594
+
+```
+$client = \Drupal::httpClient();
+try {
+  $request = $client->get($url);
+  $status = $request->getStatusCode();
+  $file_contents = $request->getBody()->getContents();
+}
+catch (RequestException $e) {
+  //An error happened.
+}
+```
+
+This PHP code works to submit a new card!!!!!!!
+```
+  $client = \Drupal::httpClient();
+  $request = $client->post('https://api.trello.com/1/cards?name=New%20Card&desc=Please%20Fix%20My%20Computer&pos=top&idList=5ad7da0dab91022ea25796da&urlSource=https%3A%2F%2Fsupport.coopercenter.org%2Ftickets&keepFromSource=all&key=KEY&token=TOKEN');
+  $response = json_decode($request->getBody());
+```
+
+My Key - KEY
+Token - TOKEN
+
+
+Here is the response
+```
+object(stdClass)[588]
+  public 'id' => string '5ada2198a08f24cf053e4d4e' (length=24)
+  public 'badges' =>
+    object(stdClass)[586]
+      public 'votes' => int 0
+      public 'attachmentsByType' =>
+        object(stdClass)[559]
+          public 'trello' =>
+            object(stdClass)[582]
+              ...
+      public 'viewingMemberVoted' => boolean false
+      public 'subscribed' => boolean false
+      public 'fogbugz' => string '' (length=0)
+      public 'checkItems' => int 0
+      public 'checkItemsChecked' => int 0
+      public 'comments' => int 0
+      public 'attachments' => int 1
+      public 'description' => boolean true
+      public 'due' => null
+      public 'dueComplete' => boolean false
+  public 'checkItemStates' =>
+    array (size=0)
+      empty
+  public 'closed' => boolean false
+  public 'dueComplete' => boolean false
+  public 'dateLastActivity' => string '2018-04-20T17:21:28.841Z' (length=24)
+  public 'desc' => string 'Please Fix My Computer' (length=22)
+  public 'descData' =>
+    object(stdClass)[561]
+      public 'emoji' =>
+        object(stdClass)[560]
+  public 'due' => null
+  public 'email' => null
+  public 'idBoard' => string '5ad7d8b0af86ba9895891ab7' (length=24)
+  public 'idChecklists' =>
+    array (size=0)
+      empty
+  public 'idList' => string '5ad7da0dab91022ea25796da' (length=24)
+  public 'idMembers' =>
+    array (size=0)
+      empty
+  public 'idMembersVoted' =>
+    array (size=0)
+      empty
+  public 'idShort' => int 9
+  public 'idAttachmentCover' => null
+  public 'labels' =>
+    array (size=0)
+      empty
+  public 'idLabels' =>
+    array (size=0)
+      empty
+  public 'manualCoverAttachment' => boolean false
+  public 'name' => string 'New CardComp' (length=12)
+  public 'pos' => int 2048
+  public 'shortLink' => string 'NOCZSZGr' (length=8)
+  public 'shortUrl' => string 'https://trello.com/c/NOCZSZGr' (length=29)
+  public 'subscribed' => boolean false
+  public 'stickers' =>
+    array (size=0)
+      empty
+  public 'url' => string 'https://trello.com/c/NOCZSZGr/9-new-cardcomp' (length=44)
+  public 'limits' =>
+    object(stdClass)[288]
+  ```
+
+  Getting the custom fields and their definitions for our board.
+  Board ID - 5ad7d8b0af86ba9895891ab7
+  https://api.trello.com/1/board/5ad7d8b0af86ba9895891ab7?key=KEY&token=TOKEN
+  Card ID - 5ada2198a08f24cf053e4d4e
+
+  My Key - KEY
+  Token - TOKEN
+  https://api.trello.com/1/board/5ad7d8b0af86ba9895891ab7/customFields?key=KEY&token=TOKEN
+
+
+Using this kind of a request I am able to get all of the board data I need.
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/?fields=name&cards=visible&card_fields=name&customFields=true&card_customFieldItems=true&key=KEY&token=TOKEN
+
+5ada31dade941ce827bd1305 - Customer Email
+5ada31cc8cc9574fa096bce8 - Customer Name
+5ad7da91b2aeb0f0ceebe691 - Date Created
+5ad7da9e1ded184355867d28 - Date Completed
+
+
+
+https://api.trello.com/1/board/5ad7d8b0af86ba9895891ab7/customFields?key=KEY&token=TOKEN
+
+  ```
+  $request_data = 'https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/customFields&key=KEY&token=TOKEN';
+$client = \Drupal::httpClient();
+$request = $client->get($request_data);
+$response = json_decode($request->getBody());
+var_dump($response);
+```
+
+
+```
+[
+{
+"id": "5ad7da91b2aeb0f0ceebe691",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "4cbcd5f64f44c20674adfd97f4bf4bce5abbbec2b323d5ed9820010f3f7c55ec",
+"name": "Date Created",
+"pos": 16384,
+"type": "date"
+},
+{
+"id": "5ad7da9e1ded184355867d28",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "f6065514bd878639c3b7073703f9fc2373c2b2b2b43c1f43a56d9c71b16fe8f4",
+"name": "Date Completed",
+"pos": 32768,
+"type": "date"
+},
+{
+"id": "5ada31cc8cc9574fa096bce8",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "c5aa7ca545628b7ae6afe628eead70fa5f284e6e8cfeddd8ddb6bc076af5ae71",
+"name": "Customer Name",
+"pos": 49152,
+"type": "text"
+},
+{
+"id": "5ada31dade941ce827bd1305",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "3bcbc0b9543931242a567fa85d9b00b16840469be8c7e8eaa80131f66fa7c14a",
+"name": "Customer Email",
+"pos": 65536,
+"type": "text"
+}
+]
+```
+
+Drupalize Me Example of how to add data to a request
+```
+$client = \Drupal::httpClient();
+$request = $client->get('https://api.github.com/user', [
+  'auth' => ['username','password']
+]);
+$response = $request->getBody();
+```
+
+
+```
+$client = \Drupal::httpClient();
+$request = $client->put('https://api.trello.com/1/card/5adf9669d4bdf0a0d1adfaeb/customField/5ada31dade941ce827bd1305/item', 'json' => [
+  "key" => 'KEY',
+  "token" => 'TOKEN',
+  "value" => ["text", "Hello, world!"]
+]);
+$response = $request->getBody();
+```
+
+https://api.trello.com/1/card/{card ID}/customField/{Custom Field ID}/item
+
+
+
+"idValue": "5a6a23abf958725e1ac86c22",
+"key": "",
+"token": ""
+
+{
+  "value" => ["text": "Hello, world!"]
+}
