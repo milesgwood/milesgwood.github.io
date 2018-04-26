@@ -1682,3 +1682,10 @@ https://api.trello.com/1/card/{card ID}/customField/{Custom Field ID}/item
 {
   "value" => ["text": "Hello, world!"]
 }
+
+
+## Getting my Hyper sudo passwords to match
+
+https://askubuntu.com/questions/772050/reset-the-password-in-linux-bash-in-windows
+
+I have forgotten my bash on windows password and needed to reset it. The second answer solved the problem.
