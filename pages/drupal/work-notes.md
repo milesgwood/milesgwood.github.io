@@ -1683,9 +1683,24 @@ https://api.trello.com/1/card/{card ID}/customField/{Custom Field ID}/item
   "value" => ["text": "Hello, world!"]
 }
 
+https://api.trello.com/1/card/5ad7d8b0af86ba9895891ab7/customField/%7BCustom%20Field%20ID%7D/item
+
+https://api.trello.com/1/card/5ad7d8b0af86ba9895891ab7?customFieldItems=true&key={APIKey}&token={APIToken}
+
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7?fields=name&customFieldItems=true&key={APIKey}&token={APIToken}
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/cards/?fields=name&customFieldItems=true&key={APIKey}&token={APIToken}
+
+
+
 
 ## Getting my Hyper sudo passwords to match
 
 https://askubuntu.com/questions/772050/reset-the-password-in-linux-bash-in-windows
 
 I have forgotten my bash on windows password and needed to reset it. The second answer solved the problem.
+
+## Javascript ESLint
+
+[Tutorial](https://www.jetbrains.com/help/webstorm/eslint.html) Linting is running a program to check for possible errors. I need to set up linting on my work computer. It is installed here `/usr/local/bin/eslint -> /usr/local/lib/node_modules/eslint/bin/eslint.js`.
+
+I'm also installing the JavaScript Standard style. I set the version of JS I'm using to Javascript 1.8.5
