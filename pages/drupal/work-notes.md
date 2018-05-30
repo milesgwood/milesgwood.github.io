@@ -1589,6 +1589,7 @@ object(stdClass)[588]
   https://api.trello.com/1/board/5ad7d8b0af86ba9895891ab7/customFields?key=KEY&token=TOKEN
 
 
+
 Using this kind of a request I am able to get all of the board data I need.
 https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/?fields=name&cards=visible&card_fields=name&customFields=true&card_customFieldItems=true&key=KEY&token=TOKEN
 
@@ -1704,3 +1705,495 @@ I have forgotten my bash on windows password and needed to reset it. The second 
 [Tutorial](https://www.jetbrains.com/help/webstorm/eslint.html) Linting is running a program to check for possible errors. I need to set up linting on my work computer. It is installed here `/usr/local/bin/eslint -> /usr/local/lib/node_modules/eslint/bin/eslint.js`.
 
 I'm also installing the JavaScript Standard style. I set the version of JS I'm using to Javascript 1.8.5
+
+## Convert SASS to SCSS
+```
+sass-convert -F scss -T sass style.scss style.sass
+```
+
+## Netbadge Simplesaml devdesktop issues
+
+When I pull the site off of the server and run it locally all of the simplesaml configuration issues change.
+
+simplesaml_auth/src/Service/SimplesamlphpAuthManager.php line 216
+```php
+if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php'))
+{
+    require_once('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
+}
+else{
+    require_once('/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
+}
+```
+
+5-11-18-trello branch is working perfectly
+
+
+## Making a Satisfaction Survey page
+
+\Drupal\trello_support_form\TicketAnalyzer::run_survey_generator();
+
+\Drupal\trello_support_form\TicketAnalyzer::get_all_ticket_nodes_by_current_user();
+
+\Drupal\trello_support_form\SurveyResults::get_all_survey_nodes();
+
+## Headshot updates
+
+https://coopercenter.org/sites/cooper/files/larry_head.png
+https://www.linkedin.com/in/larry-terry-0bb24529/
+
+Larry Terry Slide goes at the topic
+
+```html
+<div class="ms-slide"><img alt="lorem ipsum dolor sit" data-src="https://coopercenter.org/sites/cooper/files/larry_head.png" src="/masterslider/style/blank.gif" />
+<div class="ms-info">
+<h3>Larry D. Terry II</h3>
+
+<h4>Executive Director</h4>
+
+<p class="email">E-Mail: <a href="mailto:larry.terry@virginia.edu">larry.terry@virginia.edu</a></p>
+
+<p>Larry Terry comes to the Cooper Center in 2018 from Texas, where he worked to improve the lives of citizens in the Dallas region and beyond, creating practical partnerships with elected officials, public servants and community leaders to address poverty and other community issues, including launching the Community Leadership Academy, the nation’s first peer-based citizen police officer leadership training program. His passion is research-based, outcome-driven programs and services that advance the priorities of the University of Virginia in serving the Commonwealth, forming lasting partnerships with citizens, and building vibrant, connected communities. Terry’s research, publications, teaching, and educational achievements focus on leading and managing public organizations, housing reform, and community engagement and public trust. Prior to his position at UNT Dallas, Terry served as an assistant professor of Public Administration at both Long Island University-Brooklyn and Arizona State University.</p>
+
+<ul class="ms-socials ">
+	<li class="ms-ico-fb link"><a href="https://www.linkedin.com/in/larry-terry-0bb24529/">linkedin</a></li>
+	<!-- <li class='ms-ico-tw gs'><a href='https://scholar.google.com/citations?user=09W80zgAAAAJ&hl=en&oi=sra'>google</a></li> -->
+</ul>
+</div>
+</div>
+```
+
+
+## PHPUnit Tests
+
+I found some examples for the phpunit tests. I have to run the tests from the core directory. There is a phpunit.xml.dist file that has the settings needed to make the tests work.
+```
+cd /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core
+../vendor/bin/phpunit --group phpunit_example
+```
+The tests take forever to run but this configuration in the phpunit.xml.dist file seems to work out.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- TODO set checkForUnintentionallyCoveredCode="true" once https://www.drupal.org/node/2626832 is resolved. -->
+<!-- PHPUnit expects functional tests to be run with either a privileged user
+ or your current system user. See core/tests/README.md and
+ https://www.drupal.org/node/2116263 for details.
+-->
+<phpunit bootstrap="tests/bootstrap.php" colors="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutChangesToGlobalState="true">
+<!-- TODO set printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter" once
+ https://youtrack.jetbrains.com/issue/WI-24808 is resolved. Drupal provides a
+ result printer that links to the html output results for functional tests.
+ Unfortunately, this breaks the output of PHPStorm's PHPUnit runner. However, if
+ using the command line you can add
+ - -printer="\Drupal\Tests\Listeners\HtmlOutputPrinter" to use it (note there
+ should be no spaces between the hyphens).
+-->
+  <php>
+    <!-- Set error reporting to E_ALL. -->
+    <ini name="error_reporting" value="32767"/>
+    <!-- Do not limit the amount of memory tests take to run. -->
+    <ini name="memory_limit" value="-1"/>
+    <!-- Example SIMPLETEST_BASE_URL value: http://localhost -->
+    <env name="SIMPLETEST_BASE_URL" value="http://support.dd:8083"/>
+    <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/databasename#table_prefix -->
+    <!-- <env name="SIMPLETEST_DB" value="mysql://root@localhost:8083/test"/> -->
+    <env name="SIMPLETEST_DB" value="mysql://root@localhost:33067/test"/>
+    <!-- 127.0.0.1:33067  -->
+    <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
+    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/Users/miles/Sites/devdesktop/uvacooper-dev/tests"/>
+    <!-- To disable deprecation testing uncomment the next line. -->
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors"/>
+    <!-- Example for changing the driver class for mink tests MINK_DRIVER_CLASS value: 'Drupal\FunctionalJavascriptTests\DrupalSelenium2Driver' -->
+    <!-- Example for changing the driver args to mink tests MINK_DRIVER_ARGS value: '["http://127.0.0.1:8510"]' -->
+    <!-- Example for changing the driver args to phantomjs tests MINK_DRIVER_ARGS_PHANTOMJS value: '["http://127.0.0.1:8510"]' -->
+    <!-- Example for changing the driver args to webdriver tests MINK_DRIVER_ARGS_WEBDRIVER value: '["firefox", null, "http://localhost:4444/wd/hub"]' -->
+  </php>
+  <testsuites>
+    <testsuite name="unit">
+      <file>./tests/TestSuites/UnitTestSuite.php</file>
+    </testsuite>
+    <testsuite name="kernel">
+      <file>./tests/TestSuites/KernelTestSuite.php</file>
+    </testsuite>
+    <testsuite name="functional">
+      <file>./tests/TestSuites/FunctionalTestSuite.php</file>
+    </testsuite>
+    <testsuite name="functional-javascript">
+      <file>./tests/TestSuites/FunctionalJavascriptTestSuite.php</file>
+    </testsuite>
+  </testsuites>
+  <listeners>
+    <listener class="\Drupal\Tests\Listeners\DrupalListener">
+    </listener>
+    <!-- The Symfony deprecation listener has to come after the Drupal listener -->
+    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+    </listener>
+  </listeners>
+  <!-- Filter for coverage reports. -->
+  <filter>
+    <whitelist>
+      <directory>./includes</directory>
+      <directory>./lib</directory>
+      <directory>./modules</directory>
+      <directory>../modules</directory>
+      <directory>../sites</directory>
+      <!-- By definition test classes have no tests. -->
+      <exclude>
+        <directory suffix="Test.php">./</directory>
+        <directory suffix="TestBase.php">./</directory>
+      </exclude>
+     </whitelist>
+  </filter>
+</phpunit>
+```
+
+The unit tests take a really long time to run but they do work. With 6 tests it takes 1.31 minutes. Here is my group of tests I am using.
+
+```
+../vendor/bin/phpunit --group trello_test
+```
+
+
+## Creating Butler so we don't have to pay for Trello
+
+Churning Board ID - 5967774e86ea1554e62fa8f1
+
+Asynchronous javascript using the .then notation
+```js
+function markCardComplete(t){
+  var card_id = t.getContext()['card'];
+  t.board('all').then(function (board){
+      return get_completed_field_id_from_baord(board);
+  })
+  .then(function (field_id){
+      return setEndDateToCurrentDate(card_id, field_id);
+  });
+}
+
+doSomething()
+.then(result => doSomethingElse(result))
+.then(newResult => doThirdThing(newResult))
+.then(finalResult => {
+  console.log(`Got the final result: ${finalResult}`);
+})
+.catch(failureCallback);
+```
+Now rewritten in the cleaner style:
+```js
+function markCardComplete(t){
+  var card_id = t.getContext()['card'];
+  t.board('all')
+  .then(resulting_board => get_completed_field_id_from_baord(resulting_board))
+  .then(field_id => set_end_date_to_current_date(card_id, field_id));
+}
+```
+
+ID of the list - 5b0704c53424605a40397a8a
+Card ID - "5b075186b9029fa7b2244b55"
+
+The working url
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/?fields=name&list&cards=visible&card_fields=name&customFields=true&card_customFieldItems=true&key=ebc310e38e2e0fe0d33cc0eba8eeb024&token=bcb740e1385d254f27f4c99346788dc13536c86da93a946cf6ecb6234a258608
+
+https://glitch.com/edit/#!/perpetual-polish?path=public/js/client.js:491:47
+
+Working Code with Durations and Date Completed marking
+```js
+/* global TrelloPowerUp */
+
+var Promise = TrelloPowerUp.Promise;
+
+//                              Completed Button on Cards
+////////////////////////////////////////////////////////////////////////////////////////
+
+function mark_card_completed(t){
+  var card_id = t.getContext()['card'];
+  t.board('all')
+    .then(resulting_board => get_completed_field_id_from_baord(resulting_board))
+    .then(field_id => set_end_date_to_current_date(card_id, field_id));
+}
+
+function get_completed_field_id_from_baord(board){
+  for(var i = 0 ; i < board["customFields"].length; i++){
+      if(board["customFields"][i].name == "Date Completed"){
+        var date_completed_field_id = board["customFields"][i].id;
+      }   
+    }
+  return date_completed_field_id;
+}
+
+function set_end_date_to_current_date(card_id, custom_field){
+  let cur_date = new Date();
+  var url = "https://api.trello.com/1/cards/"+card_id+"/customField/"+custom_field+"/item?";
+  url = addAuthToken(url);
+  var data = {value: { date: cur_date }};
+  fetch(url, { body: JSON.stringify(data), method: 'PUT', headers: {'content-type': 'application/json'}})
+  .then((resp) => resp.json())
+  // .then((data) => console.log(JSON.stringify(data, null, 2)))
+  .catch((err) => console.log(JSON.stringify(err, null, 2)))
+}
+
+function addAuthToken(str){
+  return str + "&key=ebc310e38e2e0fe0d33cc0eba8eeb024&token=bcb740e1385d254f27f4c99346788dc13536c86da93a946cf6ecb6234a258608";
+}
+//                              Setting Badge Durations
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//Here we set the duration badge and update card end dates using the last 50 actions
+var getBadges = function(t){
+  return t.card('customFieldItems')
+  .then((fields) => find_duration(fields))
+  .then(function(duration){
+    // console.log('We just loaded the duration: ', duration);
+    check_cards_in_done_list_for_end_times(t);
+    return [{
+      // dynamic badges can have their function rerun after a set number
+      // of seconds defined by refresh. Minimum of 10 seconds.
+      dynamic: function(){
+        // we could also return a Promise that resolves to this as well if we needed to do something async first
+        return {
+          title: 'Duration', // for detail badges only
+          text: duration.str,
+          color: get_time_color(duration.number),
+          refresh: 10 // in seconds
+        };
+      }
+    }];
+  });
+};
+
+function find_duration(fields){
+ let dates = [];
+ for(let i = 0 ; i < fields.customFieldItems.length ; i++){
+   if(fields.customFieldItems[i].value.date != undefined){
+     dates.push(fields.customFieldItems[i].value.date);
+   }
+ }
+ let d2 = new Date();
+ let d1 = new Date();
+
+ if(dates.length > 0){
+   d1 = new Date(dates[0]);
+   if(dates.length > 1){
+     d2 = new Date(dates[1]);  
+   }
+ }
+  let duration = Math.abs(d2 - d1);
+  return formatted_duration(duration);
+}
+
+function formatted_duration(duration){
+  let min = 60000;
+  let hour = 3600000;
+  let day = 86400000;
+  let week = 604800000;
+
+  if(duration < min){
+    return {"str" : ms_to_seconds(duration).toFixed(2) + " sec",
+            "number" : duration};
+  }
+  else if(duration < 2*hour){
+    return {"str" : ms_to_minutes(duration).toFixed(2) + " min" , "number" : duration};
+  }
+  else if(duration < 2* day){
+    return {"str" : ms_to_hours(duration).toFixed(2) + " hours" , "number" : duration};
+  }
+  else if(duration < 2* week){
+    return {"str" : ms_to_days(duration).toFixed(2) + " days" , "number" : duration};
+  }
+  else if(duration >= 2* week){
+    return {"str" : ms_to_week(duration).toFixed(2) + " weeks" , "number" : duration};
+  }
+  else{
+    return {"str" : "No Duration" , "number" : duration};
+  }
+}
+
+
+function ms_to_seconds(duration){
+  return duration / 1000;
+}
+
+function ms_to_minutes(duration){
+  return duration / 1000 / 60;
+}
+
+function ms_to_hours(duration){
+  return duration / 1000 / 60 / 60;
+}
+
+function ms_to_days(duration){
+  return duration /1000 /60 / 60 / 24;
+}
+
+function ms_to_week(duration){
+  return duration /1000 /60 / 60 / 24 / 7;
+}
+
+function get_time_color(duration){
+  let min = 60000;
+  let hour = 3600000;
+  let day = 86400000;
+  let week = 604800000;
+
+  if(duration < min){
+    return "green";
+  }
+  else if(duration < 2*hour){
+    return "yellow";
+  }
+  else if(duration < 2* day){
+    return "orange";
+  }
+  else if(duration < 2* week){
+    return "red";
+  }
+  else if(duration >= 2* week){
+    return "dark_red";
+  }
+  else{
+    return "none";
+  }
+}
+
+//                              Update Cards Based on Actions
+////////////////////////////////////////////////////////////////////////////////////////////
+
+var global_board_id;
+var actions_json;
+var completed_id = -1;
+var complete_board_info = -1;
+
+function check_cards_in_done_list_for_end_times(t){
+  // console.log("Here is the t: ", t, t.getContext());
+  // debugger;
+  let board_id = t.getContext().board;
+  if(global_board_id != board_id){
+    console.log("Board Id Changed : ",  board_id);
+    global_board_id = board_id;
+    return scan_actions(board_id) //this gets called a single time since we only need the actions set once.
+      .then((actions_json) => update_cards_moved_to_the_done_list(actions_json));
+  }
+}
+
+function scan_actions(board_id){
+  let url = "https://api.trello.com/1/boards/"
+    + board_id + "/actions?key=ebc310e38e2e0fe0d33cc0eba8eeb024&token=bcb740e1385d254f27f4c99346788dc13536c86da93a946cf6ecb6234a258608&filter=updateCard:idList"
+  return fetch(url, {method: 'GET', headers: {'content-type': 'application/json'}})
+    .then((response) => response.json());
+}
+
+function update_cards_moved_to_the_done_list(actions_json){
+  console.log("actions: ", actions_json);
+  for(var i = 0 ; i < actions_json.length ; i++){ //since this is a asynchronous loop, it needs to have a private copy of the action it is operating on. If this doesn't work I'll try a primitive
+    let local_func_exe = (function() {
+      let local_scope_action_index  = i; // A copy of i only available to the scope of the inner function
+      return function() {
+        if(moved_to_done(actions_json[local_scope_action_index])){
+        set_end_date(actions_json[local_scope_action_index]);
+      }
+    }
+  })();
+  local_func_exe(); //Execute the local scope function you created
+  }//end loop
+}//end outer
+
+function moved_to_done(action){
+  // console.log("Checking if action moved it to done: ", action.data.card.idShort);
+  return (action.data.listAfter.name == "Done");
+}
+
+function set_end_date(action){
+  let date = action.date;
+  let card_id = action.data.card.id;
+
+  if(complete_board_info > 0 && completed_id > 0){
+    return set_custom_field(completed_id, card_id, date)
+  }
+  else{
+    let url = "https://api.trello.com/1/boards/" +
+      action.data.board.id + "/?list&cards=visible&card_fields=name&customFields=true&card_customFieldItems=true";
+    url = addAuthToken(url);
+    return fetch(url, {method: 'GET', headers: {'content-type': 'application/json'}})
+    .then((response) => response.json())
+    .then((board_data) => set_global_response(board_data))
+    .then((customFieldTypes) => find_date_completed_field_id(customFieldTypes))
+    .then((field_id) => set_custom_field(field_id, card_id, date));
+  }  
+}
+
+function set_global_response(board_data){
+  complete_board_info = board_data;
+  return board_data.customFields;
+}
+
+function set_custom_field(custom_field, card_id, date){
+  var url = "https://api.trello.com/1/cards/"+card_id+"/customField/"+custom_field+"/item?";
+  url = addAuthToken(url);
+  var data = {value: { date: date }};
+  return fetch(url, { body: JSON.stringify(data), method: 'PUT', headers: {'content-type': 'application/json'}})
+  .then((resp) => resp.json())
+  .then(function(updated){
+    // console.log("End Date Updated: ", updated);
+    return updated.value.date; //return the date completed field so we can set the duration badge
+  })
+  .catch((err) => console.log(JSON.stringify(err, null, 2)));
+}
+
+function find_date_completed_field_id(custom_fields){
+  try{
+    // console.log("Custom Fields", custom_fields);
+    for(let field of custom_fields){
+        if(field.name == "Date Completed"){
+          completed_id = field.id;
+          return field.id;
+        }
+      }
+  }
+  catch(e){
+    console.log("Error - Here be the customs fields", e, custom_fields);
+  }
+}
+
+TrelloPowerUp.initialize({
+  'card-badges': function(t, options){
+    return getBadges(t);
+  },
+  'card-buttons': function(t, options){
+    return [{
+      icon: 'https://cdn.glitch.com/1b42d7fe-bda8-4af8-a6c8-eff0cea9e08a%2Frocket-ship.png?1494946700421',
+      text: 'Mark Completed',
+      callback: mark_card_completed,
+    }];
+  },
+  'card-detail-badges': function(t, options) {
+    return getBadges(t);
+  },
+});
+```
+
+## Finishing up the Support site
+
+### Forms
+
+I need to create all of the forms and make sure that they are submitting data properly.
+
+Remember in atom that the alt-q keybinding expands the selection to the quotes. That would be even more useful for dreamweaver.
+
+Computer is really sluggish so I am clearing out some ram and changing some finder settings.
+
+1. Alt-rt click finder icon and relaunch
+2. [Set default finder open to Downloads and keep that clear so it opens fast](https://paradite.com/2017/01/31/reduce-macos-finder-memory-usage/)
+3. [Reduce the usage of mds_stores](https://www.neilturner.me.uk/2013/02/08/fixing-high-memory-usage-caused-by-mds.html) Continue with this if Finder is still slow or mds_stores uses up more memory.
+4. PhPStorm File > Invalidate Caches and Restart
+5. Reduce the indexed files in PHPStorm - Preferences > Directories > Rt.Click and Exclude so it turns orange
+
+
+Cleaning up the github repo. I haven't been merging anything since it's just me on the repository.
+```
+git branch --merged
+git branch -d branch_name
+```
