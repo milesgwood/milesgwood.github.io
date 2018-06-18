@@ -18,46 +18,53 @@ You must use the https:// URL because simplesaml will not work without it. You c
 1. Download the SimpleSAMLphp library
 2. Put the library next to the docroot folder
 3. Make a symbolic link to the www folder of the simplesaml library so it is visible to the webserver. You don't want the other files visible on the web.
-`cd docroot; ln -s ../simplesamlphp/www simplesaml`
+```
+cd docroot; ln -s ../simplesamlphp/www simplesaml
+```
 4. Generate certificates in the cert folder inside the outer simplesamlphp-1.14.8 folder (not visible to the web) as (DRUPAL_ROOT/simplesamlphp-1.14.8/cert). You may need to create the cert folder.
-`openssl req -new -x509 -days 3652 -nodes -out saml.crt -keyout saml.pem`
-
-
+```
+openssl req -new -x509 -days 3652 -nodes -out saml.crt -keyout saml.pem
+```
 ## Manual edits to files in SimpleSAMLphp library
-5. Edit the config.php file and fill in all of the needed information.
- - You need to set where the information about authenticated users will be stored. It goes into the netbadge database that you created on Acquia Cloud. Set a $sqldsn , $sqlusername, and $sqlpassword for each of the possible environments. If you aren't storing the user's info in a database, you need to find an alternative place to store the info.
- - Inside of the config array
-    - baseurlpath
-    - certdir
-    - showerrors => true
-    - errorreporting => true
-    (These previous two need to be false in a live enviroment after this is all set up)
-    - auth.adminpassword
-    - secretsalt
-    - technicalcontact_name
-    - database.dsn => '$sqldsn'  <-- This was set outside of config array in previous bullet
-    - database.username => $sqlusername
-    - database.password => $sqlpassword
+#### overview
+You're going to edit the config.php file and fill in all of the needed information.
+
+ You need to set where the information about authenticated users will be stored. It goes into the netbadge database that you created on Acquia Cloud. Set a $sqldsn , $sqlusername, and $sqlpassword for each of the possible environments. If you aren't storing the user's info in a database, you need to find an alternative place to store the info.
+
+
+
+#### Edits inside of the config array
+- baseurlpath
+- certdir
+- showerrors => true
+- errorreporting => true
+(These previous two need to be false in a live enviroment after this is all set up)
+- auth.adminpassword
+- secretsalt
+- technicalcontact_name
+- database.dsn => '$sqldsn'  <-- This was set outside of config array in previous bullet
+- database.username => $sqlusername
+- database.password => $sqlpassword
 ```php
-    if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-    switch ($_ENV['AH_SITE_ENVIRONMENT']) {
-        case 'dev':
-            $sqldsn = 'mysql:host=127.0.0.1;dbname=netbadge';
-            $sqlusername = 'username';
-            $sqlpassword = ''******';';
-            break;
-            //Change these credentials later from acquia
-        case 'test':
-            $sqldsn = 'mysql:host=127.0.0.1;dbname=netbadge';
-            $sqlusername = 'theusernameonAcquiaCloud';
-            $sqlpassword = '******';
-            break;
-        case 'prod':
-            $sqldsn = 'mysql:host=dbmaster-17482.prod.hosting.acquia.com;dbname=netbadge';
-            $sqlusername = 'theusernameonAcquiaCloudForThisEnviroment';
-            $sqlpassword = ''******';';
-            break;
-    }
+if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+    case 'dev':
+        $sqldsn = 'mysql:host=127.0.0.1;dbname=netbadge';
+        $sqlusername = 'username';
+        $sqlpassword = ''******';';
+        break;
+        //Change these credentials later from acquia
+    case 'test':
+        $sqldsn = 'mysql:host=127.0.0.1;dbname=netbadge';
+        $sqlusername = 'theusernameonAcquiaCloud';
+        $sqlpassword = '******';
+        break;
+    case 'prod':
+        $sqldsn = 'mysql:host=dbmaster-17482.prod.hosting.acquia.com;dbname=netbadge';
+        $sqlusername = 'theusernameonAcquiaCloudForThisEnviroment';
+        $sqlpassword = ''******';';
+        break;
+}
 }
 ```
 
@@ -65,9 +72,9 @@ Here's some of the variables in the config array:
 
 ```php    
 'baseurlpath' => 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/',
-    'certdir' => 'cert/',
-    'loggingdir' => 'log/',
-    'datadir' => 'data/',
+'certdir' => 'cert/',
+'loggingdir' => 'log/',
+'datadir' => 'data/',
 ```
 
 Database credentials
@@ -80,26 +87,26 @@ Database credentials
 
 6. Edit config/authsources.php
 ```php
-  'cooper-dev-sp' => array(
-    'saml:SP',
-    'entityID' => 'https://uvacooperdev.prod.acquia-sites.com',
-    'idp' => 'urn:mace:incommon:virginia.edu' ,
-    'privatekey' => 'saml.pem',
-    'certificate' => 'saml.crt',
-    'discoURL' => null,
+'cooper-dev-sp' => array(
+  'saml:SP',
+  'entityID' => 'https://uvacooperdev.prod.acquia-sites.com',
+  'idp' => 'urn:mace:incommon:virginia.edu' ,
+  'privatekey' => 'saml.pem',
+  'certificate' => 'saml.crt',
+  'discoURL' => null,
 ),
 ```
 
 7. Edit the .htaccess file in docroot
   -Add the two lines with + diff to the docroot/.htaccess
 ```
-  # Copy and adapt this rule to directly execute PHP files in contributed or
-  # custom modules or to run another PHP application in the same directory.
-   RewriteCond %{REQUEST_URI} !/core/modules/statistics/statistics.php$
-  + #Allow access to simplesaml paths
-  + RewriteCond %{REQUEST_URI} !^/simplesaml
-  # Deny access to any other PHP files that do not match the rules above.
-  # RewriteRule "^.+/.*\.php$" - [F]
+# Copy and adapt this rule to directly execute PHP files in contributed or
+# custom modules or to run another PHP application in the same directory.
+ RewriteCond %{REQUEST_URI} !/core/modules/statistics/statistics.php$
++ #Allow access to simplesaml paths
++ RewriteCond %{REQUEST_URI} !^/simplesaml
+# Deny access to any other PHP files that do not match the rules above.
+# RewriteRule "^.+/.*\.php$" - [F]
 ```
 After editing the .htaccess file I no longer get errors when trying to access the simplesaml module web interface.
 I did not need to follow the rest of this [SimpleSAMLphp library installation](https://simplesamlphp.org/docs/stable/simplesamlphp-install) since the Acquia Cloud tutorial above already had me create the symbolic link in the docroot folder.
@@ -127,12 +134,12 @@ openssl req -newkey rsa:2048 -new -x509 -days 3652 -nodes -out saml.crt -keyout 
 1. Add a SP to authsources.php (library/config/authsources.php)
 ```
 'support-prod-sp' => array(
-    'saml:SP',
-    'entityID' => 'https://support.coopercenter.org',
-    'idp' => 'urn:mace:incommon:virginia.edu' ,
-    'privatekey' => 'saml.pem',
-    'certificate' => 'saml.crt',
-    'discoURL' => null,
+  'saml:SP',
+  'entityID' => 'https://support.coopercenter.org',
+  'idp' => 'urn:mace:incommon:virginia.edu' ,
+  'privatekey' => 'saml.pem',
+  'certificate' => 'saml.crt',
+  'discoURL' => null,
 ),
 ```
 2. Go to the [/simplesaml admin page](https://ceps.coopercenter.org/simplesaml)
@@ -142,14 +149,14 @@ openssl req -newkey rsa:2048 -new -x509 -days 3652 -nodes -out saml.crt -keyout 
 6. Get the attribute names from testing the SP
 7. Enter those attribute names into the simplesaml_auth module UI
 
-### More edits to the simplesamlphp library
+## More edits to the simplesamlphp library
 
-Since we are using a symlink, these require_once statements break. They can't find the files they need since calling dirname(dirname(__FILE__)) doesn't actually return the directory name it needs. Hard coding the values solves the issue.
+Since we are using a symlink, these require_once statements break. They can't find the files they need since calling `dirname(dirname(__FILE__))` doesn't actually return the directory name it needs. Hard coding the values solves the issue.
 
 Edit `simplesaml/www/_include.php`
 
 Edit line 96 and 34 of public simplesamlphp library so it doesn't strictly define config directory. `_include.php`
-```PHP
+```php
 /**
  * Disable magic quotes if they are enabled.
  */
