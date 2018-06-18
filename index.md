@@ -26,7 +26,7 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 [Multisite](pages/drupal/multisite)
 
-[Shibboleth](pages/drupal/Shibboleth)
+[SimpleSamlPHP](pages/drupal/SimpleSamlPHP)
 
 [Page Templates](pages/drupal/templates)
 
