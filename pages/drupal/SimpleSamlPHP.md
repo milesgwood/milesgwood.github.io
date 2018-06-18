@@ -273,6 +273,8 @@ SimpleSAML\Utils\Time::initTimezone();
 
 ## Reference Docs
 
+[My Trello Notes](https://trello.com/c/SG7rjgdB/1100-use-netbadge-as-the-login-for-content-that-needs-to-be-hidden)
+
 [Description of UVA info from idP ](http://its.virginia.edu/netbadge/defaultpolicy.html)
 
 [Garbage UVA walkthrough that you can't use since you can't access Apache.](http://its.virginia.edu/netbadge/unixdevelopers.html) It does have a link to the needed XML metadata of the UVA idP.
