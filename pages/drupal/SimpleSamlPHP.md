@@ -25,11 +25,14 @@ cd docroot; ln -s ../simplesamlphp/www simplesaml
 ```
 openssl req -new -x509 -days 3652 -nodes -out saml.crt -keyout saml.pem
 ```
+
 ## Manual edits to files in SimpleSAMLphp library
+
 #### overview
+
 You're going to edit the config.php file and fill in all of the needed information.
 
- You need to set where the information about authenticated users will be stored. It goes into the netbadge database that you created on Acquia Cloud. Set a $sqldsn , $sqlusername, and $sqlpassword for each of the possible environments. If you aren't storing the user's info in a database, you need to find an alternative place to store the info.
+You need to set where the information about authenticated users will be stored. It goes into the netbadge database that you created on Acquia Cloud. Set a $sqldsn , $sqlusername, and $sqlpassword for each of the possible environments. If you aren't storing the user's info in a database, you need to find an alternative place to store the info.
 
 
 
@@ -86,7 +89,7 @@ Database credentials
 'database.password' => $sqlpassword,
 ```
 
-6. Edit config/authsources.php
+Edit config/authsources.php
 
 ```php
 'cooper-dev-sp' => array(
@@ -99,8 +102,8 @@ Database credentials
 ),
 ```
 
-7. Edit the .htaccess file in docroot
-  -Add the two lines with + diff to the docroot/.htaccess
+Edit the .htaccess file in docroot
+- Add the two lines with + diff to the docroot/.htaccess
 
 ```
 # Copy and adapt this rule to directly execute PHP files in contributed or
