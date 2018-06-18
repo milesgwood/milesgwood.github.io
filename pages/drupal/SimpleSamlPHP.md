@@ -45,6 +45,7 @@ You're going to edit the config.php file and fill in all of the needed informati
 - database.dsn => '$sqldsn'  <-- This was set outside of config array in previous bullet
 - database.username => $sqlusername
 - database.password => $sqlpassword
+
 ```php
 if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
 switch ($_ENV['AH_SITE_ENVIRONMENT']) {
@@ -86,6 +87,7 @@ Database credentials
 ```
 
 6. Edit config/authsources.php
+
 ```php
 'cooper-dev-sp' => array(
   'saml:SP',
@@ -99,6 +101,7 @@ Database credentials
 
 7. Edit the .htaccess file in docroot
   -Add the two lines with + diff to the docroot/.htaccess
+
 ```
 # Copy and adapt this rule to directly execute PHP files in contributed or
 # custom modules or to run another PHP application in the same directory.
@@ -108,6 +111,7 @@ Database credentials
 # Deny access to any other PHP files that do not match the rules above.
 # RewriteRule "^.+/.*\.php$" - [F]
 ```
+
 After editing the .htaccess file I no longer get errors when trying to access the simplesaml module web interface.
 I did not need to follow the rest of this [SimpleSAMLphp library installation](https://simplesamlphp.org/docs/stable/simplesamlphp-install) since the Acquia Cloud tutorial above already had me create the symbolic link in the docroot folder.
 
