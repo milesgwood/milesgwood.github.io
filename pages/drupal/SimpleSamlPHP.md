@@ -383,6 +383,8 @@ This turns into uvacooperdev uvacooper and other site enviroment folder names.
 
 ## Netbadge Authentication with Filemaker
 
+[Filemaker 16 guide with web server info](https://fmhelp.filemaker.com/docs/16/en/fms16_cwp_guide.pdf)
+
 So we want to make sure that users are logged into Netbadge in order for them to look at specific databases in Filemaker on the web. They already have their permissions set through Active directory accounts. We just need to make sure that they are logged into netbadge to access the web-app at all.
 
 So while building every page, we want to check if the user has a valid cookie that relates to a valid session stored at login.
@@ -404,9 +406,9 @@ if(isset( $_SESSION['SESS_MEMBER_ID']) && !empty($_SESSION['SESS_MEMBER_ID'])):?
     ?>
 ```
 
-## Failed attempts to get simplesaml on filemaker server
+So I need to find the php files or the PHP code that interacts with the FM API  and add some restrictive code.
 
-[Filemaker 16 guide with web server info](https://fmhelp.filemaker.com/docs/16/en/fms16_cwp_guide.pdf)
+## Failed attempts to get simplesaml on filemaker server
 
 [Changing the filemakerhomepage](https://community.filemaker.com/thread/143388)
 fmwebd_home.html
@@ -421,3 +423,10 @@ Start & Stop FileMaker Server processes
 sudo launchctl stop com.filemaker.fms
 sudo launchctl start com.filemaker.fms
 ```
+
+## Using the filemaker API to create webpages
+
+Here is the location of the Filemaker API
+
+For Apache (macOS): /Library/FileMaker Server/Documentation/PHP API
+Documentation/index.html
