@@ -379,3 +379,45 @@ The live site was broken as a result of the settings.php file specifying the wro
 $settings['simplesamlphp_dir'] = '/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15';
 ```
 This turns into uvacooperdev uvacooper and other site enviroment folder names.
+
+
+## Netbadge Authentication with Filemaker
+
+So we want to make sure that users are logged into Netbadge in order for them to look at specific databases in Filemaker on the web. They already have their permissions set through Active directory accounts. We just need to make sure that they are logged into netbadge to access the web-app at all.
+
+So while building every page, we want to check if the user has a valid cookie that relates to a valid session stored at login.
+
+The Cooopercenter.org site will handle the authentication and send the session data to the Filemaker server.
+
+On all of the sensitive Filemaker pages, we'll add some php code to check for a valid session.
+[Example](https://stackoverflow.com/questions/42022837/require-user-to-login-for-certain-pages)
+
+```
+<?php
+if(isset( $_SESSION['SESS_MEMBER_ID']) && !empty($_SESSION['SESS_MEMBER_ID'])):?>
+    Do your html and other code
+<?php
+    else:
+        header("location:page.php"); // take them to page
+     //or echo "You not allowed to view this page <a href=\"login.php\">Please login</a>";
+    endif;
+    ?>
+```
+
+## Failed attempts to get simplesaml on filemaker server
+
+[Filemaker 16 guide with web server info](https://fmhelp.filemaker.com/docs/16/en/fms16_cwp_guide.pdf)
+
+[Changing the filemakerhomepage](https://community.filemaker.com/thread/143388)
+fmwebd_home.html
+
+[fmsadmin settings edits](https://community.filemaker.com/thread/186328)
+
+```
+sudo fmsadmin set cwpconfig enablephp=true
+sudo fmsadmin set cwpconfig UseFMPHP=false
+
+Start & Stop FileMaker Server processes
+sudo launchctl stop com.filemaker.fms
+sudo launchctl start com.filemaker.fms
+```
