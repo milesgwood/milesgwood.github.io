@@ -770,123 +770,7 @@ I am getting messages saying that the csv line endings are all wrong. That is wh
 Before I publish I need to restrict permissions possibly using this Group Module.
 [Instructions](https://drupal.stackexchange.com/questions/249393/how-to-restrict-access-to-specific-content-types-by-role)
 
-## Updating Drupal to 8.5.0-rc1
 
-Updating to the release candidate since it doesn't seem to be causing issues
-
-Error on drush cr after the replacing of the core files. Replaced everything except modules profiles sites and themes. Delete everything else that the new core offers.
-
-```
-drush cr
-
-PHP Fatal error:  Declaration of Drush\Command\DrushInputAdapter::hasParameterOption() must be compatible with Symfony\Component\Console\Input\InputInterface::hasParameterOption($values, $onlyParams = false) in /Applications/DevDesktop/tools/vendor/drush/drush/lib/Drush/Command/DrushInputAdapter.php on line 27
-
-composer require drush/drush:8.1.16
-```
-
-After uninstalling the backup migrate plugin I got this error. Solution is to run the database updates BEFORE uninstalling any plugins or anything. Run updates as an atomic action.
-
-```
-Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
-Drupal\Component\Plugin\Exception\PluginNotFoundException: The "file_uri" plugin does not exist. in Drupal\Core\Plugin\DefaultPluginManager->doGetDefinition() (line 52 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php).
-```
-
-Another Error after running the database updates
-```
-views module
-Update #8500
-Failed: Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
-```
-
-The site seems to still work despite this error on the views module database update. After a second run of update.php the site seems to have completed all of the core updates correctly.
-
-A bunch of the modules required the contribute module to perform their database updates so I copied it to the modules directory.
-
-The site is running really slow after this update. It's really struggling to bring up the admin pages.
-
-Secondary update of migrate tools and migrate plus was needed.
-
-Sorensen looks great but the rest of the sites are broken now. I don't know if it is the drupal update or the modules that caused but I expect it is the core update that did it. I'm going to attempt to update the sei site with drush instead of the regular gui. If this all fails then I will just revert to the site on Stage which is pre-update.
-
-So to update drush I have to get composer the right kind of drush. My global install of composer is using drush/drush dev-master. So maybe if I update drush there I will get it inside my project. The global composer file is stored at `composer global update`
-
-```
-composer global update
-```
-
-I edited the global composer file to have this in it.
-```
-{
-    "require": {
-        "drush/drush": "8.1.16"
-    }
-}
-```
-
-I am failing to update drush with composer. [Tutorial](https://drupal.stackexchange.com/questions/222188/updating-drush-with-composer). Requiring a newer version of drush worked to get `drush cr` working. I want to see if it will work with updating drupal.
-
-```
-composer require drush/drush
-drush --version
-9.2.1
-```
-In this version the update command is deprecated.
-```
-drush ups
-
-The pm-updatestatus command was deprecated. Please see `composer show` and `composer outdated`. For security release notification, see `drush pm:security`.  
-```
-
-## Update Drupal and Modules with Drush
-
-With drush 9.2.1 I can now downgrade to drush 8.1.16 [Here's how to actually preform the update.](https://www.drupal.org/docs/8/update/update-core-via-drush-option-3)
-```
-composer require drush/drush:8.1.16  
-
-drush --version
- Drush Version   :  8.1.16
-
-cd sites/sei
-drush ups
-drush up
-drush updb
-drush entup
-```
-
-Error on sorensen after sei update
-```
-exception 'Drupal\Component\Plugin\Exception\PluginNotFoundException' with message 'The "group_permission" plugin does not exist.' in  [error]
-/Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php:52
-Stack trace:
-
-drush cr
-drush en group_permission
-```
-
-I messed up my modules directory so now I'm going to perform an update on Sorensen again using the bakcup I made on Stage.
-
-1. Pull database from live environment
-2. Make sure you have drush 8.1.16 (if not `composer require drush/drush` and `composer require drush\drush:8.1.16`)
-3. Run ` drush cr and drush ups` to make sure drush is working
-4. Copy Core files over  (this may revert you back to the previous version of drush and you'll need to repeat previous steps)
-5. cd into sites/sorensen
-6. Run `drush updb` to get the database updates for the core update
-7. Run `drush entup`
-8. Run `drush up` for the module updates
-9. Run `drush updb`
-10. Run `drush entup`
-
-```
-Local site is fine but live site gives this Error - FIXED BY ANOTHER DEV DEXKTOP PUSH
-
-The website encountered an unexpected error. Please try again later.</br></br><em class="placeholder">Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException</em>:  in <em class="placeholder">Drupal\Core\Routing\AccessAwareRouter-&gt;checkAccess()</em> (line <em class="placeholder">114</em> of <em class="placeholder">core/lib/Drupal/Core/Routing/AccessAwareRouter.php</em>).
-```
-
-Had to enable contribute module before last database update
-```
-drush en -y contribute
-drush updb
-```
 
 
 ## CSR migrations
@@ -1728,6 +1612,13 @@ else{
 
 5-11-18-trello branch is working perfectly
 
+### Troubleshooting
+
+```
+Fatal error: Class 'SimpleSAML\Auth\Simple' not found in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/simplesamlphp_auth/src/Service/SimplesamlphpAuthManager.php on line 59
+```
+
+
 
 ## Making a Satisfaction Survey page
 
@@ -2190,10 +2081,93 @@ Computer is really sluggish so I am clearing out some ram and changing some find
 3. [Reduce the usage of mds_stores](https://www.neilturner.me.uk/2013/02/08/fixing-high-memory-usage-caused-by-mds.html) Continue with this if Finder is still slow or mds_stores uses up more memory.
 4. PhPStorm File > Invalidate Caches and Restart
 5. Reduce the indexed files in PHPStorm - Preferences > Directories > Rt.Click and Exclude so it turns orange
-
+6. [Disabled spotlight to make things faster](https://forums.macrumors.com/threads/disabling-spotlight-in-sierra.2075261/)
 
 Cleaning up the github repo. I haven't been merging anything since it's just me on the repository.
 ```
 git branch --merged
 git branch -d branch_name
+```
+
+## Add Kara Fitzgibbon to slider
+
+Kara Fitzgibbon
+
+Senior Project Coordinator
+
+Kara earned her M.A. and Ph.D. in Sociology at the University of Virginia. While completing her graduate degree, she worked part-time at CSR as a Graduate Research Analyst. Beyond survey and social research methodology, her areas of specialty are race, ethnicity, immigration, and religion.
+
+ksf5fe@virginia.edu
+
+https://twitter.com/ksfitzgibbon
+
+## CSS selectors of children
+
+1. descendant selector (space) : .outer h2: All descendants
+2. child selector (>) : .outer > h2 : Immediate Child
+3. adjacent sibling selector (+) : .outer + h2 : Immediate Sibling from same parent
+4. general sibling selector (~) : .outer ~ h2 : All Sibling from same parent
+
+Attempt to run js updates of css classes
+
+```js
+jQuery(window).load(function(){
+debugger;
+jQuery('.views-row').each(function(i){
+  setTimeout(function(){
+    jQuery('.item').eq(i).addClass('is-visible');
+  }, 100 * i);
+});
+});
+```
+
+
+Production is on tags/2018-05-30 if you break the netbadge sign in then you can use that to reset it to the correct code.
+
+Added the access analytics to theme files in html.html.twig
+```html
+<script src="https://cdn.levelaccess.net/accessjs/YW1wX3V2YTExMDA/access.js" type="text/javascript"></script>
+```
+
+It was
+```html
+<script type="text/javascript">var access_analytics={base_url:"https://analytics.ssbbartgroup.com/api/",instance_id:"AA-58bdcc11cee35"};(function(a,b,c){var d=a.createElement(b);a=a.getElementsByTagName(b)[0];d.src=c.base_url+"access.js?o="+c.instance_id+"&v=2";a.parentNode.insertBefore(d,a)})(document,"script",access_analytics);</script>
+```
+
+
+## Adding Netbadge Logins to every site
+
+```HTML
+<div id="footer-newsletter-signup">
+  <a class="no-underline" href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="glyphicon glyphicon-envelope"></span></a>
+  <a href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="link-text">Subscribe</span></a>
+</div>
+<div id="netbadge-link">
+  <a class="no-underline" href="https://coopercenter.org/saml_login"><span class="glyphicon glyphicon-log-in"></span></a>
+  <a href="https://coopercenter.org/saml_login"><span class="netbadge-link-text">Netbadge Login</span></a>
+</div>
+```
+
+```SASS
+#footer-newsletter-signup
+  margin-bottom: 3px
+  .glyphicon-envelope
+    font-size:  22px
+    line-height: 19px
+    display: inline
+  .link-text
+    display: inline
+    padding-left: 5px
+    position:  relative
+    bottom: 2px
+#netbadge-link
+  .glyphicon-log-in
+    font-size: 20px
+    line-height: 28px
+  .netbadge-link-text
+    display: inline
+    padding-left: 7px
+
+a.no-underline:hover
+  text-decoration: none
 ```
