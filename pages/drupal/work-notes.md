@@ -2125,11 +2125,11 @@ jQuery('.views-row').each(function(i){
 Production is on tags/2018-05-30 if you break the netbadge sign in then you can use that to reset it to the correct code.
 
 Added the access analytics to theme files in html.html.twig
+
 ```html
 <script src="https://cdn.levelaccess.net/accessjs/YW1wX3V2YTExMDA/access.js" type="text/javascript"></script>
 ```
 
-It was
 ```html
 <script type="text/javascript">var access_analytics={base_url:"https://analytics.ssbbartgroup.com/api/",instance_id:"AA-58bdcc11cee35"};(function(a,b,c){var d=a.createElement(b);a=a.getElementsByTagName(b)[0];d.src=c.base_url+"access.js?o="+c.instance_id+"&v=2";a.parentNode.insertBefore(d,a)})(document,"script",access_analytics);</script>
 ```
