@@ -67,8 +67,6 @@ I upgraded to Drush 8.1.15 `composer require drush/drush:8.1.15` and the problem
  Command "migrate-import" is not defined.
 ```
 
-
-
 ## Editing your bash profile
 ```
 PATH=$PATH:/usr/local/bin/drushphar
@@ -178,3 +176,160 @@ Updated version of the update code.
     }
   }
 ```
+
+## Updating Drupal to 8.5.0-rc1
+
+Updating to the release candidate since it doesn't seem to be causing issues
+
+Error on drush cr after the replacing of the core files. Replaced everything except modules profiles sites and themes. Delete everything else that the new core offers.
+
+```
+drush cr
+
+PHP Fatal error:  Declaration of Drush\Command\DrushInputAdapter::hasParameterOption() must be compatible with Symfony\Component\Console\Input\InputInterface::hasParameterOption($values, $onlyParams = false) in /Applications/DevDesktop/tools/vendor/drush/drush/lib/Drush/Command/DrushInputAdapter.php on line 27
+
+composer require drush/drush:8.1.16
+```
+
+After uninstalling the backup migrate plugin I got this error. Solution is to run the database updates BEFORE uninstalling any plugins or anything. Run updates as an atomic action.
+
+```
+Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
+Drupal\Component\Plugin\Exception\PluginNotFoundException: The "file_uri" plugin does not exist. in Drupal\Core\Plugin\DefaultPluginManager->doGetDefinition() (line 52 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php).
+```
+
+Another Error after running the database updates
+```
+views module
+Update #8500
+Failed: Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
+```
+
+The site seems to still work despite this error on the views module database update. After a second run of update.php the site seems to have completed all of the core updates correctly.
+
+A bunch of the modules required the contribute module to perform their database updates so I copied it to the modules directory.
+
+The site is running really slow after this update. It's really struggling to bring up the admin pages.
+
+Secondary update of migrate tools and migrate plus was needed.
+
+Sorensen looks great but the rest of the sites are broken now. I don't know if it is the drupal update or the modules that caused but I expect it is the core update that did it. I'm going to attempt to update the sei site with drush instead of the regular gui. If this all fails then I will just revert to the site on Stage which is pre-update.
+
+So to update drush I have to get composer the right kind of drush. My global install of composer is using drush/drush dev-master. So maybe if I update drush there I will get it inside my project. The global composer file is stored at `composer global update`
+
+```
+composer global update
+```
+
+I edited the global composer file to have this in it.
+```
+{
+    "require": {
+        "drush/drush": "8.1.16"
+    }
+}
+```
+
+I am failing to update drush with composer. [Tutorial](https://drupal.stackexchange.com/questions/222188/updating-drush-with-composer). Requiring a newer version of drush worked to get `drush cr` working. I want to see if it will work with updating drupal.
+
+```
+composer require drush/drush
+drush --version
+9.2.1
+```
+In this version the update command is deprecated.
+```
+drush ups
+
+The pm-updatestatus command was deprecated. Please see `composer show` and `composer outdated`. For security release notification, see `drush pm:security`.  
+```
+
+## Update Drupal and Modules with Drush
+
+With drush 9.2.1 I can now downgrade to drush 8.1.16 [Here's how to actually preform the update.](https://www.drupal.org/docs/8/update/update-core-via-drush-option-3)
+```
+composer require drush/drush:8.1.16  
+
+drush --version
+ Drush Version   :  8.1.16
+
+cd sites/sei
+drush ups
+drush up
+drush updb
+drush entup
+```
+
+Error on sorensen after sei update
+```
+exception 'Drupal\Component\Plugin\Exception\PluginNotFoundException' with message 'The "group_permission" plugin does not exist.' in  [error]
+/Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php:52
+Stack trace:
+
+drush cr
+drush en group_permission
+```
+
+1. Pull database from live environment
+2. Make sure you have drush 8.1.16 (if not `composer require drush/drush` and `composer require drush/drush:8.1.16`)
+3. Run ` drush cr and drush ups` to make sure drush is working
+4. Copy Core files over  (this may revert you back to the previous version of drush and you'll need to repeat previous steps)
+5. cd into sites/sorensen
+6. Run `drush updb` to get the database updates for the core update
+7. Run `drush entup`
+8. Run `drush up` for the module updates
+9. Run `drush updb`
+10. Run `drush entup`
+
+```
+Local site is fine but live site gives this Error - FIXED BY ANOTHER DEV DEXKTOP PUSH
+
+The website encountered an unexpected error. Please try again later.</br></br><em class="placeholder">Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException</em>:  in <em class="placeholder">Drupal\Core\Routing\AccessAwareRouter-&gt;checkAccess()</em> (line <em class="placeholder">114</em> of <em class="placeholder">core/lib/Drupal/Core/Routing/AccessAwareRouter.php</em>).
+```
+
+Had to enable contribute module before last database update
+```
+drush en -y contribute
+drush updb
+```
+
+# Drupal Updates
+
+Want to update drupal to 8.5.4 from 8.5.3. So update core first, then test. Then update modules, database, entities and test again.
+
+1. Download all the current site databases from production.
+2. Pull the code form production.
+3. Replace the Drupal core files manually.
+4. Update the database and entities  
+5. Update all the modules
+6. Test
+
+### Copying Core Files over
+
+Download the latest core files. Select all of the contents of the new core files EXCEPT modules profiles sites and themes folders.
+
+DO NOT COPY
+- modules
+- profiles
+- sites
+- themes
+
+### Runing the drush updates
+
+```
+drush --version
+composer require drush/drush:8.1.16
+cd sites/support
+drush cr
+drush ups
+drush updb
+drush entup
+```
+
+### Troubleshooting
+
+I'm attempting to update the webform module separately since it is causing issues. I made some manual edits to the simplesamlphp module code so now I can't update the module without recreating the edits in the updated module. I'll leave it alone for now.
+
+- Manually transfer the Webform module code and then run drush updb
+- Don't update the simplesamlphp module
+- Don't update the Quick Node Clone module 
