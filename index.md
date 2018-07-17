@@ -137,7 +137,9 @@ Content in the first column | Content in the second column
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
+[For valid code block assignments try to use capitals as this list specifies.](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml)
+
+JavaScript bash Ruby HTML PHP Java Python 
 
 Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/milesgwood/milesgwood.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 

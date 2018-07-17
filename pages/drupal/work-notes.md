@@ -1744,7 +1744,7 @@ https://www.linkedin.com/in/larry-terry-0bb24529/
 
 Larry Terry Slide goes at the topic
 
-```html
+```HTML
 <div class="ms-slide"><img alt="lorem ipsum dolor sit" data-src="https://coopercenter.org/sites/cooper/files/larry_head.png" src="/masterslider/style/blank.gif" />
 <div class="ms-info">
 <h3>Larry D. Terry II</h3>
