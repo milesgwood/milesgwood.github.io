@@ -190,9 +190,7 @@ Here's the code that you should have added to `authsources.php`
 
 ![Login](../../assets/images/login)
 
-
 Support Dev1 Works right now for cooper-dev-sp. It should still work after I upload the new code.
-
 
 12. Send off your request to UVA ITS or whatever IDP you are using. You have created a service provider and need your IDP to recognize your SP for it to work. [Here is the request form](https://virginia.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=6e4e233a6fc726007aeffee09d3ee433&sysparm_link_parent=966aaf8f6f9e0200287a2d65ad3ee40a&sysparm_catalog=25dfeeb46f004200287a2d65ad3ee46e&sysparm_catalog_view=service_request_catalog_portal_page).
 
