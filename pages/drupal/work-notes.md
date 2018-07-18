@@ -1595,30 +1595,6 @@ I'm also installing the JavaScript Standard style. I set the version of JS I'm u
 sass-convert -F scss -T sass style.scss style.sass
 ```
 
-## Netbadge Simplesaml devdesktop issues
-
-When I pull the site off of the server and run it locally all of the simplesaml configuration issues change.
-
-simplesaml_auth/src/Service/SimplesamlphpAuthManager.php line 216
-```php
-if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php'))
-{
-    require_once('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
-}
-else{
-    require_once('/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
-}
-```
-
-5-11-18-trello branch is working perfectly
-
-### Troubleshooting
-
-```
-Fatal error: Class 'SimpleSAML\Auth\Simple' not found in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/simplesamlphp_auth/src/Service/SimplesamlphpAuthManager.php on line 59
-```
-
-
 
 ## Making a Satisfaction Survey page
 
@@ -2121,9 +2097,6 @@ jQuery('.views-row').each(function(i){
 });
 ```
 
-
-Production is on tags/2018-05-30 if you break the netbadge sign in then you can use that to reset it to the correct code.
-
 Added the access analytics to theme files in html.html.twig
 
 ```html
@@ -2135,39 +2108,53 @@ Added the access analytics to theme files in html.html.twig
 ```
 
 
-## Adding Netbadge Logins to every site
 
-```HTML
-<div id="footer-newsletter-signup">
-  <a class="no-underline" href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="glyphicon glyphicon-envelope"></span></a>
-  <a href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="link-text">Subscribe</span></a>
-</div>
-<div id="netbadge-link">
-  <a class="no-underline" href="https://coopercenter.org/saml_login"><span class="glyphicon glyphicon-log-in"></span></a>
-  <a href="https://coopercenter.org/saml_login"><span class="netbadge-link-text">Netbadge Login</span></a>
-</div>
+# Simplesaml and Filemaker Pro Web Publishing
+
+[Filemaker 16 guide with web server info](https://fmhelp.filemaker.com/docs/16/en/fms16_cwp_guide.pdf)
+
+So we want to make sure that users are logged into Netbadge in order for them to look at specific databases in Filemaker on the web. They already have their permissions set through Active directory accounts. We just need to make sure that they are logged into netbadge to access the web-app at all.
+
+So while building every page, we want to check if the user has a valid cookie that relates to a valid session stored at login.
+
+The Cooopercenter.org site will handle the authentication and send the session data to the Filemaker server.
+
+On all of the sensitive Filemaker pages, we'll add some php code to check for a valid session.
+[Example](https://stackoverflow.com/questions/42022837/require-user-to-login-for-certain-pages)
+
+```
+<?php
+if(isset( $_SESSION['SESS_MEMBER_ID']) && !empty($_SESSION['SESS_MEMBER_ID'])):?>
+    Do your html and other code
+<?php
+    else:
+        header("location:page.php"); // take them to page
+     //or echo "You not allowed to view this page <a href=\"login.php\">Please login</a>";
+    endif;
+    ?>
 ```
 
-```SASS
-#footer-newsletter-signup
-  margin-bottom: 3px
-  .glyphicon-envelope
-    font-size:  22px
-    line-height: 19px
-    display: inline
-  .link-text
-    display: inline
-    padding-left: 5px
-    position:  relative
-    bottom: 2px
-#netbadge-link
-  .glyphicon-log-in
-    font-size: 20px
-    line-height: 28px
-  .netbadge-link-text
-    display: inline
-    padding-left: 7px
+So I need to find the php files or the PHP code that interacts with the FM API  and add some restrictive code.
 
-a.no-underline:hover
-  text-decoration: none
+## Failed attempts to get simplesaml on filemaker server
+
+[Changing the filemakerhomepage](https://community.filemaker.com/thread/143388)
+fmwebd_home.html
+
+[fmsadmin settings edits](https://community.filemaker.com/thread/186328)
+
 ```
+sudo fmsadmin set cwpconfig enablephp=true
+sudo fmsadmin set cwpconfig UseFMPHP=false
+
+Start & Stop FileMaker Server processes
+sudo launchctl stop com.filemaker.fms
+sudo launchctl start com.filemaker.fms
+```
+
+## Using the filemaker API to create webpages
+
+Here is the location of the Filemaker API
+
+For Apache (macOS): /Library/FileMaker Server/Documentation/PHP API
+Documentation/index.html

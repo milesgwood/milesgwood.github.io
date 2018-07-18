@@ -2,7 +2,7 @@
 layout: default
 ---
 
-# Setting Up Netbadge SSO with Acquia Cloud Enviroments
+# Setting Up Netbadge SSO with Acquia Cloud Environments
 
 [UVA provides this tutorial](http://its.virginia.edu/netbadge/unixdevelopers.html) about how to setup Shibboleth software on a website. However, Acquia Cloud doesn't support shibboleth software for their instances since they don't allow access to their Apache instances. I need to find a way to enable SSO using SimpleSAML.
 
@@ -10,10 +10,18 @@ layout: default
 
 Mary Beth directed me to [another walkthrough](http://valuebound.com/resources/blog/how-to-configure-single-sign-on-across-multiple-drupal-8-platforms-or-websites) that describes getting Simplesamlphp to work with Drupal 8.
 
-## SSL is required
-You must use the https:// URL because simplesaml will not work without it. You can't securely authenticate if you can't securely connect. Getting  SSL certificate is easy. Simply make the request on the acquia enterprise account under the SSL tab. They'll give you a key which you send to your SSL provider. In our case, this is UVA service now. They send you back a bunch of certificates and you copy the certificates to Acquia through the same page you got the key to make your request. In the top box put the X509 Certificate only, Base64 encoded. In the intermediaries box put the X509 Intermediates/root only Reverse, Base64 encoded certificate. This is a standard certificate, not a legacy one. Now back to the actual simplesaml work.  
+# Overview of process
 
-## SimpleSAMLphp configurations:
+1. Get a SSL certificate
+2. Install the PHP code
+3. Configure the code and setup your Service Provider (SP)
+3. Install the simplesamlphp_auth module
+4. Configure the simplesamlphp_auth module to talk with your IDP
+
+## Getting a SSL certificate
+SSL is required! You must use the https:// URL because simplesaml will not work without it. You can't securely authenticate if you can't securely connect. Getting  SSL certificate is easy. Simply make the request on the acquia enterprise account under the SSL tab. They'll give you a key which you send to your SSL provider. In our case, this is UVA service now. They send you back a bunch of certificates and you copy the certificates to Acquia through the same page you got the key to make your request. In the top box put the X509 Certificate only, Base64 encoded. In the intermediaries box put the X509 Intermediates/root only Reverse, Base64 encoded certificate. This is a standard certificate, not a legacy one. Now back to the actual simplesaml work.
+
+## Installing the PHP code - SimpleSAMLphp configuration:
 
 1. Download the SimpleSAMLphp library
 2. Put the library next to the docroot folder
@@ -21,22 +29,20 @@ You must use the https:// URL because simplesaml will not work without it. You c
 ```
 cd docroot; ln -s ../simplesamlphp/www simplesaml
 ```
-4. Generate certificates in the cert folder inside the outer simplesamlphp-1.14.8 folder (not visible to the web) as (DRUPAL_ROOT/simplesamlphp-1.14.8/cert). You may need to create the cert folder.
+4. You need to generate certificates in the cert folder inside the outer simplesamlphp-1.14.8 folder (not visible to the web) as (DRUPAL_ROOT/simplesamlphp-1.14.8/cert). You may need to create the cert folder. The generated key and cert are how the SP you make and your IDP talk to eachother. This cert has nothing to do with your SSL cert for the site.
 ```
 openssl req -new -x509 -days 3652 -nodes -out saml.crt -keyout saml.pem
 ```
 
-## Manual edits to files in SimpleSAMLphp library
+At this point you should be able to see the simplesaml admin login by adding `/simplesaml` to the end of your base domain.
+![simplesaml_admin](../../assets/images/simplesaml)
 
-#### overview
+## Configuring the SimpleSAMLphp library
 
-You're going to edit the config.php file and fill in all of the needed information.
+### Editing config/config.php
 
-You need to set where the information about authenticated users will be stored. It goes into the netbadge database that you created on Acquia Cloud. Set a $sqldsn , $sqlusername, and $sqlpassword for each of the possible environments. If you aren't storing the user's info in a database, you need to find an alternative place to store the info.
+In addition to some basic settings, you need to set where the information about authenticated users will be stored. It goes into the netbadge database that you created on Acquia Cloud. Set a $sqldsn , $sqlusername, and $sqlpassword for each of the possible environments. If you aren't storing the user's info in a database, you need to find an alternative place to store the info.
 
-
-
-#### Edits inside of the config array
 - baseurlpath
 - certdir
 - showerrors => true
@@ -49,49 +55,61 @@ You need to set where the information about authenticated users will be stored. 
 - database.username => $sqlusername
 - database.password => $sqlpassword
 
-```php
-if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
-switch ($_ENV['AH_SITE_ENVIRONMENT']) {
-    case 'dev':
-        $sqldsn = 'mysql:host=127.0.0.1;dbname=netbadge';
-        $sqlusername = 'username';
-        $sqlpassword = ''******';';
-        break;
-        //Change these credentials later from acquia
-    case 'test':
-        $sqldsn = 'mysql:host=127.0.0.1;dbname=netbadge';
-        $sqlusername = 'theusernameonAcquiaCloud';
-        $sqlpassword = '******';
-        break;
-    case 'prod':
-        $sqldsn = 'mysql:host=dbmaster-17482.prod.hosting.acquia.com;dbname=netbadge';
-        $sqlusername = 'theusernameonAcquiaCloudForThisEnviroment';
-        $sqlpassword = ''******';';
-        break;
-}
-}
-```
-
 Here's some of the variables in the config array:
 
-```php    
-'baseurlpath' => 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/',
+```PHP    
 'certdir' => 'cert/',
 'loggingdir' => 'log/',
 'datadir' => 'data/',
 ```
 
-Database credentials
+Database credentials added to `my.config.php`
 
-```php
+```PHP
+if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+    switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+        case 'dev':
+            $sqldsn = 'mysql:host=127.0.0.1;dbname=uvacooperdb145495';
+            $sqlusername = '****';
+            $sqlpassword = '****';
+            $basepath = 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/';
+            break;
+        case 'prod':
+            $sqldsn = 'mysql:host=dbmaster-17482.prod.hosting.acquia.com;dbname=uvacooperdb145496';
+            $sqlusername = '****';
+            $sqlpassword = '****';
+            $basepath = 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/';
+            break;
+        default:
+            $sqldsn = 'mysql:host=localhost:8083;dbname=netbadge';
+            $sqlusername = '****';
+            $sqlpassword = '****';
+            $basepath = 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/';
+    }
+}else{
+    $sqldsn = 'mysql:host=localhost;dbname=netbadge';
+    $sqlusername = '****';
+    $sqlpassword = '****';
+    $basepath = $basepath = 'http://' . $_SERVER['SERVER_NAME'] . ':8083/simplesaml/';
+}
+
+
+$config['baseurlpath'] = $basepath;
+```
+
+The above credentials are used in the config array to set the database info dynamically.
+
+```PHP
 'database.dsn' => $sqldsn,
 'database.username' => $sqlusername,
 'database.password' => $sqlpassword,
 ```
 
-Edit config/authsources.php
+### Editing config/authsources.php
 
-```php
+Here you set your Service Providers for each site. If you want to add more SP, you just add more entries into the array.
+
+```PHP
 'cooper-dev-sp' => array(
   'saml:SP',
   'entityID' => 'https://uvacooperdev.prod.acquia-sites.com',
@@ -102,7 +120,23 @@ Edit config/authsources.php
 ),
 ```
 
-Edit the .htaccess file in docroot
+### Editing your sites settings.php
+
+You need to set the location of your simplesamlphp_dir in your site's settings.php file. Whenever you see a variable missing you can add it to your site like this `$dir = Settings::get('simplesamlphp_dir');`. The module code is querying the settings array for that specific variable.
+
+```PHP
+//Settings for the simplesamlPHP library on a local machine
+if (isset($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR']) && file_exists($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR'] . '/cld_prod_uvacooper_dev_support.inc')) {
+    $conf['simplesamlphp_auth_installdir'] = '/Users/miles/Sites/devdesktop/uvacooper-dev/simplesamlphp';
+    $settings['simplesamlphp_dir'] = '/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15';
+}
+else{
+    $conf['simplesamlphp_auth_installdir'] = '/var/www/html/' . $_ENV['AH_SITE_NAME'] . '/simplesamlphp';
+    $settings['simplesamlphp_dir'] = '/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15';
+}
+```
+
+### Edit the .htaccess file in docroot
 - Add the two lines with + diff to the docroot/.htaccess
 
 ```
@@ -118,19 +152,47 @@ Edit the .htaccess file in docroot
 After editing the .htaccess file I no longer get errors when trying to access the simplesaml module web interface.
 I did not need to follow the rest of this [SimpleSAMLphp library installation](https://simplesamlphp.org/docs/stable/simplesamlphp-install) since the Acquia Cloud tutorial above already had me create the symbolic link in the docroot folder.
 
+### Setup your Service Provider
+
 8. Now I need to [configuring the Service Provider](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). The SP  is what talks to the UVA idP or identity provider to facilitate the authentication and retrieval of needed session cookies from the idP.
 
-9. In config/authsources.php I left all fields null so they would auto configure with the exception of the idp for my default-sp array. I changed the idp to  
-`'idp' => 'urn:mace:incommon:virginia.edu',`
-
-10. If you haven't created certificates yet, you need to before making the request to your IDP. I created a self signed cert in the cert directory and set their values in the config file. Check the tutorials at the top for exact syntax. The purpose of these key / cert pairs is to identify your SP to the IDP. They need to know who you are and you prove that by holding onto a secret key.
-```
-openssl req -newkey rsa:2048 -new -x509 -days 3652 -nodes -out saml.crt -keyout saml.pem
+Here's the code that you should have added to `authsources.php`
+```PHP
+'cooper-prod-sp' => array(
+    'saml:SP',
+    'entityID' => 'cooper-prod-sp',
+    'idp' => 'urn:mace:incommon:virginia.edu' ,
+    'privatekey' => 'saml.pem',
+    'certificate' => 'saml.crt',
+    'discoURL' => null,
+),
+'demographics-prod-sp' => array(
+    'saml:SP',
+    'entityID' => 'demographics-prod-sp',
+    'idp' => 'urn:mace:incommon:virginia.edu' ,
+    'privatekey' => 'saml.pem',
+    'certificate' => 'saml.crt',
+    'discoURL' => null,
+),
+'sorensen-prod-sp' => array(
+    'saml:SP',
+    'entityID' => 'sorensen-prod-sp',
+    'idp' => 'urn:mace:incommon:virginia.edu' ,
+    'privatekey' => 'saml.pem',
+    'certificate' => 'saml.crt',
+    'discoURL' => null,
+),
 ```
 
 11. Using [this XML file for the UVA IDP](https://shibidp.its.virginia.edu/shibboleth/uva-idp-metadata.xml) I used the converter in the simplesaml web interface to get the php needed for `saml20-idp-remote.php` and `shib13-idp-remote.php` in the metadatafolder of the simplesamlphp library. The converter is found at an address similar to this `http://uvacooper.test.dd:8083/simplesaml/admin/metadata-converter.php`
 
 12. At this point you should be able to login to the simplesaml admin page and see your SP configured. If you click on the federation tab, you should be redirected to netbadge but be unable to login since the IDP doesn't recognize you yet.
+
+![Login](../../assets/images/login)
+
+
+Support Dev1 Works right now for cooper-dev-sp. It should still work after I upload the new code.
+
 
 12. Send off your request to UVA ITS or whatever IDP you are using. You have created a service provider and need your IDP to recognize your SP for it to work. [Here is the request form](https://virginia.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=6e4e233a6fc726007aeffee09d3ee433&sysparm_link_parent=966aaf8f6f9e0200287a2d65ad3ee40a&sysparm_catalog=25dfeeb46f004200287a2d65ad3ee46e&sysparm_catalog_view=service_request_catalog_portal_page).
 
@@ -163,7 +225,7 @@ Since we are using a symlink, these require_once statements break. They can't fi
 Edit `simplesaml/www/_include.php`
 
 Edit line 96 and 34 of public simplesamlphp library so it doesn't strictly define config directory. `_include.php`
-```php
+```PHP
 /**
  * Disable magic quotes if they are enabled.
  */
@@ -293,7 +355,9 @@ SimpleSAML\Utils\Time::initTimezone();
 1. You need to install and enable the externauth and simplesamlphp modules.
 2. Enter the attribute names for userIDs into the module's configuration page.
 
-## Troubleshooting
+# Troubleshooting
+
+## Module fails to activate after install
 
 Even though the idP worked correctly. When I tried to install the simplesaml drupal module it failed.
 ```
@@ -303,35 +367,44 @@ Warning: include_once(): Failed opening '/lib/_autoload.php' for inclusion (incl
 
 SimpleSAMLphp module requires the simplesamlphp library. See README file for installation instructions.
 ```
-You get this error from the simplesaml enabling because the php library still needs to be set up according to [this documentation.](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). I hardcoded the file paths in `/lib/_autoload.php` to solve the issue.
+You get this error from the simplesaml enabling because the php library still needs to be set up according to [this documentation.](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). Hardcoding paths in `/lib/_autoload.php` does NOT solve the issue.
 
-### Failed Ideas
-1. I tried manually setting the location of the simplesamlphp library in autoload and that caused 500 server issues.
-2. I tried requiring composer to add simplesamlphp/simplesamlphp and that failed because it doesn't import the configurations I painfully setup.
+Here is the error message provided from the support site.
+![Local Site Issue](../../assets/images/local-simplesaml-error)
 
-So since I had moved the simplesamlphp library files it wasn't finding them. The symlink that acquia requires I do made the `lib/_autoload.php` file and the config file impossible for the drupal module to find. I need to add some info according to the part 13 of [this tutorial](https://simplesamlphp.org/docs/stable/simplesamlphp-install#section_13)
+The simplesamlphp library files aren't being found. I need to add some info according to the part 13 of [this tutorial](https://simplesamlphp.org/docs/stable/simplesamlphp-install#section_13)
 
-Now, we need to make a few configuration changes. First, let's edit `~/public_html/simplesaml/_include.php:`
+- First, let's edit `/www/_include.php` for the autoloader
 
-Change the two lines from:
-```
-require_once(dirname(dirname(__FILE__)) . '/lib/_autoload.php');
-```
-to something like:
-```
-require_once('/var/www/html/uvacooperdev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
-```
-And then at the end of the file, you need to change another line from:
-```
-$configdir = dirname(dirname(__FILE__)) . '/config';
-to:
-$configdir = '/var/www/html/uvacooperdev/old-attempt-simplesamlphp-1.14.15/config';
+```PHP
+require_once(dirname(dirname(__FILE__)).'/lib/_autoload.php');
+//Changed to this below
+if (isset($_ENV['AH_SITE_NAME'])){
+    require_once('/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
+}
+else{
+    if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php')) {
+        require_once('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
+    }
+}
 ```
 
-I found that those changes didn't solve the missing library problem which makes sense since they are inside the library files that I can't seem to get the module to find. I went to the module's README and found this.
+I also added an unneeded edit for the config directory that isn't necessary anymore
 
+```PHP
+$configdir = SimpleSAML\Utils\Config::getConfigDir();
+//Changed to this below
+if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php'))
+{
+   $configdir = '/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/config';
+}
+else{
+   $configdir = '/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/config';
+}
 ```
-## INSTALLATION WITHOUT COMPOSER
+
+
+### The Real Fix - INSTALLATION WITHOUT COMPOSER
 
 1. Make sure you have a working SimpleSAMLphp installation. It needs to be a
 standalone installation, which has a "vendor" folder in the root of the project.
@@ -340,15 +413,71 @@ standalone installation, which has a "vendor" folder in the root of the project.
 4. Move it to the appropriate modules directory (usually, /modules)
 5. In your settings.php file, add the location of your SimpleSAMLphp
 installation (no trailing slashes):
-```
-So I need to edit my settings.php file by adding this to the support site's settings.php file.
-```
-$settings['simplesamlphp_dir'] = '/var/www/html/uvacooperdev/old-attempt-simplesamlphp-1.14.15';
+
+
+- Add these settings variables to the end of your site's `settings.php` file.
+
+```PHP
+if (isset($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR']) && file_exists($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR'] . '/cld_prod_uvacooper_dev_support.inc')) {
+    $conf['simplesamlphp_auth_installdir'] = '/Users/miles/Sites/devdesktop/uvacooper-dev/simplesamlphp';
+    $settings['simplesamlphp_dir'] = '/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15';
+}
+else{
+    $conf['simplesamlphp_auth_installdir'] = '/var/www/html/' . $_ENV['AH_SITE_NAME'] . '/simplesamlphp';
+    $settings['simplesamlphp_dir'] = '/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15';
+}
 ```
 
-SUCCESS!!!!! From now on if you see a variable is missing like this variable `$dir = Settings::get('simplesamlphp_dir');`, you should code it into the site's settings.php file. That code is querying the settings array for that specific variable.
+- Edits to the my_config or config.php
 
-Now you can enable SimpleSaml SSO [through the account settings page!!!!](https://supportdev1.coopercenter.org/admin/config/people/accounts)
+You need to add a basepath variable dependent on the environment. For local enviroments it can't have https:// in it and it also needs the port of 8083
+
+```PHP
+if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+    switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+        case 'dev':
+            $sqldsn = 'mysql:host=127.0.0.1;dbname=uvacooperdb145495';
+            $sqlusername = '****';
+            $sqlpassword = '****';
+            $basepath = 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/';
+            break;
+        case 'prod':
+            $sqldsn = 'mysql:host=dbmaster-17482.prod.hosting.acquia.com;dbname=uvacooperdb145496';
+            $sqlusername = '****';
+            $sqlpassword = '****';
+            $basepath = 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/';
+            break;
+        default:
+            $sqldsn = 'mysql:host=localhost:8083;dbname=netbadge';
+            $sqlusername = '****';
+            $sqlpassword = '****';
+            $basepath = 'https://' . $_SERVER['SERVER_NAME'] . '/simplesaml/';
+    }
+}else{
+    $sqldsn = 'mysql:host=localhost;dbname=netbadge';
+    $sqlusername = '****';
+    $sqlpassword = '****';
+    $basepath = $basepath = 'http://' . $_SERVER['SERVER_NAME'] . ':8083/simplesaml/';
+}
+
+
+$config['baseurlpath'] = $basepath;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Dev Site Netbadge login
 
@@ -381,52 +510,61 @@ $settings['simplesamlphp_dir'] = '/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-
 This turns into uvacooperdev uvacooper and other site enviroment folder names.
 
 
-## Netbadge Authentication with Filemaker
+## Troubleshooting
 
-[Filemaker 16 guide with web server info](https://fmhelp.filemaker.com/docs/16/en/fms16_cwp_guide.pdf)
-
-So we want to make sure that users are logged into Netbadge in order for them to look at specific databases in Filemaker on the web. They already have their permissions set through Active directory accounts. We just need to make sure that they are logged into netbadge to access the web-app at all.
-
-So while building every page, we want to check if the user has a valid cookie that relates to a valid session stored at login.
-
-The Cooopercenter.org site will handle the authentication and send the session data to the Filemaker server.
-
-On all of the sensitive Filemaker pages, we'll add some php code to check for a valid session.
-[Example](https://stackoverflow.com/questions/42022837/require-user-to-login-for-certain-pages)
+When I pull the site off of the server and run it locally all of the simplesaml configuration issues change.
 
 ```
-<?php
-if(isset( $_SESSION['SESS_MEMBER_ID']) && !empty($_SESSION['SESS_MEMBER_ID'])):?>
-    Do your html and other code
-<?php
-    else:
-        header("location:page.php"); // take them to page
-     //or echo "You not allowed to view this page <a href=\"login.php\">Please login</a>";
-    endif;
-    ?>
+Fatal error: Class 'SimpleSAML\Auth\Simple' not found in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/simplesamlphp_auth/src/Service/SimplesamlphpAuthManager.php on line 59
+
+OR
+
+simplesaml_auth/src/Service/SimplesamlphpAuthManager.php line 216
 ```
 
-So I need to find the php files or the PHP code that interacts with the FM API  and add some restrictive code.
-
-## Failed attempts to get simplesaml on filemaker server
-
-[Changing the filemakerhomepage](https://community.filemaker.com/thread/143388)
-fmwebd_home.html
-
-[fmsadmin settings edits](https://community.filemaker.com/thread/186328)
-
-```
-sudo fmsadmin set cwpconfig enablephp=true
-sudo fmsadmin set cwpconfig UseFMPHP=false
-
-Start & Stop FileMaker Server processes
-sudo launchctl stop com.filemaker.fms
-sudo launchctl start com.filemaker.fms
+```PHP
+if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php'))
+{
+    require_once('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
+}
+else{
+    require_once('/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
+}
 ```
 
-## Using the filemaker API to create webpages
+## Adding Netbadge Login Links to the site footers
 
-Here is the location of the Filemaker API
+```HTML
+<div id="footer-newsletter-signup">
+  <a class="no-underline" href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="glyphicon glyphicon-envelope"></span></a>
+  <a href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="link-text">Subscribe</span></a>
+</div>
+<div id="netbadge-link">
+  <a class="no-underline" href="https://coopercenter.org/saml_login"><span class="glyphicon glyphicon-log-in"></span></a>
+  <a href="https://coopercenter.org/saml_login"><span class="netbadge-link-text">Netbadge Login</span></a>
+</div>
+```
 
-For Apache (macOS): /Library/FileMaker Server/Documentation/PHP API
-Documentation/index.html
+```SASS
+#footer-newsletter-signup
+  margin-bottom: 3px
+  .glyphicon-envelope
+    font-size:  22px
+    line-height: 19px
+    display: inline
+  .link-text
+    display: inline
+    padding-left: 5px
+    position:  relative
+    bottom: 2px
+#netbadge-link
+  .glyphicon-log-in
+    font-size: 20px
+    line-height: 28px
+  .netbadge-link-text
+    display: inline
+    padding-left: 7px
+
+a.no-underline:hover
+  text-decoration: none
+```
