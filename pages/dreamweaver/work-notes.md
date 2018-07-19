@@ -4,7 +4,8 @@ layout: default
 
 # Dreamweaver Setup
 
-I downloaded the 2017 version of Dreamweaver and it is working on my home machine as well as my laptop machine. First tutorial to follow is [this one that Annette linked me](https://char.gd/blog/2017/how-to-set-up-the-perfect-modern-dev-environment-on-windows).
+[General Setup Tutorial](https://char.gd/blog/2017/how-to-set-up-the-perfect-modern-dev-environment-on-windows).
+[Setup SASS preprocessor](https://helpx.adobe.com/dreamweaver/using/css-preprocessors.html)
 
 ## Install Hyper as bash tool
 
@@ -21,20 +22,16 @@ I found out about a windows package manager like homebrew. It's called [Chocolat
 
 I still need to generate a git key so that I don't need to enter a git password. [Where to put you git password.](https://github.com/settings/keys)
 
-Next Steps
-- Get remote access  
-- [Setup SASS preprocessor](https://helpx.adobe.com/dreamweaver/using/css-preprocessors.html)
-- Create a git key?  
-
 ## Shortcuts
 
-F12  - opens up the browser live preview
-CNTRL + E - Quick edit the stylesheet from within the HTML  
+`F12`  - opens up the browser live preview
+`CNTRL + E` - Quick edit the stylesheet from within the HTML  
 
 I was really hopeful for the quick edit function for sass. Unfortunatly quick edit only lets you edit the compiled css and not the sass. That sucks.
 
-## Working request for news items
-```
+## Dynamically creating New Items
+
+```JavaScript
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script type="text/javascript">
     function create(htmlStr) {
       var frag = document.createDocumentFragment(),
@@ -45,8 +42,6 @@ I was really hopeful for the quick edit function for sass. Unfortunatly quick ed
       }
       return frag;
     }
-
-
 
     $.ajax({
       url: 'https://api.rss2json.com/v1/api.json',
@@ -64,12 +59,6 @@ I was really hopeful for the quick edit function for sass. Unfortunatly quick ed
 
       console.log('====== ' + response.feed.title + ' ======');
 
-      // for (var i in response.items) {
-      //   var item = response.items[i];
-      //   console.log(item.title);
-      //
-      // }
-
       var item = response.items[0];
       console.log(item.title);
       console.log(item.content);
@@ -79,7 +68,6 @@ I was really hopeful for the quick edit function for sass. Unfortunatly quick ed
       console.log(item);
 
       var fragment = create("<a href='" + item.link + "'><h3>" + item.title + "</h3></a><span>" + item.pubDate + "</span><p>" + item.content + "</p>");
-      // You can use native DOM methods to insert the fragment:
       document.getElementById('rss_feed').append(fragment);
     });
   </script>
@@ -100,23 +88,7 @@ if (x == '\xa0') { // Non-breakable space is char 0xa0 (160 dec)
 }
 ```
 
-## Response to annette's Comments
-
-Glad Cheryl seems happy. I'll definitely focus on getting more pages out faster. I spent much more time than I should have getting the Recent News to automatically populate.
-
- - As far as managing the scss and sass changes, I think the easiest solution would be to have separate style sheets. Right now the homepage is importing bootstrap.css, brand.css and vpr.css. I'll keep all of my changes in vpr.sass. That way I can just pull any changes you make without fear of conflicts. Our other alternative is to use a git repo but that still doesn't solve the issue of having to convert between css sass and scss. There are tools to do the conversions but I think separate stylesheets would be simpler.
-
- - Should I be making logos for these new pages or do they already exist somewhere? I'm all for getting to use my illustrator skills a bit to make logos. I just don't want to step on any toes if people already have logos.
-
- - I think you and cheryl are right about a separate News page. I'm thinking 3 news items on the front page that automatically update, a link in the footer by the social media links for the newsletter page, the news page with the last mailchimp newsletter's worth of news, and a link to an archive of old mailchimp newsletters. My main reason for wanting a link in the footer is that it is the main piece of content I see that is updated frequently and could be set up to auto-populate where needed.
-
-- On contact/directions/location, I think all of the basic info should go in the footer with links to the pages with the same content elaborated.
-
-- I was intending to combine the Leadership page with the staff page, under the title of Leadership. The current biography page is all about Ramasubramanian. I was expecting it to be a history of the organization, not just about him, so I think it fits better in leadership.
-
-- On the content of the News Page. I will look into the UVA Daily site to see if there is a similar rss feed I could grab and populate our news with. For now, I'll leave it as the mailchimp rss feed.
-
-## Start on homepage fixes
+## Creating Dreamweaver Templates
 
 So you need to create a dwt template for all of the home pages.
 1. Create new template
