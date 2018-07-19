@@ -210,6 +210,9 @@ You should be able to login to the simplesaml admin page and see your SP configu
 
 ![mod1](../../assets/images/module1.png)
 ![mod2](../../assets/images/module2.png)
+
+The attributes used for provisioning accounts are found by testing the SP on the Federation tab of the simplesaml admin dashboard. For my setup they are `urn:oid:1.3.6.1.4.1.5923.1.1.1.6` for their username and `urn:oid:0.9.2342.19200300.100.1.1` for their email.
+
 ![mod3](../../assets/images/module3.png)
 
 ## Adding Netbadge Login Links to the site footers
