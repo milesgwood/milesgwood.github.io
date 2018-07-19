@@ -65,7 +65,7 @@ Here's some of the variables in the config array:
 
 Database credentials added to `my.config.php`
 
-```PHP
+```php
 if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
     switch ($_ENV['AH_SITE_ENVIRONMENT']) {
         case 'dev':
@@ -143,7 +143,7 @@ else{
 # Copy and adapt this rule to directly execute PHP files in contributed or
 # custom modules or to run another PHP application in the same directory.
  RewriteCond %{REQUEST_URI} !/core/modules/statistics/statistics.php$
-+ #Allow access to simplesaml paths
++ Allow access to simplesaml paths
 + RewriteCond %{REQUEST_URI} !^/simplesaml
 # Deny access to any other PHP files that do not match the rules above.
 # RewriteRule "^.+/.*\.php$" - [F]
