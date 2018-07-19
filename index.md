@@ -16,6 +16,8 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 ## Drupal
 
+[SimpleSamlPHP and Drupal Netbadge setup](pages/drupal/SimpleSamlPHP)
+
 [Using Composer](pages/drupal/composer)
 
 [Manual Database Inserts](pages/drupal/database)
@@ -25,8 +27,6 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 [Drupal 7 -> 8 Migrate](pages/drupal/migrate)
 
 [Multisite](pages/drupal/multisite)
-
-[SimpleSamlPHP](pages/drupal/SimpleSamlPHP)
 
 [Page Templates](pages/drupal/templates)
 
@@ -139,7 +139,7 @@ For more details see [GitHub Flavored Markdown](https://guides.github.com/featur
 
 [For valid code block assignments try to use capitals as this list specifies.](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml)
 
-JavaScript bash Ruby HTML PHP Java Python 
+JavaScript bash Ruby HTML PHP Java Python
 
 Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/milesgwood/milesgwood.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 

@@ -200,17 +200,6 @@ Support Dev1 Works right now for cooper-dev-sp. It should still work after I upl
 [Link to Request Page](https://virginia.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=6e4e233a6fc726007aeffee09d3ee433&sysparm_link_parent=966aaf8f6f9e0200287a2d65ad3ee40a&sysparm_catalog=25dfeeb46f004200287a2d65ad3ee46e&sysparm_catalog_view=service_request_catalog_portal_page)
 
 1. Add a SP to authsources.php (library/config/authsources.php)
-
-```php
-'support-prod-sp' => array(
-  'saml:SP',
-  'entityID' => 'https://support.coopercenter.org',
-  'idp' => 'urn:mace:incommon:virginia.edu' ,
-  'privatekey' => 'saml.pem',
-  'certificate' => 'saml.crt',
-  'discoURL' => null,
-),
-```
 2. Go to the [/simplesaml admin page](https://ceps.coopercenter.org/simplesaml)
 3. Grab the SP metadata from the [Federation page](https://ceps.coopercenter.org/simplesaml/module.php/core/frontpage_federation.php)
 4. Send off that info in an IT request  
@@ -218,128 +207,55 @@ Support Dev1 Works right now for cooper-dev-sp. It should still work after I upl
 6. Get the attribute names from testing the SP
 7. Enter those attribute names into the simplesaml_auth module UI
 
-## More edits to the simplesamlphp library
+## Drupal Module Setup
 
-Since we are using a symlink, these require_once statements break. They can't find the files they need since calling `dirname(dirname(__FILE__))` doesn't actually return the directory name it needs. Hard coding the values solves the issue.
+1. You need to install and enable the externauth and simplesamlphp modules.
+2. Enter the attribute names for userIDs into the module's configuration page.
 
-Edit `simplesaml/www/_include.php`
+## Adding Netbadge Login Links to the site footers
 
-Edit line 96 and 34 of public simplesamlphp library so it doesn't strictly define config directory. `_include.php`
-```php
-/**
- * Disable magic quotes if they are enabled.
- */
-function removeMagicQuotes()
-{
-    if (get_magic_quotes_gpc()) {
-        foreach (array('_GET', '_POST', '_COOKIE', '_REQUEST') as $a) {
-            if (isset($$a) && is_array($$a)) {
-                foreach ($$a as &$v) {
-                    // we don't use array-parameters anywhere. Ignore any that may appear
-                    if (is_array($v)) {
-                        continue;
-                    }
-                    // unescape the string
-                    $v = stripslashes($v);
-                }
-            }
-        }
-    }
-    if (get_magic_quotes_runtime()) {
-        set_magic_quotes_runtime(false);
-    }
-}
+Now add some HTML and css to each page so there is always a login link in the footer. The login link is `https://coopercenter.org/saml_login`
 
-if (version_compare(PHP_VERSION, '5.4.0', '<')) {
-    removeMagicQuotes();
-}
-
-// initialize the autoloader
-//require_once(dirname(dirname(__FILE__)).'/lib/_autoload.php');
-// Edited 3-18 By milesgwood
-require_once('/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
-
-// enable assertion handler for all pages
-SimpleSAML_Error_Assertion::installHandler();
-
-// show error page on unhandled exceptions
-function SimpleSAML_exception_handler($exception)
-{
-    if ($exception instanceof SimpleSAML_Error_Error) {
-        $exception->show();
-    } elseif ($exception instanceof Exception) {
-        $e = new SimpleSAML_Error_Error('UNHANDLEDEXCEPTION', $exception);
-        $e->show();
-    } else {
-        if (class_exists('Error') && $exception instanceof Error) {
-            $code = $exception->getCode();
-            $errno = ($code > 0) ? $code : E_ERROR;
-            $errstr = $exception->getMessage();
-            $errfile = $exception->getFile();
-            $errline = $exception->getLine();
-            SimpleSAML_error_handler($errno, $errstr, $errfile, $errline);
-        }
-    }
-}
-
-set_exception_handler('SimpleSAML_exception_handler');
-
-// log full backtrace on errors and warnings
-function SimpleSAML_error_handler($errno, $errstr, $errfile = null, $errline = 0, $errcontext = null)
-{
-    if (!class_exists('SimpleSAML_Logger')) {
-        /* We are probably logging a deprecation-warning during parsing. Unfortunately, the autoloader is disabled at
-         * this point, so we should stop here.
-         *
-         * See PHP bug: https://bugs.php.net/bug.php?id=47987
-         */
-        return false;
-    }
-
-    if ($errno & SimpleSAML_Utilities::$logMask || !($errno & error_reporting())) {
-        // masked error
-        return false;
-    }
-
-    static $limit = 5;
-    $limit -= 1;
-    if ($limit < 0) {
-        // we have reached the limit in the number of backtraces we will log
-        return false;
-    }
-
-    // show an error with a full backtrace
-    $e = new SimpleSAML_Error_Exception('Error '.$errno.' - '.$errstr);
-    $e->logError();
-
-    // resume normal error processing
-    return false;
-}
-
-set_error_handler('SimpleSAML_error_handler');
-
-//milesgwood edit for remote server issues
-$configdir = '/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/config';
-
-//$configdir = SimpleSAML\Utils\Config::getConfigDir();
-if (!file_exists($configdir.'/config.php')) {
-    header('Content-Type: text/plain');
-    echo("You have not yet created the SimpleSAMLphp configuration files.\n");
-    echo("See: https://simplesamlphp.org/docs/devel/simplesamlphp-install-repo\n");
-    exit(1);
-}
-
-// set the timezone
-SimpleSAML\Utils\Time::initTimezone();
+```HTML
+<div id="footer-newsletter-signup">
+  <a class="no-underline" href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="glyphicon glyphicon-envelope"></span></a>
+  <a href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="link-text">Subscribe</span></a>
+</div>
+<div id="netbadge-link">
+  <a class="no-underline" href="https://coopercenter.org/saml_login"><span class="glyphicon glyphicon-log-in"></span></a>
+  <a href="https://coopercenter.org/saml_login"><span class="netbadge-link-text">Netbadge Login</span></a>
+</div>
 ```
 
-## Reference Docs
+```SASS
+#footer-newsletter-signup
+  margin-bottom: 3px
+  .glyphicon-envelope
+    font-size:  22px
+    line-height: 19px
+    display: inline
+  .link-text
+    display: inline
+    padding-left: 5px
+    position:  relative
+    bottom: 2px
+#netbadge-link
+  .glyphicon-log-in
+    font-size: 20px
+    line-height: 28px
+  .netbadge-link-text
+    display: inline
+    padding-left: 7px
+
+a.no-underline:hover
+  text-decoration: none
+```
+
+## Reference Links
 
 [My Trello Notes](https://trello.com/c/SG7rjgdB/1100-use-netbadge-as-the-login-for-content-that-needs-to-be-hidden)
 
 [Description of UVA info from idP ](http://its.virginia.edu/netbadge/defaultpolicy.html)
-
-[Garbage UVA walkthrough that you can't use since you can't access Apache.](http://its.virginia.edu/netbadge/unixdevelopers.html) It does have a link to the needed XML metadata of the UVA idP.
 
 [simplesamlphp_auth Plugin](https://www.drupal.org/project/simplesamlphp_auth)
 
@@ -348,12 +264,8 @@ SimpleSAML\Utils\Time::initTimezone();
 [Another walkthrough that is Drupal 8 specific](http://valuebound.com/resources/blog/how-to-configure-single-sign-on-across-multiple-drupal-8-platforms-or-websites)
 
 [UVA Dev docs](http://its.virginia.edu/netbadge/developers.html)
+
 [UVA Shibboleth No good for SimpleSaml](http://its.virginia.edu/netbadge/unixdevelopers.html)
-
-# Drupal Module Setup
-
-1. You need to install and enable the externauth and simplesamlphp modules.
-2. Enter the attribute names for userIDs into the module's configuration page.
 
 # Troubleshooting
 
@@ -374,7 +286,7 @@ Here is the error message provided from the support site.
 
 The simplesamlphp library files aren't being found. I need to add some info according to the part 13 of [this tutorial](https://simplesamlphp.org/docs/stable/simplesamlphp-install#section_13)
 
-- First, let's edit `/www/_include.php` for the autoloader
+BAD SOLUTION - This was am attempt to hardcode the locations in `/www/_include.php`
 
 ```php
 require_once(dirname(dirname(__FILE__)).'/lib/_autoload.php');
@@ -389,7 +301,7 @@ else{
 }
 ```
 
-I also added an unneeded edit for the config directory that isn't necessary anymore
+I also added an bad edit for the config directory that isn't necessary anymore.
 
 ```php
 $configdir = SimpleSAML\Utils\Config::getConfigDir();
@@ -403,7 +315,6 @@ else{
 }
 ```
 
-
 ### The Real Fix - INSTALLATION WITHOUT COMPOSER
 
 1. Make sure you have a working SimpleSAMLphp installation. It needs to be a
@@ -414,8 +325,7 @@ standalone installation, which has a "vendor" folder in the root of the project.
 5. In your settings.php file, add the location of your SimpleSAMLphp
 installation (no trailing slashes):
 
-
-- Add these settings variables to the end of your site's `settings.php` file.
+Add these settings variables to the end of your site's `settings.php` file.
 
 ```php
 if (isset($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR']) && file_exists($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR'] . '/cld_prod_uvacooper_dev_support.inc')) {
@@ -462,109 +372,4 @@ if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
 
 
 $config['baseurlpath'] = $basepath;
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Dev Site Netbadge login
-
-simplesaml is configured on the dev site so I want to get that working with the automatic account creation. Then I want to get a idp service provider setup for the live site. Test it on dev and then roll it out to the live sites.
-
-So I am able to get the attributes using the simplesaml admin login. I am working on setting up accounts using the actual module. So I have a netbadge login button on the login page but it doesn't actually link to anywhere. I am thinking that the cookie isn't being stored in the sql database as it should.
-
-It looks like I am not actually using the netbadge database to store anything. I need to edit the config file for the simplesaml library.
-
-After adding the netbadge database to the settings and the store.type array I got this error where the access is denied using the correct password. I am changing the database name from netbadge to uvacooperdb145495 to see if that changes anything. It worked again. The name of the database is set in the acquia interface, not the name I used.
-```
-The website encountered an unexpected error. Please try again later.</br></br><em class="placeholder">PDOException</em>: SQLSTATE[HY000] [1044] Access denied for user &#039;s33747&#039;@&#039;localhost&#039; to database &#039;netbadge&#039; in <em class="placeholder">SimpleSAML_Store_SQL-&gt;__construct()</em> (line <em class="placeholder">54</em> of <em class="placeholder">/mnt/www/html/uvacooperdev/old-attempt-simplesamlphp-1.14.15/lib/SimpleSAML/Store/SQL.php</em>).
-```
-
-Now I have the netbadge and auth module working together but the attribute names are all wrong.
-```
-The website encountered an unexpected error. Please try again later.</br></br><em class="placeholder">Drupal\simplesamlphp_auth\Exception\SimplesamlphpAttributeException</em>: Error in simplesamlphp_auth.module: no valid &quot;eduPersonPrincipalName&quot; attribute set. in <em class="placeholder">Drupal\simplesamlphp_auth\Service\SimplesamlphpAuthManager-&gt;getAttribute()</em> (line <em class="placeholder">165</em> of <em class="placeholder">modules/simplesamlphp_auth/src/Service/SimplesamlphpAuthManager.php</em>).
-```
-
-I'm going to try the only attribute that made any sense to me. -
-urn:oid:0.9.2342.19200300.100.1.3
-eduPersonPrincipalName - failed
-
-Using that attribute worked!!!!! I don't know why it has such a strange name though.
-
-The live site was broken as a result of the settings.php file specifying the wrong location of the simplesamlphp library. The correct entry takes account of the environment site.
-```
-$settings['simplesamlphp_dir'] = '/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15';
-```
-This turns into uvacooperdev uvacooper and other site enviroment folder names.
-
-
-## Troubleshooting
-
-When I pull the site off of the server and run it locally all of the simplesaml configuration issues change.
-
-```
-Fatal error: Class 'SimpleSAML\Auth\Simple' not found in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/simplesamlphp_auth/src/Service/SimplesamlphpAuthManager.php on line 59
-
-OR
-
-simplesaml_auth/src/Service/SimplesamlphpAuthManager.php line 216
-```
-
-```php
-if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php'))
-{
-    require_once('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
-}
-else{
-    require_once('/var/www/html/'. $_ENV['AH_SITE_NAME'] .'/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
-}
-```
-
-## Adding Netbadge Login Links to the site footers
-
-```HTML
-<div id="footer-newsletter-signup">
-  <a class="no-underline" href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="glyphicon glyphicon-envelope"></span></a>
-  <a href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="link-text">Subscribe</span></a>
-</div>
-<div id="netbadge-link">
-  <a class="no-underline" href="https://coopercenter.org/saml_login"><span class="glyphicon glyphicon-log-in"></span></a>
-  <a href="https://coopercenter.org/saml_login"><span class="netbadge-link-text">Netbadge Login</span></a>
-</div>
-```
-
-```SASS
-#footer-newsletter-signup
-  margin-bottom: 3px
-  .glyphicon-envelope
-    font-size:  22px
-    line-height: 19px
-    display: inline
-  .link-text
-    display: inline
-    padding-left: 5px
-    position:  relative
-    bottom: 2px
-#netbadge-link
-  .glyphicon-log-in
-    font-size: 20px
-    line-height: 28px
-  .netbadge-link-text
-    display: inline
-    padding-left: 7px
-
-a.no-underline:hover
-  text-decoration: none
 ```
