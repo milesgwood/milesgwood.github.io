@@ -154,9 +154,9 @@ I did not need to follow the rest of this [SimpleSAMLphp library installation](h
 
 ### Setup your Service Provider
 
-8. Now I need to [configuring the Service Provider](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). The SP  is what talks to the UVA idP or identity provider to facilitate the authentication and retrieval of needed session cookies from the idP.
+[Configure the Service Provider](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). The SP is what talks to the UVA idP or identity provider to facilitate the authentication and retrieval of needed session cookies from the idP.
 
-Here's the code that you should have added to `authsources.php`
+Here's the code added to `authsources.php`
 
 ```php
 'cooper-prod-sp' => array(
@@ -185,17 +185,13 @@ Here's the code that you should have added to `authsources.php`
 ),
 ```
 
-11. Using [this XML file for the UVA IDP](https://shibidp.its.virginia.edu/shibboleth/uva-idp-metadata.xml) I used the converter in the simplesaml web interface to get the php needed for `saml20-idp-remote.php` and `shib13-idp-remote.php` in the metadatafolder of the simplesamlphp library. The converter is found at an address similar to this `http://uvacooper.test.dd:8083/simplesaml/admin/metadata-converter.php`
+Using [this XML file for the UVA IDP](https://shibidp.its.virginia.edu/shibboleth/uva-idp-metadata.xml) I used the converter in the simplesaml web interface to get the php needed for `saml20-idp-remote.php` and `shib13-idp-remote.php` in the metadatafolder of the simplesamlphp library. The converter is found at an address similar to this `http://uvacooper.test.dd:8083/simplesaml/admin/metadata-converter.php`
 
-12. At this point you should be able to login to the simplesaml admin page and see your SP configured. If you click on the federation tab, you should be redirected to netbadge but be unable to login since the IDP doesn't recognize you yet.
+You should be able to login to the simplesaml admin page and see your SP configured. If you click on the federation tab, you should be redirected to netbadge but be unable to login since the IDP doesn't recognize you yet.
 
 ![Login](../../assets/images/login.png)
 
-Support Dev1 Works right now for cooper-dev-sp. It should still work after I upload the new code.
-
-12. Send off your request to UVA ITS or whatever IDP you are using. You have created a service provider and need your IDP to recognize your SP for it to work. [Here is the request form](https://virginia.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=6e4e233a6fc726007aeffee09d3ee433&sysparm_link_parent=966aaf8f6f9e0200287a2d65ad3ee40a&sysparm_catalog=25dfeeb46f004200287a2d65ad3ee46e&sysparm_catalog_view=service_request_catalog_portal_page).
-
-## Make ITS request for the support site IDP
+### Make ITS request for the support site IDP
 
 [Link to Request Page](https://virginia.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=6e4e233a6fc726007aeffee09d3ee433&sysparm_link_parent=966aaf8f6f9e0200287a2d65ad3ee40a&sysparm_catalog=25dfeeb46f004200287a2d65ad3ee46e&sysparm_catalog_view=service_request_catalog_portal_page)
 
@@ -212,11 +208,15 @@ Support Dev1 Works right now for cooper-dev-sp. It should still work after I upl
 1. You need to install and enable the externauth and simplesamlphp modules.
 2. Enter the attribute names for userIDs into the module's configuration page.
 
+![mod1](../../assets/images/module1.png)
+![mod2](../../assets/images/module2.png)
+![mod3](../../assets/images/module3.png)
+
 ## Adding Netbadge Login Links to the site footers
 
 Now add some HTML and css to each page so there is always a login link in the footer. The login link is `https://coopercenter.org/saml_login`
 
-```HTML
+```html
 <div id="footer-newsletter-signup">
   <a class="no-underline" href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="glyphicon glyphicon-envelope"></span></a>
   <a href="https://coopercenter.org/contact/virginia_newsletter_signup"><span class="link-text">Subscribe</span></a>
@@ -227,7 +227,7 @@ Now add some HTML and css to each page so there is always a login link in the fo
 </div>
 ```
 
-```SASS
+```css
 #footer-newsletter-signup
   margin-bottom: 3px
   .glyphicon-envelope
