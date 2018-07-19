@@ -57,7 +57,7 @@ In addition to some basic settings, you need to set where the information about 
 
 Here's some of the variables in the config array:
 
-```PHP    
+```php    
 'certdir' => 'cert/',
 'loggingdir' => 'log/',
 'datadir' => 'data/',
@@ -99,7 +99,7 @@ $config['baseurlpath'] = $basepath;
 
 The above credentials are used in the config array to set the database info dynamically.
 
-```PHP
+```php
 'database.dsn' => $sqldsn,
 'database.username' => $sqlusername,
 'database.password' => $sqlpassword,
@@ -109,7 +109,7 @@ The above credentials are used in the config array to set the database info dyna
 
 Here you set your Service Providers for each site. If you want to add more SP, you just add more entries into the array.
 
-```PHP
+```php
 'cooper-dev-sp' => array(
   'saml:SP',
   'entityID' => 'https://uvacooperdev.prod.acquia-sites.com',
@@ -124,7 +124,7 @@ Here you set your Service Providers for each site. If you want to add more SP, y
 
 You need to set the location of your simplesamlphp_dir in your site's settings.php file. Whenever you see a variable missing you can add it to your site like this `$dir = Settings::get('simplesamlphp_dir');`. The module code is querying the settings array for that specific variable.
 
-```PHP
+```php
 //Settings for the simplesamlPHP library on a local machine
 if (isset($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR']) && file_exists($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR'] . '/cld_prod_uvacooper_dev_support.inc')) {
     $conf['simplesamlphp_auth_installdir'] = '/Users/miles/Sites/devdesktop/uvacooper-dev/simplesamlphp';
@@ -157,7 +157,7 @@ I did not need to follow the rest of this [SimpleSAMLphp library installation](h
 8. Now I need to [configuring the Service Provider](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). The SP  is what talks to the UVA idP or identity provider to facilitate the authentication and retrieval of needed session cookies from the idP.
 
 Here's the code that you should have added to `authsources.php`
-```PHP
+```php
 'cooper-prod-sp' => array(
     'saml:SP',
     'entityID' => 'cooper-prod-sp',
@@ -223,7 +223,7 @@ Since we are using a symlink, these require_once statements break. They can't fi
 Edit `simplesaml/www/_include.php`
 
 Edit line 96 and 34 of public simplesamlphp library so it doesn't strictly define config directory. `_include.php`
-```PHP
+```php
 /**
  * Disable magic quotes if they are enabled.
  */
@@ -374,7 +374,7 @@ The simplesamlphp library files aren't being found. I need to add some info acco
 
 - First, let's edit `/www/_include.php` for the autoloader
 
-```PHP
+```php
 require_once(dirname(dirname(__FILE__)).'/lib/_autoload.php');
 //Changed to this below
 if (isset($_ENV['AH_SITE_NAME'])){
@@ -389,7 +389,7 @@ else{
 
 I also added an unneeded edit for the config directory that isn't necessary anymore
 
-```PHP
+```php
 $configdir = SimpleSAML\Utils\Config::getConfigDir();
 //Changed to this below
 if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php'))
@@ -415,7 +415,7 @@ installation (no trailing slashes):
 
 - Add these settings variables to the end of your site's `settings.php` file.
 
-```PHP
+```php
 if (isset($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR']) && file_exists($_SERVER['DEVDESKTOP_DRUPAL_SETTINGS_DIR'] . '/cld_prod_uvacooper_dev_support.inc')) {
     $conf['simplesamlphp_auth_installdir'] = '/Users/miles/Sites/devdesktop/uvacooper-dev/simplesamlphp';
     $settings['simplesamlphp_dir'] = '/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15';
@@ -430,7 +430,7 @@ else{
 
 You need to add a basepath variable dependent on the environment. For local enviroments it can't have https:// in it and it also needs the port of 8083
 
-```PHP
+```php
 if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
     switch ($_ENV['AH_SITE_ENVIRONMENT']) {
         case 'dev':
@@ -520,7 +520,7 @@ OR
 simplesaml_auth/src/Service/SimplesamlphpAuthManager.php line 216
 ```
 
-```PHP
+```php
 if(file_exists('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php'))
 {
     require_once('/Users/miles/Sites/devdesktop/uvacooper-dev/old-attempt-simplesamlphp-1.14.15/lib/_autoload.php');
