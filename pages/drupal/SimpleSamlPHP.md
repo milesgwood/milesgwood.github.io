@@ -157,6 +157,7 @@ I did not need to follow the rest of this [SimpleSAMLphp library installation](h
 8. Now I need to [configuring the Service Provider](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). The SP  is what talks to the UVA idP or identity provider to facilitate the authentication and retrieval of needed session cookies from the idP.
 
 Here's the code that you should have added to `authsources.php`
+
 ```php
 'cooper-prod-sp' => array(
     'saml:SP',
@@ -199,7 +200,8 @@ Support Dev1 Works right now for cooper-dev-sp. It should still work after I upl
 [Link to Request Page](https://virginia.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=6e4e233a6fc726007aeffee09d3ee433&sysparm_link_parent=966aaf8f6f9e0200287a2d65ad3ee40a&sysparm_catalog=25dfeeb46f004200287a2d65ad3ee46e&sysparm_catalog_view=service_request_catalog_portal_page)
 
 1. Add a SP to authsources.php (library/config/authsources.php)
-```
+
+```php
 'support-prod-sp' => array(
   'saml:SP',
   'entityID' => 'https://support.coopercenter.org',
@@ -368,7 +370,7 @@ SimpleSAMLphp module requires the simplesamlphp library. See README file for ins
 You get this error from the simplesaml enabling because the php library still needs to be set up according to [this documentation.](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). Hardcoding paths in `/lib/_autoload.php` does NOT solve the issue.
 
 Here is the error message provided from the support site.
-![Local Site Issue](../../assets/images/local-simplesaml-error,png)
+![Local Site Issue](../../assets/images/local-simplesaml-error.png)
 
 The simplesamlphp library files aren't being found. I need to add some info according to the part 13 of [this tutorial](https://simplesamlphp.org/docs/stable/simplesamlphp-install#section_13)
 
