@@ -35,7 +35,7 @@ openssl req -new -x509 -days 3652 -nodes -out saml.crt -keyout saml.pem
 ```
 
 At this point you should be able to see the simplesaml admin login by adding `/simplesaml` to the end of your base domain.
-![simplesaml_admin](../../assets/images/simplesaml)
+![simplesaml_admin](../../assets/images/simplesaml.png)
 
 ## Configuring the SimpleSAMLphp library
 
@@ -188,7 +188,7 @@ Here's the code that you should have added to `authsources.php`
 
 12. At this point you should be able to login to the simplesaml admin page and see your SP configured. If you click on the federation tab, you should be redirected to netbadge but be unable to login since the IDP doesn't recognize you yet.
 
-![Login](../../assets/images/login)
+![Login](../../assets/images/login.png)
 
 Support Dev1 Works right now for cooper-dev-sp. It should still work after I upload the new code.
 
@@ -368,7 +368,7 @@ SimpleSAMLphp module requires the simplesamlphp library. See README file for ins
 You get this error from the simplesaml enabling because the php library still needs to be set up according to [this documentation.](https://simplesamlphp.org/docs/stable/simplesamlphp-sp). Hardcoding paths in `/lib/_autoload.php` does NOT solve the issue.
 
 Here is the error message provided from the support site.
-![Local Site Issue](../../assets/images/local-simplesaml-error)
+![Local Site Issue](../../assets/images/local-simplesaml-error,png)
 
 The simplesamlphp library files aren't being found. I need to add some info according to the part 13 of [this tutorial](https://simplesamlphp.org/docs/stable/simplesamlphp-install#section_13)
 
