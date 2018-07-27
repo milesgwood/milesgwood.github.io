@@ -654,13 +654,8 @@ drush en -y lost
 drush config-import -y --partial --source=modules/custom/lost/config/install/
 ```
 
-<<<<<<< HEAD
-## Colorbox code
-
-=======
 
 ## Add click to enlarge to all colorboxes
->>>>>>> 6b8d2066651bd9d95dfd4f38dd0aaa3f96bcc1a1
 ```
 <script>
 window.onload = function clickbox(e) {
@@ -668,8 +663,6 @@ window.onload = function clickbox(e) {
 }
 </script>
 ```
-<<<<<<< HEAD
-=======
 
 ## Fresh run of the migration on a unfucked datatype set
 
@@ -2206,4 +2199,3 @@ Here is the location of the Filemaker API
 
 For Apache (macOS): /Library/FileMaker Server/Documentation/PHP API
 Documentation/index.html
->>>>>>> b07637a243267b2dd0c00577f5caa4d049b39e2f
