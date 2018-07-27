@@ -19,4 +19,8 @@ layout: default
 
 # Restore your Monero Wallet
 
+Go through all of the above steps to verify the hashfile using fluffypony's key & also verifying the binaries by comparing the SHA256 to the confirmed hashes. Install the gui and click it to start. I'm using the 12.3.0 gui so it should support Ledger setup from the GUI. It was incredibly easy this time. I simply had to select the Ledger option, use the same lookahead of 3:200 I used before and a restore height of 162. It will take some time to sync the blockchain but I can let it run while I'm at work.
+
 # Send Monero from wallet
+
+Sending is as easy as entering the address and setting the fee. Since monero makes it hard to track who sent what coins, you sometimes have to include a message with the transaction to make it clear who you sent the coins to.
