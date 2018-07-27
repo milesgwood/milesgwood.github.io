@@ -103,3 +103,29 @@ print(os.path.isdir("/home/el"))
 To get the path this file is in use This
 dir_path = os.path.dirname(os.path.realpath(__file__))
 ```
+
+## Airplane work - 7/10/18
+
+I want to...
+- Learn how to move files and manipulate their names
+- Create a local web server that lets me explore videos like netflix
+- Learn how to create my own modules/packages
+- Debug code line by line
+- Get Atom to auto format the code on save
+- Get Atom to enforce python code style
+- Learn how to handle errors in python
+
+
+## Interesting notes
+
+Strings are immutable so the methods that modify them return new strings for assignment.
+Lists do the opposite. They are mutable and passed as a reference so modifications are possible. Only the + operator makes a new list (that I know of).
+
+```python
+list = list.sort() # returns None so the list is gone
+```
+
+### Dictionaries
+For constant time lookup needs, a dictionary is far superior to linear time lists.
+They are key value pairs. The keys need to be immutable (strings, integers, tuples) since they need to be hashed to find the value.
+The values can be anything (dictionaries, lists, strings, integers, tuples).

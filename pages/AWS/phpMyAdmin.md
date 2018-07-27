@@ -214,3 +214,23 @@ ExpiresByType image/jpeg "access plus 1 month"
 # css may change a bit sometimes, so define shorter expiration
 ExpiresByType text/css "access plus 1 days"
 ```
+
+# Setting up Anousheh's site to have SSL
+
+I made a cloudflare account and entered in the correct DNS records for her google domain. For some reason I am not getting a valid certificate. So what I  think I will do is take the origin certificates from Cloudflare that they provide for free and install them on the server so that the connection between origin and cloudflare is encrypted with SSL. [Tutorial](https://support.cloudflare.com/hc/en-us/articles/217472077)
+
+I need to copy the key and certificate files to the EC2 server.
+
+```
+scp -i MilesLynchLabKey.pem /mnt/c/Users/miles/Documents/lynchlab/* bitnami@ec2-18-188-228-55.us-east-2.compute.amazonaws.com:/opt/bitnami/apache2/conf/
+```
+
+Modified `/opt/bitnami/apache2/conf/bitnami/bitnami.conf` so now it has the cloudflare keys instead of server.crt and server.key.
+
+Restart Apache and MYSQL and then check to see that they are running.
+
+[Putting the certificates in the correct place.](https://docs.bitnami.com/aws/apps/wordpress/#how-to-enable-https-support-with-ssl-certificates)
+```
+sudo /opt/bitnami/ctlscript.sh restart
+sudo /opt/bitnami/ctlscript.sh status
+```

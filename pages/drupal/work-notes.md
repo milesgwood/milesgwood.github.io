@@ -770,123 +770,7 @@ I am getting messages saying that the csv line endings are all wrong. That is wh
 Before I publish I need to restrict permissions possibly using this Group Module.
 [Instructions](https://drupal.stackexchange.com/questions/249393/how-to-restrict-access-to-specific-content-types-by-role)
 
-## Updating Drupal to 8.5.0-rc1
 
-Updating to the release candidate since it doesn't seem to be causing issues
-
-Error on drush cr after the replacing of the core files. Replaced everything except modules profiles sites and themes. Delete everything else that the new core offers.
-
-```
-drush cr
-
-PHP Fatal error:  Declaration of Drush\Command\DrushInputAdapter::hasParameterOption() must be compatible with Symfony\Component\Console\Input\InputInterface::hasParameterOption($values, $onlyParams = false) in /Applications/DevDesktop/tools/vendor/drush/drush/lib/Drush/Command/DrushInputAdapter.php on line 27
-
-composer require drush/drush:8.1.16
-```
-
-After uninstalling the backup migrate plugin I got this error. Solution is to run the database updates BEFORE uninstalling any plugins or anything. Run updates as an atomic action.
-
-```
-Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
-Drupal\Component\Plugin\Exception\PluginNotFoundException: The "file_uri" plugin does not exist. in Drupal\Core\Plugin\DefaultPluginManager->doGetDefinition() (line 52 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php).
-```
-
-Another Error after running the database updates
-```
-views module
-Update #8500
-Failed: Drupal\Core\Entity\Exception\UnsupportedEntityTypeDefinitionException: The entity type block_content does not have a "published" entity key. in Drupal\Core\Entity\EditorialContentEntityBase::publishedBaseFieldDefinitions() (line 32 of /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Core/Entity/EntityPublishedTrait.php).
-```
-
-The site seems to still work despite this error on the views module database update. After a second run of update.php the site seems to have completed all of the core updates correctly.
-
-A bunch of the modules required the contribute module to perform their database updates so I copied it to the modules directory.
-
-The site is running really slow after this update. It's really struggling to bring up the admin pages.
-
-Secondary update of migrate tools and migrate plus was needed.
-
-Sorensen looks great but the rest of the sites are broken now. I don't know if it is the drupal update or the modules that caused but I expect it is the core update that did it. I'm going to attempt to update the sei site with drush instead of the regular gui. If this all fails then I will just revert to the site on Stage which is pre-update.
-
-So to update drush I have to get composer the right kind of drush. My global install of composer is using drush/drush dev-master. So maybe if I update drush there I will get it inside my project. The global composer file is stored at `composer global update`
-
-```
-composer global update
-```
-
-I edited the global composer file to have this in it.
-```
-{
-    "require": {
-        "drush/drush": "8.1.16"
-    }
-}
-```
-
-I am failing to update drush with composer. [Tutorial](https://drupal.stackexchange.com/questions/222188/updating-drush-with-composer). Requiring a newer version of drush worked to get `drush cr` working. I want to see if it will work with updating drupal.
-
-```
-composer require drush/drush
-drush --version
-9.2.1
-```
-In this version the update command is deprecated.
-```
-drush ups
-
-The pm-updatestatus command was deprecated. Please see `composer show` and `composer outdated`. For security release notification, see `drush pm:security`.  
-```
-
-## Update Drupal and Modules with Drush
-
-With drush 9.2.1 I can now downgrade to drush 8.1.16 [Here's how to actually preform the update.](https://www.drupal.org/docs/8/update/update-core-via-drush-option-3)
-```
-composer require drush/drush:8.1.16  
-
-drush --version
- Drush Version   :  8.1.16
-
-cd sites/sei
-drush ups
-drush up
-drush updb
-drush entup
-```
-
-Error on sorensen after sei update
-```
-exception 'Drupal\Component\Plugin\Exception\PluginNotFoundException' with message 'The "group_permission" plugin does not exist.' in  [error]
-/Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core/lib/Drupal/Component/Plugin/Discovery/DiscoveryTrait.php:52
-Stack trace:
-
-drush cr
-drush en group_permission
-```
-
-I messed up my modules directory so now I'm going to perform an update on Sorensen again using the bakcup I made on Stage.
-
-1. Pull database from live environment
-2. Make sure you have drush 8.1.16 (if not `composer require drush/drush` and `composer require drush\drush:8.1.16`)
-3. Run ` drush cr and drush ups` to make sure drush is working
-4. Copy Core files over  (this may revert you back to the previous version of drush and you'll need to repeat previous steps)
-5. cd into sites/sorensen
-6. Run `drush updb` to get the database updates for the core update
-7. Run `drush entup`
-8. Run `drush up` for the module updates
-9. Run `drush updb`
-10. Run `drush entup`
-
-```
-Local site is fine but live site gives this Error - FIXED BY ANOTHER DEV DEXKTOP PUSH
-
-The website encountered an unexpected error. Please try again later.</br></br><em class="placeholder">Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException</em>:  in <em class="placeholder">Drupal\Core\Routing\AccessAwareRouter-&gt;checkAccess()</em> (line <em class="placeholder">114</em> of <em class="placeholder">core/lib/Drupal/Core/Routing/AccessAwareRouter.php</em>).
-```
-
-Had to enable contribute module before last database update
-```
-drush en -y contribute
-drush updb
-```
 
 
 ## CSR migrations
@@ -1352,6 +1236,7 @@ So here are a bunch of images for the politics page.
 </div>
 ```
 
+<<<<<<< HEAD
 
 # Using Pug / Jade
 
@@ -1398,3 +1283,927 @@ $('.js-anchor-link').click(function(e){
   <a href="#section-2" class="js-anchor-link">Go to section 2</a>
 </div>
 ```
+=======
+State Government
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='https://governor.virginia.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Governors-Office.png'/></a>
+<a class='politics-link' href='https://virginiageneralassembly.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/virginiageneralassembly.png'/></a>
+<a class='politics-link' href='https://www.elections.virginia.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Virginia-department-of-elections.png'/></a>
+</div>
+```
+
+Party Sites
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='http://virginia.gop/' ><img class='grow' src='sites/sorensen/files/va_politics_page/republican-party-of-va-2.png'/></a>
+<a class='politics-link' href='https://vademocrats.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-democrats.png'/></a>
+<a class='politics-link' href='https://www.dems.gov/' ><img class='grow' src='sites/sorensen/files/va_politics_page/dem-caucus.png'/></a>
+<a class='politics-link' href='https://www.senators4va.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-repub-caucus.jpg'/></a>
+</div>
+
+```
+
+Organizations for Young People
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='http://www.vayd.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/va-young-democrats.png'/></a>
+<a class='politics-link' href='https://www.virginia21.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/VA21.png'/></a>
+<a class='politics-link' href='https://yrfv.gop/' ><img class='grow' src='sites/sorensen/files/va_politics_page/young-republican-federation-of-va.png'/></a>
+</div>
+```
+
+
+State & Local News
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='https://www.loudountimes.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/london-times-mirror.png'/></a>
+<a class='politics-link' href='http://www.newsadvance.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-advance.png'/></a>
+<a class='politics-link' href='http://www.dailypress.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-daily-press.png'/></a>
+<a class='politics-link' href='http://www.fredericksburg.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/fredricksburg.png'/></a>
+<a class='politics-link' href='http://www.insidenova.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/insidenova.png'/></a>
+<a class='politics-link' href='http://www.heraldcourier.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-bristol.png'/></a>
+<a class='politics-link' href='http://www.dnronline.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-daily-record.png'/></a>
+<a class='politics-link' href='http://www.dailyprogress.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/news-progress.png'/></a>
+<a class='politics-link' href='https://www.richmondsunlight.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-sunlight.png'/></a>
+<a class='politics-link' href='http://www.richmond.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-times-dispatch-logo-feat.jpg'/></a>
+<a class='politics-link' href='http://richmondfreepress.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/richmond-free-press.jpeg'/></a>
+<a class='politics-link' href='https://pilotonline.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/virginia-pilot.jpg'/></a>
+</div>
+```
+
+
+National news
+
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='https://www.nytimes.com/section/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/NewYorkTimes.png'/></a>
+<a class='politics-link' href='http://www.columnists.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/NSNClogo.jpg'/></a>
+<a class='politics-link' href='https://www.wsj.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/wsj.jpeg'/></a>
+<a class='politics-link' href='https://fivethirtyeight.com/politics/' ><img class='grow' src='sites/sorensen/files/va_politics_page/538-logo-fivethirtyeight.png'/></a>
+<a class='politics-link' href='https://cookpolitical.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cookpoliticalreport.png'/></a>
+<a class='politics-link' href='https://www.bloomberg.com/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/bloomberg.png'/></a>
+<a class='politics-link' href='https://www.realclearpolitics.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/RealClearPolitics.png'/></a>
+<a class='politics-link' href='http://www.msnbc.com/place-for-politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/msnbc-logo-card-twitter.png'/></a>
+<a class='politics-link' href='https://www.washingtonpost.com/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/WashingtonPost.png'/></a>
+<a class='politics-link' href='https://www.cnn.com/politics' ><img class='grow' src='sites/sorensen/files/va_politics_page/cnn.png'/></a>
+<a class='politics-link' href='https://www.politico.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/Politico.png'/></a>
+<a class='politics-link' href='http://www.foxnews.com/politics.html' ><img class='grow' src='sites/sorensen/files/va_politics_page/fox.png'/></a>
+<a class='politics-link' href='http://thehill.com/' ><img class='grow' src='sites/sorensen/files/va_politics_page/thehill-logo-big.png'/></a>
+
+
+
+</div>
+```
+
+
+Research & Demographics
+```
+<div class="politics-wrapper">
+<a class='politics-link' href='http://www.pollingreport.com/index.html' ><img class='grow' src='sites/sorensen/files/va_politics_page/PollingReport.png'/></a>
+<a class='politics-link' href='http://wasoncenter.cnu.edu/' ><img class='grow' src='sites/sorensen/files/va_politics_page/wason-center.png'/></a>
+<a class='politics-link' href='http://www.centerforpolitics.org/crystalball/' ><img class='grow' src='sites/sorensen/files/va_politics_page/crystal-ball.png'/></a>
+<a class='politics-link' href='http://ced.uab.es/en/' ><img class='grow' src='sites/sorensen/files/va_politics_page/demographics-CED.png'/></a>
+<a class='politics-link' href='https://cooperceter.org' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
+<a class='politics-link' href='https://csr.cooperceter.org' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
+<a class='politics-link' href='http://statchatva.org/' ><img class='grow' src='sites/sorensen/files/va_politics_page/cooper-center.png'/></a>
+</div>
+```
+
+So I have two last goals for this politics page. I need to edit the Governors' images so they are unique and I need to make the jump links.
+
+[Codepen with great example](https://codepen.io/jooleearr/pen/gpooKj)
+```
+<ul id="jump-nav">
+  <li><a href="#section-1" class="js-anchor-link">Research & Demographics</a></li>
+  <li><a href="#section-2" class="js-anchor-link">State & Local News</a></li>
+  <li><a href="#section-3" class="js-anchor-link">National News</a></li>
+  <li><a href="#section-4" class="js-anchor-link">Organizations for Young People</a></li>
+  <li><a href="#section-5" class="js-anchor-link">Party Sites</a></li>
+  <li><a href="#section-6" class="js-anchor-link">State Government</a></li>
+</ul>
+```
+
+## Test out how you add a custom field to a card in trello
+
+I want to create two custom fields fields for my trello cards. A date created and a date completed field. I also need to create a email field that is autopopulated by the Drupal account email.
+
+I'm realizing that creating this application as a client side app will make this board vulnerable.
+
+key - KEY
+token - TOKEN
+board id - 5ad7d8b0af86ba9895891ab7
+New Requests List Id - 5ad7da0dab91022ea25796da
+
+Here is the script that adds a global Trello object to make calls on.
+<script src="https://api.trello.com/1/client.js?key=6617bebb8d1e9ddd8ab682977cf8d6a2"></script>
+
+```
+var data = null;
+
+var xhr = new XMLHttpRequest();
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://api.trello.com/1/cards?name=New%20Card&desc=Please%20Fix%20My%20Computer&pos=top&idList=5ad7da0dab91022ea25796da&urlSource=https%3A%2F%2Fsupport.coopercenter.org%2Ftickets&keepFromSource=all&key={YOUR-API-KEY}&token={AN-OAUTH-TOKEN}");
+
+xhr.send(data);
+```
+
+https://api.trello.com/1/cards?name=New%20Card&desc=Please%20Fix%20My%20Computer&pos=top&idList=5ad7da0dab91022ea25796da&urlSource=https%3A%2F%2Fsupport.coopercenter.org%2Ftickets&keepFromSource=all&key=KEY&token=TOKEN
+
+So the issue I am running into is that making this a client side app leaves the trello boards vulnerable to attack since the API ket and token would be exposed. If I make the HTTP Requests from the server through PHP then the API key is protected. Unfortunatley that means I'd need to use PHP to send the data to Trello and I am not nearly as clear on how to do that.
+
+It looks like the httpClient() method is my solution to sending values through cURL - https://www.drupal.org/project/filefield_sources/issues/2840594
+
+```
+$client = \Drupal::httpClient();
+try {
+  $request = $client->get($url);
+  $status = $request->getStatusCode();
+  $file_contents = $request->getBody()->getContents();
+}
+catch (RequestException $e) {
+  //An error happened.
+}
+```
+
+This PHP code works to submit a new card!!!!!!!
+```
+  $client = \Drupal::httpClient();
+  $request = $client->post('https://api.trello.com/1/cards?name=New%20Card&desc=Please%20Fix%20My%20Computer&pos=top&idList=5ad7da0dab91022ea25796da&urlSource=https%3A%2F%2Fsupport.coopercenter.org%2Ftickets&keepFromSource=all&key=KEY&token=TOKEN');
+  $response = json_decode($request->getBody());
+```
+
+My Key - KEY
+Token - TOKEN
+
+
+Here is the response
+```
+object(stdClass)[588]
+  public 'id' => string '5ada2198a08f24cf053e4d4e' (length=24)
+  public 'badges' =>
+    object(stdClass)[586]
+      public 'votes' => int 0
+      public 'attachmentsByType' =>
+        object(stdClass)[559]
+          public 'trello' =>
+            object(stdClass)[582]
+              ...
+      public 'viewingMemberVoted' => boolean false
+      public 'subscribed' => boolean false
+      public 'fogbugz' => string '' (length=0)
+      public 'checkItems' => int 0
+      public 'checkItemsChecked' => int 0
+      public 'comments' => int 0
+      public 'attachments' => int 1
+      public 'description' => boolean true
+      public 'due' => null
+      public 'dueComplete' => boolean false
+  public 'checkItemStates' =>
+    array (size=0)
+      empty
+  public 'closed' => boolean false
+  public 'dueComplete' => boolean false
+  public 'dateLastActivity' => string '2018-04-20T17:21:28.841Z' (length=24)
+  public 'desc' => string 'Please Fix My Computer' (length=22)
+  public 'descData' =>
+    object(stdClass)[561]
+      public 'emoji' =>
+        object(stdClass)[560]
+  public 'due' => null
+  public 'email' => null
+  public 'idBoard' => string '5ad7d8b0af86ba9895891ab7' (length=24)
+  public 'idChecklists' =>
+    array (size=0)
+      empty
+  public 'idList' => string '5ad7da0dab91022ea25796da' (length=24)
+  public 'idMembers' =>
+    array (size=0)
+      empty
+  public 'idMembersVoted' =>
+    array (size=0)
+      empty
+  public 'idShort' => int 9
+  public 'idAttachmentCover' => null
+  public 'labels' =>
+    array (size=0)
+      empty
+  public 'idLabels' =>
+    array (size=0)
+      empty
+  public 'manualCoverAttachment' => boolean false
+  public 'name' => string 'New CardComp' (length=12)
+  public 'pos' => int 2048
+  public 'shortLink' => string 'NOCZSZGr' (length=8)
+  public 'shortUrl' => string 'https://trello.com/c/NOCZSZGr' (length=29)
+  public 'subscribed' => boolean false
+  public 'stickers' =>
+    array (size=0)
+      empty
+  public 'url' => string 'https://trello.com/c/NOCZSZGr/9-new-cardcomp' (length=44)
+  public 'limits' =>
+    object(stdClass)[288]
+  ```
+
+  Getting the custom fields and their definitions for our board.
+  Board ID - 5ad7d8b0af86ba9895891ab7
+  https://api.trello.com/1/board/5ad7d8b0af86ba9895891ab7?key=KEY&token=TOKEN
+  Card ID - 5ada2198a08f24cf053e4d4e
+
+  My Key - KEY
+  Token - TOKEN
+  https://api.trello.com/1/board/5ad7d8b0af86ba9895891ab7/customFields?key=KEY&token=TOKEN
+
+
+
+Using this kind of a request I am able to get all of the board data I need.
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/?fields=name&cards=visible&card_fields=name&customFields=true&card_customFieldItems=true&key=KEY&token=TOKEN
+
+5ada31dade941ce827bd1305 - Customer Email
+5ada31cc8cc9574fa096bce8 - Customer Name
+5ad7da91b2aeb0f0ceebe691 - Date Created
+5ad7da9e1ded184355867d28 - Date Completed
+
+
+
+https://api.trello.com/1/board/5ad7d8b0af86ba9895891ab7/customFields?key=KEY&token=TOKEN
+
+  ```
+  $request_data = 'https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/customFields&key=KEY&token=TOKEN';
+$client = \Drupal::httpClient();
+$request = $client->get($request_data);
+$response = json_decode($request->getBody());
+var_dump($response);
+```
+
+
+```
+[
+{
+"id": "5ad7da91b2aeb0f0ceebe691",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "4cbcd5f64f44c20674adfd97f4bf4bce5abbbec2b323d5ed9820010f3f7c55ec",
+"name": "Date Created",
+"pos": 16384,
+"type": "date"
+},
+{
+"id": "5ad7da9e1ded184355867d28",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "f6065514bd878639c3b7073703f9fc2373c2b2b2b43c1f43a56d9c71b16fe8f4",
+"name": "Date Completed",
+"pos": 32768,
+"type": "date"
+},
+{
+"id": "5ada31cc8cc9574fa096bce8",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "c5aa7ca545628b7ae6afe628eead70fa5f284e6e8cfeddd8ddb6bc076af5ae71",
+"name": "Customer Name",
+"pos": 49152,
+"type": "text"
+},
+{
+"id": "5ada31dade941ce827bd1305",
+"idModel": "5ad7d8b0af86ba9895891ab7",
+"modelType": "board",
+"fieldGroup": "3bcbc0b9543931242a567fa85d9b00b16840469be8c7e8eaa80131f66fa7c14a",
+"name": "Customer Email",
+"pos": 65536,
+"type": "text"
+}
+]
+```
+
+Drupalize Me Example of how to add data to a request
+```
+$client = \Drupal::httpClient();
+$request = $client->get('https://api.github.com/user', [
+  'auth' => ['username','password']
+]);
+$response = $request->getBody();
+```
+
+
+```
+$client = \Drupal::httpClient();
+$request = $client->put('https://api.trello.com/1/card/5adf9669d4bdf0a0d1adfaeb/customField/5ada31dade941ce827bd1305/item', 'json' => [
+  "key" => 'KEY',
+  "token" => 'TOKEN',
+  "value" => ["text", "Hello, world!"]
+]);
+$response = $request->getBody();
+```
+
+https://api.trello.com/1/card/{card ID}/customField/{Custom Field ID}/item
+
+
+
+"idValue": "5a6a23abf958725e1ac86c22",
+"key": "",
+"token": ""
+
+{
+  "value" => ["text": "Hello, world!"]
+}
+
+https://api.trello.com/1/card/5ad7d8b0af86ba9895891ab7/customField/%7BCustom%20Field%20ID%7D/item
+
+https://api.trello.com/1/card/5ad7d8b0af86ba9895891ab7?customFieldItems=true&key={APIKey}&token={APIToken}
+
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7?fields=name&customFieldItems=true&key={APIKey}&token={APIToken}
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/cards/?fields=name&customFieldItems=true&key={APIKey}&token={APIToken}
+
+
+
+
+## Getting my Hyper sudo passwords to match
+
+https://askubuntu.com/questions/772050/reset-the-password-in-linux-bash-in-windows
+
+I have forgotten my bash on windows password and needed to reset it. The second answer solved the problem.
+
+## Javascript ESLint
+
+[Tutorial](https://www.jetbrains.com/help/webstorm/eslint.html) Linting is running a program to check for possible errors. I need to set up linting on my work computer. It is installed here `/usr/local/bin/eslint -> /usr/local/lib/node_modules/eslint/bin/eslint.js`.
+
+I'm also installing the JavaScript Standard style. I set the version of JS I'm using to Javascript 1.8.5
+
+## Convert SASS to SCSS
+```
+sass-convert -F scss -T sass style.scss style.sass
+```
+
+
+## Making a Satisfaction Survey page
+
+\Drupal\trello_support_form\TicketAnalyzer::run_survey_generator();
+
+\Drupal\trello_support_form\TicketAnalyzer::get_all_ticket_nodes_by_current_user();
+
+\Drupal\trello_support_form\SurveyResults::get_all_survey_nodes();
+
+## Headshot updates
+
+https://coopercenter.org/sites/cooper/files/larry_head.png
+https://www.linkedin.com/in/larry-terry-0bb24529/
+
+Larry Terry Slide goes at the topic
+
+```HTML
+<div class="ms-slide"><img alt="lorem ipsum dolor sit" data-src="https://coopercenter.org/sites/cooper/files/larry_head.png" src="/masterslider/style/blank.gif" />
+<div class="ms-info">
+<h3>Larry D. Terry II</h3>
+
+<h4>Executive Director</h4>
+
+<p class="email">E-Mail: <a href="mailto:larry.terry@virginia.edu">larry.terry@virginia.edu</a></p>
+
+<p>Larry Terry comes to the Cooper Center in 2018 from Texas, where he worked to improve the lives of citizens in the Dallas region and beyond, creating practical partnerships with elected officials, public servants and community leaders to address poverty and other community issues, including launching the Community Leadership Academy, the nation’s first peer-based citizen police officer leadership training program. His passion is research-based, outcome-driven programs and services that advance the priorities of the University of Virginia in serving the Commonwealth, forming lasting partnerships with citizens, and building vibrant, connected communities. Terry’s research, publications, teaching, and educational achievements focus on leading and managing public organizations, housing reform, and community engagement and public trust. Prior to his position at UNT Dallas, Terry served as an assistant professor of Public Administration at both Long Island University-Brooklyn and Arizona State University.</p>
+
+<ul class="ms-socials ">
+	<li class="ms-ico-fb link"><a href="https://www.linkedin.com/in/larry-terry-0bb24529/">linkedin</a></li>
+	<!-- <li class='ms-ico-tw gs'><a href='https://scholar.google.com/citations?user=09W80zgAAAAJ&hl=en&oi=sra'>google</a></li> -->
+</ul>
+</div>
+</div>
+```
+
+
+## PHPUnit Tests
+
+I found some examples for the phpunit tests. I have to run the tests from the core directory. There is a phpunit.xml.dist file that has the settings needed to make the tests work.
+```
+cd /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/core
+../vendor/bin/phpunit --group phpunit_example
+```
+The tests take forever to run but this configuration in the phpunit.xml.dist file seems to work out.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- TODO set checkForUnintentionallyCoveredCode="true" once https://www.drupal.org/node/2626832 is resolved. -->
+<!-- PHPUnit expects functional tests to be run with either a privileged user
+ or your current system user. See core/tests/README.md and
+ https://www.drupal.org/node/2116263 for details.
+-->
+<phpunit bootstrap="tests/bootstrap.php" colors="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutChangesToGlobalState="true">
+<!-- TODO set printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter" once
+ https://youtrack.jetbrains.com/issue/WI-24808 is resolved. Drupal provides a
+ result printer that links to the html output results for functional tests.
+ Unfortunately, this breaks the output of PHPStorm's PHPUnit runner. However, if
+ using the command line you can add
+ - -printer="\Drupal\Tests\Listeners\HtmlOutputPrinter" to use it (note there
+ should be no spaces between the hyphens).
+-->
+  <php>
+    <!-- Set error reporting to E_ALL. -->
+    <ini name="error_reporting" value="32767"/>
+    <!-- Do not limit the amount of memory tests take to run. -->
+    <ini name="memory_limit" value="-1"/>
+    <!-- Example SIMPLETEST_BASE_URL value: http://localhost -->
+    <env name="SIMPLETEST_BASE_URL" value="http://support.dd:8083"/>
+    <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/databasename#table_prefix -->
+    <!-- <env name="SIMPLETEST_DB" value="mysql://root@localhost:8083/test"/> -->
+    <env name="SIMPLETEST_DB" value="mysql://root@localhost:33067/test"/>
+    <!-- 127.0.0.1:33067  -->
+    <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
+    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/Users/miles/Sites/devdesktop/uvacooper-dev/tests"/>
+    <!-- To disable deprecation testing uncomment the next line. -->
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors"/>
+    <!-- Example for changing the driver class for mink tests MINK_DRIVER_CLASS value: 'Drupal\FunctionalJavascriptTests\DrupalSelenium2Driver' -->
+    <!-- Example for changing the driver args to mink tests MINK_DRIVER_ARGS value: '["http://127.0.0.1:8510"]' -->
+    <!-- Example for changing the driver args to phantomjs tests MINK_DRIVER_ARGS_PHANTOMJS value: '["http://127.0.0.1:8510"]' -->
+    <!-- Example for changing the driver args to webdriver tests MINK_DRIVER_ARGS_WEBDRIVER value: '["firefox", null, "http://localhost:4444/wd/hub"]' -->
+  </php>
+  <testsuites>
+    <testsuite name="unit">
+      <file>./tests/TestSuites/UnitTestSuite.php</file>
+    </testsuite>
+    <testsuite name="kernel">
+      <file>./tests/TestSuites/KernelTestSuite.php</file>
+    </testsuite>
+    <testsuite name="functional">
+      <file>./tests/TestSuites/FunctionalTestSuite.php</file>
+    </testsuite>
+    <testsuite name="functional-javascript">
+      <file>./tests/TestSuites/FunctionalJavascriptTestSuite.php</file>
+    </testsuite>
+  </testsuites>
+  <listeners>
+    <listener class="\Drupal\Tests\Listeners\DrupalListener">
+    </listener>
+    <!-- The Symfony deprecation listener has to come after the Drupal listener -->
+    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+    </listener>
+  </listeners>
+  <!-- Filter for coverage reports. -->
+  <filter>
+    <whitelist>
+      <directory>./includes</directory>
+      <directory>./lib</directory>
+      <directory>./modules</directory>
+      <directory>../modules</directory>
+      <directory>../sites</directory>
+      <!-- By definition test classes have no tests. -->
+      <exclude>
+        <directory suffix="Test.php">./</directory>
+        <directory suffix="TestBase.php">./</directory>
+      </exclude>
+     </whitelist>
+  </filter>
+</phpunit>
+```
+
+The unit tests take a really long time to run but they do work. With 6 tests it takes 1.31 minutes. Here is my group of tests I am using.
+
+```
+../vendor/bin/phpunit --group trello_test
+```
+
+
+## Creating Butler so we don't have to pay for Trello
+
+Churning Board ID - 5967774e86ea1554e62fa8f1
+
+Asynchronous javascript using the .then notation
+```js
+function markCardComplete(t){
+  var card_id = t.getContext()['card'];
+  t.board('all').then(function (board){
+      return get_completed_field_id_from_baord(board);
+  })
+  .then(function (field_id){
+      return setEndDateToCurrentDate(card_id, field_id);
+  });
+}
+
+doSomething()
+.then(result => doSomethingElse(result))
+.then(newResult => doThirdThing(newResult))
+.then(finalResult => {
+  console.log(`Got the final result: ${finalResult}`);
+})
+.catch(failureCallback);
+```
+Now rewritten in the cleaner style:
+```js
+function markCardComplete(t){
+  var card_id = t.getContext()['card'];
+  t.board('all')
+  .then(resulting_board => get_completed_field_id_from_baord(resulting_board))
+  .then(field_id => set_end_date_to_current_date(card_id, field_id));
+}
+```
+
+ID of the list - 5b0704c53424605a40397a8a
+Card ID - "5b075186b9029fa7b2244b55"
+
+The working url
+https://api.trello.com/1/boards/5ad7d8b0af86ba9895891ab7/?fields=name&list&cards=visible&card_fields=name&customFields=true&card_customFieldItems=true&key=ebc310e38e2e0fe0d33cc0eba8eeb024&token=bcb740e1385d254f27f4c99346788dc13536c86da93a946cf6ecb6234a258608
+
+https://glitch.com/edit/#!/perpetual-polish?path=public/js/client.js:491:47
+
+Working Code with Durations and Date Completed marking
+```js
+/* global TrelloPowerUp */
+
+var Promise = TrelloPowerUp.Promise;
+
+//                              Completed Button on Cards
+////////////////////////////////////////////////////////////////////////////////////////
+
+function mark_card_completed(t){
+  var card_id = t.getContext()['card'];
+  t.board('all')
+    .then(resulting_board => get_completed_field_id_from_baord(resulting_board))
+    .then(field_id => set_end_date_to_current_date(card_id, field_id));
+}
+
+function get_completed_field_id_from_baord(board){
+  for(var i = 0 ; i < board["customFields"].length; i++){
+      if(board["customFields"][i].name == "Date Completed"){
+        var date_completed_field_id = board["customFields"][i].id;
+      }   
+    }
+  return date_completed_field_id;
+}
+
+function set_end_date_to_current_date(card_id, custom_field){
+  let cur_date = new Date();
+  var url = "https://api.trello.com/1/cards/"+card_id+"/customField/"+custom_field+"/item?";
+  url = addAuthToken(url);
+  var data = {value: { date: cur_date }};
+  fetch(url, { body: JSON.stringify(data), method: 'PUT', headers: {'content-type': 'application/json'}})
+  .then((resp) => resp.json())
+  // .then((data) => console.log(JSON.stringify(data, null, 2)))
+  .catch((err) => console.log(JSON.stringify(err, null, 2)))
+}
+
+function addAuthToken(str){
+  return str + "&key=ebc310e38e2e0fe0d33cc0eba8eeb024&token=bcb740e1385d254f27f4c99346788dc13536c86da93a946cf6ecb6234a258608";
+}
+//                              Setting Badge Durations
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//Here we set the duration badge and update card end dates using the last 50 actions
+var getBadges = function(t){
+  return t.card('customFieldItems')
+  .then((fields) => find_duration(fields))
+  .then(function(duration){
+    // console.log('We just loaded the duration: ', duration);
+    check_cards_in_done_list_for_end_times(t);
+    return [{
+      // dynamic badges can have their function rerun after a set number
+      // of seconds defined by refresh. Minimum of 10 seconds.
+      dynamic: function(){
+        // we could also return a Promise that resolves to this as well if we needed to do something async first
+        return {
+          title: 'Duration', // for detail badges only
+          text: duration.str,
+          color: get_time_color(duration.number),
+          refresh: 10 // in seconds
+        };
+      }
+    }];
+  });
+};
+
+function find_duration(fields){
+ let dates = [];
+ for(let i = 0 ; i < fields.customFieldItems.length ; i++){
+   if(fields.customFieldItems[i].value.date != undefined){
+     dates.push(fields.customFieldItems[i].value.date);
+   }
+ }
+ let d2 = new Date();
+ let d1 = new Date();
+
+ if(dates.length > 0){
+   d1 = new Date(dates[0]);
+   if(dates.length > 1){
+     d2 = new Date(dates[1]);  
+   }
+ }
+  let duration = Math.abs(d2 - d1);
+  return formatted_duration(duration);
+}
+
+function formatted_duration(duration){
+  let min = 60000;
+  let hour = 3600000;
+  let day = 86400000;
+  let week = 604800000;
+
+  if(duration < min){
+    return {"str" : ms_to_seconds(duration).toFixed(2) + " sec",
+            "number" : duration};
+  }
+  else if(duration < 2*hour){
+    return {"str" : ms_to_minutes(duration).toFixed(2) + " min" , "number" : duration};
+  }
+  else if(duration < 2* day){
+    return {"str" : ms_to_hours(duration).toFixed(2) + " hours" , "number" : duration};
+  }
+  else if(duration < 2* week){
+    return {"str" : ms_to_days(duration).toFixed(2) + " days" , "number" : duration};
+  }
+  else if(duration >= 2* week){
+    return {"str" : ms_to_week(duration).toFixed(2) + " weeks" , "number" : duration};
+  }
+  else{
+    return {"str" : "No Duration" , "number" : duration};
+  }
+}
+
+
+function ms_to_seconds(duration){
+  return duration / 1000;
+}
+
+function ms_to_minutes(duration){
+  return duration / 1000 / 60;
+}
+
+function ms_to_hours(duration){
+  return duration / 1000 / 60 / 60;
+}
+
+function ms_to_days(duration){
+  return duration /1000 /60 / 60 / 24;
+}
+
+function ms_to_week(duration){
+  return duration /1000 /60 / 60 / 24 / 7;
+}
+
+function get_time_color(duration){
+  let min = 60000;
+  let hour = 3600000;
+  let day = 86400000;
+  let week = 604800000;
+
+  if(duration < min){
+    return "green";
+  }
+  else if(duration < 2*hour){
+    return "yellow";
+  }
+  else if(duration < 2* day){
+    return "orange";
+  }
+  else if(duration < 2* week){
+    return "red";
+  }
+  else if(duration >= 2* week){
+    return "dark_red";
+  }
+  else{
+    return "none";
+  }
+}
+
+//                              Update Cards Based on Actions
+////////////////////////////////////////////////////////////////////////////////////////////
+
+var global_board_id;
+var actions_json;
+var completed_id = -1;
+var complete_board_info = -1;
+
+function check_cards_in_done_list_for_end_times(t){
+  // console.log("Here is the t: ", t, t.getContext());
+  // debugger;
+  let board_id = t.getContext().board;
+  if(global_board_id != board_id){
+    console.log("Board Id Changed : ",  board_id);
+    global_board_id = board_id;
+    return scan_actions(board_id) //this gets called a single time since we only need the actions set once.
+      .then((actions_json) => update_cards_moved_to_the_done_list(actions_json));
+  }
+}
+
+function scan_actions(board_id){
+  let url = "https://api.trello.com/1/boards/"
+    + board_id + "/actions?key=ebc310e38e2e0fe0d33cc0eba8eeb024&token=bcb740e1385d254f27f4c99346788dc13536c86da93a946cf6ecb6234a258608&filter=updateCard:idList"
+  return fetch(url, {method: 'GET', headers: {'content-type': 'application/json'}})
+    .then((response) => response.json());
+}
+
+function update_cards_moved_to_the_done_list(actions_json){
+  console.log("actions: ", actions_json);
+  for(var i = 0 ; i < actions_json.length ; i++){ //since this is a asynchronous loop, it needs to have a private copy of the action it is operating on. If this doesn't work I'll try a primitive
+    let local_func_exe = (function() {
+      let local_scope_action_index  = i; // A copy of i only available to the scope of the inner function
+      return function() {
+        if(moved_to_done(actions_json[local_scope_action_index])){
+        set_end_date(actions_json[local_scope_action_index]);
+      }
+    }
+  })();
+  local_func_exe(); //Execute the local scope function you created
+  }//end loop
+}//end outer
+
+function moved_to_done(action){
+  // console.log("Checking if action moved it to done: ", action.data.card.idShort);
+  return (action.data.listAfter.name == "Done");
+}
+
+function set_end_date(action){
+  let date = action.date;
+  let card_id = action.data.card.id;
+
+  if(complete_board_info > 0 && completed_id > 0){
+    return set_custom_field(completed_id, card_id, date)
+  }
+  else{
+    let url = "https://api.trello.com/1/boards/" +
+      action.data.board.id + "/?list&cards=visible&card_fields=name&customFields=true&card_customFieldItems=true";
+    url = addAuthToken(url);
+    return fetch(url, {method: 'GET', headers: {'content-type': 'application/json'}})
+    .then((response) => response.json())
+    .then((board_data) => set_global_response(board_data))
+    .then((customFieldTypes) => find_date_completed_field_id(customFieldTypes))
+    .then((field_id) => set_custom_field(field_id, card_id, date));
+  }  
+}
+
+function set_global_response(board_data){
+  complete_board_info = board_data;
+  return board_data.customFields;
+}
+
+function set_custom_field(custom_field, card_id, date){
+  var url = "https://api.trello.com/1/cards/"+card_id+"/customField/"+custom_field+"/item?";
+  url = addAuthToken(url);
+  var data = {value: { date: date }};
+  return fetch(url, { body: JSON.stringify(data), method: 'PUT', headers: {'content-type': 'application/json'}})
+  .then((resp) => resp.json())
+  .then(function(updated){
+    // console.log("End Date Updated: ", updated);
+    return updated.value.date; //return the date completed field so we can set the duration badge
+  })
+  .catch((err) => console.log(JSON.stringify(err, null, 2)));
+}
+
+function find_date_completed_field_id(custom_fields){
+  try{
+    // console.log("Custom Fields", custom_fields);
+    for(let field of custom_fields){
+        if(field.name == "Date Completed"){
+          completed_id = field.id;
+          return field.id;
+        }
+      }
+  }
+  catch(e){
+    console.log("Error - Here be the customs fields", e, custom_fields);
+  }
+}
+
+TrelloPowerUp.initialize({
+  'card-badges': function(t, options){
+    return getBadges(t);
+  },
+  'card-buttons': function(t, options){
+    return [{
+      icon: 'https://cdn.glitch.com/1b42d7fe-bda8-4af8-a6c8-eff0cea9e08a%2Frocket-ship.png?1494946700421',
+      text: 'Mark Completed',
+      callback: mark_card_completed,
+    }];
+  },
+  'card-detail-badges': function(t, options) {
+    return getBadges(t);
+  },
+});
+```
+
+## Finishing up the Support site
+
+### Forms
+
+I need to create all of the forms and make sure that they are submitting data properly.
+
+Remember in atom that the alt-q keybinding expands the selection to the quotes. That would be even more useful for dreamweaver.
+
+Computer is really sluggish so I am clearing out some ram and changing some finder settings.
+
+1. Alt-rt click finder icon and relaunch
+2. [Set default finder open to Downloads and keep that clear so it opens fast](https://paradite.com/2017/01/31/reduce-macos-finder-memory-usage/)
+3. [Reduce the usage of mds_stores](https://www.neilturner.me.uk/2013/02/08/fixing-high-memory-usage-caused-by-mds.html) Continue with this if Finder is still slow or mds_stores uses up more memory.
+4. PhPStorm File > Invalidate Caches and Restart
+5. Reduce the indexed files in PHPStorm - Preferences > Directories > Rt.Click and Exclude so it turns orange
+6. [Disabled spotlight to make things faster](https://forums.macrumors.com/threads/disabling-spotlight-in-sierra.2075261/)
+
+Cleaning up the github repo. I haven't been merging anything since it's just me on the repository.
+```
+git branch --merged
+git branch -d branch_name
+```
+
+## Add Kara Fitzgibbon to slider
+
+Kara Fitzgibbon
+
+Senior Project Coordinator
+
+Kara earned her M.A. and Ph.D. in Sociology at the University of Virginia. While completing her graduate degree, she worked part-time at CSR as a Graduate Research Analyst. Beyond survey and social research methodology, her areas of specialty are race, ethnicity, immigration, and religion.
+
+ksf5fe@virginia.edu
+
+https://twitter.com/ksfitzgibbon
+
+## CSS selectors of children
+
+1. descendant selector (space) : .outer h2: All descendants
+2. child selector (>) : .outer > h2 : Immediate Child
+3. adjacent sibling selector (+) : .outer + h2 : Immediate Sibling from same parent
+4. general sibling selector (~) : .outer ~ h2 : All Sibling from same parent
+
+Attempt to run js updates of css classes
+
+```js
+jQuery(window).load(function(){
+debugger;
+jQuery('.views-row').each(function(i){
+  setTimeout(function(){
+    jQuery('.item').eq(i).addClass('is-visible');
+  }, 100 * i);
+});
+});
+```
+
+Added the access analytics to theme files in html.html.twig
+
+```html
+<script src="https://cdn.levelaccess.net/accessjs/YW1wX3V2YTExMDA/access.js" type="text/javascript"></script>
+```
+
+```html
+<script type="text/javascript">var access_analytics={base_url:"https://analytics.ssbbartgroup.com/api/",instance_id:"AA-58bdcc11cee35"};(function(a,b,c){var d=a.createElement(b);a=a.getElementsByTagName(b)[0];d.src=c.base_url+"access.js?o="+c.instance_id+"&v=2";a.parentNode.insertBefore(d,a)})(document,"script",access_analytics);</script>
+```
+
+
+
+# Simplesaml and Filemaker Pro Web Publishing
+
+[Filemaker 16 guide with web server info](https://fmhelp.filemaker.com/docs/16/en/fms16_cwp_guide.pdf)
+
+So we want to make sure that users are logged into Netbadge in order for them to look at specific databases in Filemaker on the web. They already have their permissions set through Active directory accounts. We just need to make sure that they are logged into netbadge to access the web-app at all.
+
+So while building every page, we want to check if the user has a valid cookie that relates to a valid session stored at login.
+
+The Cooopercenter.org site will handle the authentication and send the session data to the Filemaker server.
+
+On all of the sensitive Filemaker pages, we'll add some php code to check for a valid session.
+[Example](https://stackoverflow.com/questions/42022837/require-user-to-login-for-certain-pages)
+
+```
+<?php
+if(isset( $_SESSION['SESS_MEMBER_ID']) && !empty($_SESSION['SESS_MEMBER_ID'])):?>
+    Do your html and other code
+<?php
+    else:
+        header("location:page.php"); // take them to page
+     //or echo "You not allowed to view this page <a href=\"login.php\">Please login</a>";
+    endif;
+    ?>
+```
+
+So I need to find the php files or the PHP code that interacts with the FM API  and add some restrictive code.
+
+## Failed attempts to get simplesaml on filemaker server
+
+[Changing the filemakerhomepage](https://community.filemaker.com/thread/143388)
+fmwebd_home.html
+
+[fmsadmin settings edits](https://community.filemaker.com/thread/186328)
+
+```
+sudo fmsadmin set cwpconfig enablephp=true
+sudo fmsadmin set cwpconfig UseFMPHP=false
+
+Start & Stop FileMaker Server processes
+sudo launchctl stop com.filemaker.fms
+sudo launchctl start com.filemaker.fms
+```
+
+## Using the filemaker API to create webpages
+
+Here is the location of the Filemaker API
+
+For Apache (macOS): /Library/FileMaker Server/Documentation/PHP API
+Documentation/index.html
+>>>>>>> b07637a243267b2dd0c00577f5caa4d049b39e2f

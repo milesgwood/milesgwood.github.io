@@ -40,7 +40,6 @@ _layouts
 _sass
 _site
 .sass-cache
-assets
 script
 Gemfile*
 *.gamespec
