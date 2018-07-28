@@ -654,13 +654,8 @@ drush en -y lost
 drush config-import -y --partial --source=modules/custom/lost/config/install/
 ```
 
-<<<<<<< HEAD
-## Colorbox code
-
-=======
 
 ## Add click to enlarge to all colorboxes
->>>>>>> 6b8d2066651bd9d95dfd4f38dd0aaa3f96bcc1a1
 ```
 <script>
 window.onload = function clickbox(e) {
@@ -668,8 +663,6 @@ window.onload = function clickbox(e) {
 }
 </script>
 ```
-<<<<<<< HEAD
-=======
 
 ## Fresh run of the migration on a unfucked datatype set
 
@@ -1236,6 +1229,54 @@ So here are a bunch of images for the politics page.
 </div>
 ```
 
+<<<<<<< HEAD
+
+# Using Pug / Jade
+
+Use phpStorm and create a new project. [Tutorial](https://www.jetbrains.com/help/phpstorm/pug-jade-template-engine.html)
+
+Node.js.Express project type
+Create a Pug file > File > New > Jade file
+Create a file watcher
+
+Pug Jade File Watcher Setup on WINDOWS
+[Tutoriall](https://intellij-support.jetbrains.com/hc/en-us/community/posts/115000131524-File-Watcher-transpiler-for-pugJs)
+
+npm install pug-cli -g
+Make Pug Filewatcher with program set to `%YOUR_HOME%\AppData\Roaming\npm\pug.cmd`
+
+## Smooth Scroll Anchor links
+
+https://codepen.io/jooleearr/pen/gpooKj
+
+```javascript
+/*
+	Smooth scroll functionality for anchor links (animates the scroll
+	rather than a sudden jump in the page)
+*/
+$('.js-anchor-link').click(function(e){
+  e.preventDefault();
+  var target = $($(this).attr('href'));
+  if(target.length){
+    var scrollTo = target.offset().top;
+    $('body, html').animate({scrollTop: scrollTo+'px'}, 800);
+  }
+});
+```
+
+```html
+<ul id="nav">
+  <li><a href="#section-1" class="js-anchor-link">Section 1</a></li>
+  <li><a href="#section-2" class="js-anchor-link">Section 2</a></li>
+  <li><a href="#section-3" class="js-anchor-link">Section 3</a></li>
+</ul>
+
+<div id="section-1" class="section">
+  <h1>Section 1</h1>
+  <a href="#section-2" class="js-anchor-link">Go to section 2</a>
+</div>
+```
+=======
 State Government
 ```
 <div class="politics-wrapper">

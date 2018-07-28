@@ -71,6 +71,11 @@ def walk_through_new_music():
            if tagging_is_needed():
                print("Adding Tags")
                decide_where_parsed_song_data_goes(parse_song_data(filename))
+           else:
+               move_file_to_monkey_media_scanned_folder()
+
+def move_file_to_monkey_media_scanned_folder():
+    print("Moving File to SendToMonkeyMedia Folder")
 
 def set_mp3_path(path):
     global mp3path
