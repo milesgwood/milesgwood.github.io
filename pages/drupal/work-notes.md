@@ -2158,3 +2158,17 @@ Here is the location of the Filemaker API
 
 For Apache (macOS): /Library/FileMaker Server/Documentation/PHP API
 Documentation/index.html
+
+
+# Acquia SSH Keys and Dev Desktop setup
+
+- Remove all local sites from Dev Desktop. Preferences > remove local site.
+- Create new SSH key in dev desktop and move it to your ssh folder. ex. `/Users/miles/.ssh`
+
+```bash
+ssh-keygen -t rsa -b 4096
+```
+
+- Upload that key to Acquia
+- Clone the sites to Dev Desktop
+- Make sure you clone the correct name so it matches
