@@ -63,7 +63,7 @@ mv phpMyAdmin-4.7.7-all-languages.tar.gz phpMyAdmin
 sudo service mysqld start
 ```
 
-Then connect to the database through the url.
+Then connect to the database through the url. https://milesgreatwood.com/phpMyAdmin/ Note the capitalization. [Link](https://milesgreatwood.com/phpMyAdmin/)
 
 #### Securing site with SSL and Cloud Flare
 
