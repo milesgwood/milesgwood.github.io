@@ -5,19 +5,18 @@ layout: default
 # Multisite installation
 I want to easily duplicate the home site so that I can create the unit page sites and enjoy my family's vacation in 2 weeks. The moon is going to block out the fucking sun and I'm not gonna miss that little cheesy bastards big moment.
 
-Use the auto creation tool for multisite on Acquia Dev Desktop. Make sure you use the correct names for the sites when you make them so that the dev site matches the live site except for the domain. The subdomains should all match.
-https://docs.acquia.com/dev-desktop/multisite
+Use the auto creation tool for multisite on Acquia Dev Desktop. Make sure you use the correct names for the sites when you make them so that the dev site matches the live site except for the domain. The subdomains should all match. [Acquia Tutorial](https://docs.acquia.com/dev-desktop/multisite)
 
-The Acquia documentation provides a lot of useful information but it is all handled by dev desktop so don't worry too much about it all. My goal is to use the Backup and Migrate module to effectively clone a site with Acquia handling all of the pesky environment issues.
+The Acquia documentation provides useful information but it is all handled by dev desktop so don't worry too much about it all. My goal is to use the Backup and Migrate module to effectively clone a site with Acquia handling all of the pesky environment issues.
 
 # Multisite Site Creation - Step 1 Empty site
 
-1. Create the new Multisite in Dev Desktop through the more option in the left corner.
+1. Create the new Multisite in Dev Desktop > More > New Drupal Multisite. ![multisite-dev](../../images/multisite-dev.png)
 2. Input the site name and select create new database. ceps in this case.
-3. Go to the launched site locally and start the install.php process.
+3. Go to the launched site locally and start the install.php process. ![install](../../images/install-screen.png)
 4. Enter the Configure site info password, site name, email `coopercenter-webmaster@virginia.edu`,  time zone etc.
 5. Include the new site URL for your dev environment in the sites php file like this `$sites['newsite.coopercenter.org'] = 'newsite';`
-6. Make sure acqui cloud dev has your domain from the sites.php file declared in the dev environment too 
+6. Make sure acqui cloud dev has your domain from the sites.php file declared in the dev environment too
 5. Now that the site is live locally try to launch it to Acquia before more migration of files. Before launching it you shouldn't get the vanilla drupal site when you go to the site URL. (Note: the site  URL must be included in the sites.php file). Trying to push the database from Acquia Desktop Fails but it does add a much needed line to the end of the settings.php file.
 6. Using terminal manually commit and push the changes made to the settings.php file onto the active branch on Acquia. You should make a new branch for this site creation and deploy it on acquia. So for ceps make a ceps branch and deploy it on Acquia.
 7. With the settings.php file successfully committed and live on Acquia, the Dev Desktop push should work now. So go to the Dev environment site after a second attempt at using Dev Desktops push database and code to Acquia.
