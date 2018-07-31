@@ -3,11 +3,14 @@ layout: default
 ---
 #SASS phpFileStorm setup Sass
 ![Screenshot of setup](assets/images/Screen Shot 2017-09-05 at 3.17.44 PM.png)
+
 ```
 /Users/miles/.rvm/gems/ruby-2.4.1/bin/sass
 $FileName$:$FileNameWithoutExtension$.css
 $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 ```
+
+![settings-sass](../../images/settings-sass.png)
 
 ### Make sure that the CSS and JS optimization are off on the Performance page
 

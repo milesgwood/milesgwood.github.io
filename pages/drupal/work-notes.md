@@ -2213,3 +2213,10 @@ ssh-keygen -t rsa -b 4096
 - Upload that key to Acquia
 - Clone the sites to Dev Desktop
 - Make sure you clone the correct name so it matches
+
+
+# Context Filters for Views
+
+[How to add a Entity Reference View Type](https://drupal.stackexchange.com/questions/42034/how-to-create-a-view-type-of-entity-reference-display)
+
+[Filtering by Current User logged in](https://drupal.stackexchange.com/questions/22427/filtering-on-node-whose-user-id-is-equal-to-the-current-user)
