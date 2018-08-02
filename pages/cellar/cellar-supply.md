@@ -61,8 +61,14 @@ a:27:{i:0;s:29:"gravityforms/gravityforms.php";i:1;s:23:"blox-lite/blox-lite.php
 
 - Now you should be able to login using the credentials from the old site.
 - The theme, pages, and settings should all be the same. The only piece missing is the actual uploads and content of the site.
-- To copy over the content, use FileZilla to connect via SFTP and copy all the site files over. The content files are under the wp-content folder.
-- If you are actually migrating the site, then you will want to also correct all of the messed up URLs in the database. Use the [Find and Replace Script from interconnectit](https://interconnectit.com/products/search-and-replace-for-wordpress-databases/) to search for old links and replace them with new links. The script has to be in a folder next to the HTML docroot so it is viewable on the web.
+- To copy over the content, use FileZilla to connect via SFTP and copy all the site files over. The content files are under the wp-content folder. If you need to configure your FTP connection there is a configuration file you can download from the Go Daddy hosting cPanel. In FileZilla go File > Import and select the XML file downloaded from cPanel.
+- If you are actually migrating the site, then you will want to also correct all of the messed up URLs in the database. Use the [Find and Replace Script from interconnectit](https://interconnectit.com/products/search-and-replace-for-wordpress-databases/) to search for old links and replace them with new links. The script has to be in a very specific web accessible folder next to /wp-admin and /wp-content /wp-includes. Unzip it and then transfer the files to the server using Filezilla.
+
+![Search Replace](../../images/search-replace.png)
+
+I ran two replacements. I needed to replace all of the `https://www.cellarsupply.com` with `http://18.212.101.172`. Then `www.cellarsupply.com` with just `18.212.101.172`. I didn't bother to use the regex.
+
+![dry-run](../../images/search-replace.png)
 
 ### Alternative to Filezilla wp-content transfers
 
