@@ -6,19 +6,11 @@ layout: default
 
 ```
 /Users/miles/.rvm/gems/ruby-2.4.1/bin/sass
-$FileName$:$FileNameWithoutExtension$.css
+--no-cache --update $FileName$:$FileNameWithoutExtension$.css
 $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 ```
 
 ![settings-sass](../../images/settings-sass.png)
-
-### Make sure that the CSS and JS optimization are off on the Performance page
-
-# phpStorm File Watcher Setup SCSS
-You need to get it to update continuously
-**Program: /Users/miles/.rvm/gems/ruby-2.4.1/bin/scss**
-Arguments: --no-cache --update $FileName$:$FileNameWithoutExtension$.css
-Output paths to refresh: $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 
 Sass is easier but having all of these preset css values is horrible.
 
