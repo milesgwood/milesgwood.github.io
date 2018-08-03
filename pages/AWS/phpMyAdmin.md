@@ -234,3 +234,13 @@ Restart Apache and MYSQL and then check to see that they are running.
 sudo /opt/bitnami/ctlscript.sh restart
 sudo /opt/bitnami/ctlscript.sh status
 ```
+
+
+## WP Database reset
+
+```
+DROP DATABASE `wordpress-db`;
+CREATE DATABASE `wordpress-db`;
+GRANT ALL PRIVILEGES ON `wordpress-db`.* TO "wp-user"@"localhost";
+FLUSH PRIVILEGES;
+```
