@@ -2220,3 +2220,56 @@ ssh-keygen -t rsa -b 4096
 [How to add a Entity Reference View Type](https://drupal.stackexchange.com/questions/42034/how-to-create-a-view-type-of-entity-reference-display)
 
 [Filtering by Current User logged in](https://drupal.stackexchange.com/questions/22427/filtering-on-node-whose-user-id-is-equal-to-the-current-user)
+
+# Twig Theme Edits
+
+[Overview of TWIG](https://www.drupal.org/docs/8/theming/twig)
+
+[Enable Twig Debugging](https://www.youtube.com/watch?v=cLMxMf-DVIs)
+
+1. Create services.yml from the default and put it in the site I want to edit (sorensen)
+2. Changed twig cofing debug to true from false
+3. Set auto reload to true from null
+4. Turned off aggregate css and js in admin dashboard - Home>Admin>Configuration>Development
+
+```
+Double curly braces for simple prints {{ site_logo }} vs. {% if site_logo %}
+```
+
+## Hooks
+
+So I'm running drupal 8.5.5 and trying to implement the hook [hook_menu_local_tasks_alter](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Menu%21menu.api.php/function/hook_menu_local_tasks_alter/8.5.x). [Here's an explanation of how these hooks are defined and invoked.](https://x-team.com/blog/drupal-8-hooks/) It seems I need to use an OO approach to define my hook and implement it.
+
+## XDeBug and PHP
+
+First I want to make sure my phpStorm setup is correct. [Acquia Setup for phpStorm and XDeBug](https://docs.acquia.com/dev-desktop/sites/phpstorm/)
+
+Edit the php.ini file and specify the correct xdebug dll file. Dev Desktopo Preferences > config > php.ini edit
+
+```
+zend_extension=opcache.so
+zend_extension=xdebug.so
+xdebug.remote_enable=1
+xdebug.remote_port="9000"
+xdebug.profiler_enable=1
+```
+
+If you run into errors run `php -m` to get the modules php is running. If there is an error at the top of the output, fix that error and then try again. Often the full path to the extension will cause issues since php starts its search inside that ext directory that xdebug.so resides in.
+
+![xdebug](../../images/Screen Shot 2018-08-07 at 3.06.27 PM.png)
+
+Visit your phpinfo() output page `/admin/reports/status/php` to make sure that xdebug is in fact running. If it isn't you may need to restart apache.
+
+![phpinfo](../../images/Screen Shot 2018-08-07 at 3.31.27 PM.png)
+
+### Setting up the proper PHP for phpStorm
+
+[Walkthrough](http://redcrackle.com/blog/drupal-8/phpstorm)
+
+You need to specify the php version and an interpreter for PHPStorm to use. So go to `Preferences > Languages & Framewords > PHP` and set the path to the php file you are using with dev desktop.
+
+![php setup](../../images/Screen Shot 2018-08-07 at 3.49.04 PM.png)
+
+Now search for Drupal in preferences and set the Drupal Installation Path - this is the docroot that has sites modules and core folders in it.
+
+![docroot drupal](../../images/Screen Shot 2018-08-07 at 3.51.44 PM.png)
