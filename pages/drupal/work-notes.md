@@ -2418,3 +2418,157 @@ alumni.profile_edit_by_alumni:
   options:
     _admin_route: FALSE
 ```
+
+So with everything looking correct, I still get no menu tasks link added. I suspect it is because there are some access validation checks happening that aren't documented. I want to add teh link to entity.user.canonical but there needs to be a check in the URL for some digits.
+
+[Link to RElated Question online](https://www.drupal.org/forum/support/module-development-and-code-questions/2016-12-19/mymodulelinkstaskyml)
+
+```yaml
+I studied a bit the core modules and solved the problem!
+The routing.yml file must be like this:
+
+lessons_add_tab:
+  path: '/user/{user}/lessons/add'
+  defaults:
+    _title: 'Add new lesson'
+    _form: '\Drupal\mymodule\Forms\LessonsAdd'
+  requirements:
+    _role: 'instructor + administrator'
+  options:
+    _admin_route: TRUE
+    user: \d+
+
+the last three line are the solution.
+Thanks bye
+```
+
+Look into the route details to see if there is some info on why my route is a path and not a route that can be added as a menu task. Most of the routes that are like what I want to make are Objects like [entity.node.edit_form](http://sorensen.dd:8083/devel/routes/item?route_name=entity.node.edit_form).
+
+[More info on the \d+ number validation](https://thinkshout.com/blog/2016/07/drupal-8-routing-tricks-for-better-admin-urls/)
+
+```php
+stdClass Object
+(
+    [__CLASS__] => Symfony\Component\Routing\Route
+    [path] => /node/{node}/edit
+    [host] =>
+    [schemes] => Array
+        (
+        )
+
+    [methods] => Array
+        (
+            [0] => GET
+            [1] => POST
+        )
+
+    [defaults] => Array
+        (
+            [_entity_form] => node.edit
+        )
+
+    [requirements] => Array
+        (
+            [_entity_access] => node.update
+            [node] => \d+
+        )
+
+    [options] => Array
+        (
+            [compiler_class] => \Drupal\Core\Routing\RouteCompiler
+            [_node_operation_route] => 1
+            [_admin_route] => 1
+            [parameters] => Array
+                (
+                    [node] => Array
+                        (
+                            [type] => entity:node
+                            [converter] => paramconverter.entity
+                        )
+
+                )
+
+            [_access_checks] => Array
+                (
+                    [0] => access_check.entity
+                )
+
+        )
+
+    [condition] =>
+    [compiled] => stdClass Object
+        (
+            [__CLASS__] => Drupal\Core\Routing\CompiledRoute
+            [fit] => 5
+            [patternOutline] => /node/%/edit
+            [numParts] => 3
+        )
+)
+```
+
+Mine is a simple array.
+
+```php
+Array
+(
+    [_controller] => \Drupal\alumni_profile\Controller\AlumniController::route
+    [_title] => Update Your Sorensen Alumni Profile
+    [_route] => alumni.profile_edit_by_alumni
+    [_route_object] => stdClass Object
+        (
+            [__CLASS__] => Symfony\Component\Routing\Route
+            [path] => /user/update-your-profile
+            [host] =>
+            [schemes] => Array
+                (
+                )
+
+            [methods] => Array
+                (
+                    [0] => GET
+                    [1] => POST
+                )
+
+            [defaults] => Array
+                (
+                    [_controller] => \Drupal\alumni_profile\Controller\AlumniController::route
+                    [_title] => Update Your Sorensen Alumni Profile
+                )
+
+            [requirements] => Array
+                (
+                    [_permission] => edit-own-alumni-profile-content
+                )
+
+            [options] => Array
+                (
+                    [compiler_class] => \Drupal\Core\Routing\RouteCompiler
+                    [_admin_route] => 1
+                    [_access_checks] => Array
+                        (
+                            [0] => access_check.permission
+                        )
+
+                )
+
+            [condition] =>
+            [compiled] => stdClass Object
+                (
+                    [__CLASS__] => Drupal\Core\Routing\CompiledRoute
+                    [fit] => 3
+                    [patternOutline] => /user/update-your-profile
+                    [numParts] => 2
+                )
+
+        )
+
+    [_raw_variables] => stdClass Object
+        (
+            [__CLASS__] => Symfony\Component\HttpFoundation\ParameterBag
+            [parameters] => Array
+                (
+                )
+
+        )
+)
+```
