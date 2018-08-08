@@ -2236,10 +2236,6 @@ ssh-keygen -t rsa -b 4096
 Double curly braces for simple prints {{ site_logo }} vs. {% if site_logo %}
 ```
 
-## Hooks
-
-So I'm running drupal 8.5.5 and trying to implement the hook [hook_menu_local_tasks_alter](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Menu%21menu.api.php/function/hook_menu_local_tasks_alter/8.5.x). [Here's an explanation of how these hooks are defined and invoked.](https://x-team.com/blog/drupal-8-hooks/) It seems I need to use an OO approach to define my hook and implement it.
-
 ## XDeBug and PHP
 
 First I want to make sure my phpStorm setup is correct. [Acquia Setup for phpStorm and XDeBug](https://docs.acquia.com/dev-desktop/sites/phpstorm/)
@@ -2273,3 +2269,152 @@ You need to specify the php version and an interpreter for PHPStorm to use. So g
 Now search for Drupal in preferences and set the Drupal Installation Path - this is the docroot that has sites modules and core folders in it.
 
 ![docroot drupal](../../images/Screen Shot 2018-08-07 at 3.51.44 PM.png)
+
+## Hooks
+
+So I'm running drupal 8.5.5 and trying to implement the hook [hook_menu_local_tasks_alter](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Menu%21menu.api.php/function/hook_menu_local_tasks_alter/8.5.x). [Here's an explanation of how these hooks are defined and invoked.](https://x-team.com/blog/drupal-8-hooks/) It seems I need to use an OO approach to define my hook and implement it.
+
+I found the hook I need but had to implement it in the module and then clear the cache so the module realized it was there.
+
+```php
+/**
+ * Implements hook_menu_local_tasks_alter().
+ *
+ * Hides the 'Contact' tab on the user profile if the user does not have an
+ * email address configured.
+ */
+function alumni_profile_menu_local_tasks_alter(&$data, $route_name) {
+  if ($route_name == 'entity.user.canonical') {
+      $data['tabs'][0]['node.edit.aluni_profile'] = [
+          '#theme' => 'menu_local_task',
+          '#link' => [
+              'title' => t('Example tab'),
+              'url' => "http://sorensen.dd:8083/user/1",
+              'localized_options' => [
+                  'attributes' => [
+                      'title' => t('Add content'),
+                  ],
+              ],
+          ],
+      ];
+  }
+}
+```
+
+It seems that routes and local tasks are defined in the routing.yml files of core and modules.
+
+`entity.user.edit_form`	is the route name that defines the `/user/{user}/edit` user edit link. I want to add a link to the user page that allows for editing of the attached alumni profile.
+
+These entries in `user.links.tasks.yml` define the Edit and View actions for user accounts.
+
+```yaml
+entity.user.canonical:
+  route_name: entity.user.canonical
+  base_route: entity.user.canonical
+  title: View
+entity.user.edit_form:
+  route_name: entity.user.edit_form
+  base_route: entity.user.canonical
+  title: Edit Account
+```
+
+
+This adds the clone option to the attached profile on the user page in `quick_node_clone.links.tasks.yml` It shows up on the admin edit form.
+
+```yaml
+quick_node_clone.node.quick_clone:
+  route_name: quick_node_clone.node.quick_clone
+  base_route: entity.node.canonical
+  title: 'Clone This'
+  weight: 30
+  ```
+
+It connects to this entry in the `routing.yaml`
+
+```yaml
+quick_node_clone.node.quick_clone:
+  path: '/clone/{node}/quick_clone'
+  defaults:
+    _controller: '\Drupal\quick_node_clone\Controller\QuickNodeCloneNodeController::cloneNode'
+    _title_callback: '\Drupal\quick_node_clone\Controller\QuickNodeCloneNodeController::clonePageTitle'
+  requirements:
+    _custom_access: '\Drupal\quick_node_clone\Controller\QuickNodeCloneNodeAccess::cloneNode'
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: entity:node
+```
+
+The base route is used to group connected tabs together so if I want to add one to the top of the User page, I need the base_route to be `entity.user.canonical`.
+
+alumni_profile.routing.yaml
+
+
+This version failed to produce the link needed.
+
+```yaml
+alumni.profile_edit_by_alumni:
+  path: '/update-your-profile'
+  defaults:
+    _entity_form: 'node.default'
+    _title: 'Update Your Sorensen Alumni Profile'
+  requirements:
+    _permission: 'edit-own-alumni-profile-content'
+    _user_is_logged_in: 'TRUE'
+    ```
+
+alumni_profile.links.tasks.yaml
+
+```yaml
+alumni.profile_edit_by_alumni:
+  route_name: alumni.profile_edit_by_alumni
+  base_route: entity.user.canonical
+  title: 'Update Alumni Profile'
+  weight: 30
+```
+
+
+This user.routing entry sheds some light on what I should be doing. The controller handles the redirection based on the user that is logged in.
+
+```yaml
+user.page:
+  path: '/user'
+  defaults:
+    _controller: '\Drupal\user\Controller\UserController::userPage'
+    _title: 'My account'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    ```
+
+The Controller code handles the redirection and specifies the route to take. In this case it is `entity.user.canonical` but for our purposes, we'll use `entity.node.edit_form` and pass the node of the alumni profile as a parameter.
+
+```php
+/**
+ * Redirects users to their profile page.
+ *
+ * This controller assumes that it is only invoked for authenticated users.
+ * This is enforced for the 'user.page' route with the '_user_is_logged_in'
+ * requirement.
+ *
+ * @return \Symfony\Component\HttpFoundation\RedirectResponse
+ *   Returns a redirect to the profile of the currently logged in user.
+ */
+public function userPage() {
+  return $this->redirect('entity.user.canonical', ['user' => $this->currentUser()->id()]);
+}
+```
+
+So the route will use a controller to handle the redirect.
+
+```yaml
+alumni.profile_edit_by_alumni:
+  path: '/update-your-profile'
+  defaults:
+    _controller: '\Drupal\alumni_profile\Controller\AlumniController::route'
+    _title: 'Update Your Sorensen Alumni Profile'
+  requirements:
+    _role: 'administrator'
+  options:
+    _admin_route: FALSE
+```
