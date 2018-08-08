@@ -2233,7 +2233,7 @@ ssh-keygen -t rsa -b 4096
 4. Turned off aggregate css and js in admin dashboard - Home>Admin>Configuration>Development
 
 ```
-Double curly braces for simple prints {{ site_logo }} vs. {% if site_logo %}
+Double curly braces for simple prints {{ site_logo }}
 ```
 
 ## XDeBug and PHP
@@ -2500,7 +2500,7 @@ stdClass Object
         (
             [__CLASS__] => Drupal\Core\Routing\CompiledRoute
             [fit] => 5
-            [patternOutline] => /node/%/edit
+            [patternOutline] => /node/edit
             [numParts] => 3
         )
 )
@@ -2508,7 +2508,7 @@ stdClass Object
 
 Mine is a simple array.
 
-```
+```php
 Array
 (
     [_controller] => \Drupal\alumni_profile\Controller\AlumniController::route
