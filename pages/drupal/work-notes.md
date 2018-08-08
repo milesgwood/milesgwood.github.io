@@ -2232,9 +2232,9 @@ ssh-keygen -t rsa -b 4096
 3. Set auto reload to true from null
 4. Turned off aggregate css and js in admin dashboard - Home>Admin>Configuration>Development
 
-```
-Double curly braces for simple prints {{ site_logo }}
-```
+
+Double curly braces for simple prints {{ site_logo }}. Add a percent sign for other variables.
+
 
 ## XDeBug and PHP
 
