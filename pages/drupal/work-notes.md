@@ -2508,7 +2508,7 @@ stdClass Object
 
 Mine is a simple array.
 
-```php
+```
 Array
 (
     [_controller] => \Drupal\alumni_profile\Controller\AlumniController::route
@@ -2568,7 +2568,4 @@ Array
             [parameters] => Array
                 (
                 )
-
-        )
-)
 ```
