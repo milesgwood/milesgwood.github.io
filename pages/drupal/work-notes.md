@@ -2206,7 +2206,7 @@ Documentation/index.html
 - Remove all local sites from Dev Desktop. Preferences > remove local site.
 - Create new SSH key in dev desktop and move it to your ssh folder. ex. `/Users/miles/.ssh`
 
-```bash
+```
 ssh-keygen -t rsa -b 4096
 ```
 
@@ -2264,11 +2264,11 @@ Visit your phpinfo() output page `/admin/reports/status/php` to make sure that x
 
 You need to specify the php version and an interpreter for PHPStorm to use. So go to `Preferences > Languages & Framewords > PHP` and set the path to the php file you are using with dev desktop.
 
-![php setup](../../images/Screen Shot 2018-08-07 at 3.49.04 PM.png)
+![php setup]("../../images/Screen Shot 2018-08-07 at 3.49.04 PM.png")
 
 Now search for Drupal in preferences and set the Drupal Installation Path - this is the docroot that has sites modules and core folders in it.
 
-![docroot drupal](../../images/Screen Shot 2018-08-07 at 3.51.44 PM.png)
+![docroot drupal]("../../images/Screen Shot 2018-08-07 at 3.51.44 PM.png")
 
 ## Hooks
 
