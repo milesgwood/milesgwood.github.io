@@ -333,3 +333,35 @@ I'm attempting to update the webform module separately since it is causing issue
 - Manually transfer the Webform module code and then run drush updb
 - Don't update the simplesamlphp module
 - Don't update the Quick Node Clone module 
+
+# Cloud9 Updates 
+
+Since Dev Desktop takes forever to actually copy the databases, I will perform all my code and cored updates on cloud9 now. It connects directly to the DEV environment so I can quickly copy all of the databases from the live sites if something goes wrong. Then I can run the script to preform all of the database updates. 
+
+1. Sync Databases from the live sites
+2. Create a new branch using the SSH connector on dev desktop or by simply connecting directly with command 
+```
+ssh uvacooper.dev@staging-17490.prod.hosting.acquia.com
+git branch my-new-branch
+git checkout my-new-branch
+git push
+git push --set-upstream origin core-8-5-6
+```
+3. Copy the core code for updates and extract it to the correct folders. Replace everything except sites, themes, .htaccess, and modules. (optional module updates here too)
+```
+weget https://ftp.drupal.org/files/projects/drupal-8.5.6.tar.gz
+tar -xzf drupal-8.5.6.tar.gz
+```
+4. Clear the cache with `drush cr` and then clear the varnish on acquia 
+5. Verify all the dev sites are working and you can sign in.
+6. Run the DB update script that's above the docroot
+7. Test the sites on dev 
+8. Test the sites on stage 
+9. Copy all DB and swith the code on live
+10. Clear cache and debug errors on all live sites
+
+
+
+
+
+
