@@ -40,6 +40,7 @@ def check_clipboard_for_youtube_url():
 def download_audio(url):
     ydl_opts = {
         'format': 'bestaudio/best',
+        'no-check-certificate' , True,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
