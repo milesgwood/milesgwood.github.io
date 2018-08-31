@@ -2572,3 +2572,69 @@ Array
         )
 )
 ```
+
+
+## Add a field to the User entity through a module
+
+```php
+function MYMODULE_enable() {
+// Check if our field is not already created.
+if (!field_info_field('api_username')) {
+
+// Create the field base.
+$field = array(
+'field_name' => 'api_username',
+'type' => 'text',
+);
+field_create_field($field);
+
+// Create the field instance on the bundle.
+$instance = array(
+'field_name' => 'api_username',
+'entity_type' => 'user',
+'label' => 'api user name',
+'bundle' => 'user',
+// If you don't set the "required" property then the field wont be required by default.
+'required' => TRUE,
+'settings' => array(
+// Here you inform either or not you want this field showing up on the registration form.
+'user_register_form' => 1,
+),
+'widget' => array(
+'type' => 'textfield',
+),
+);
+field_create_instance($instance);
+}
+
+// Check if our field is not already created.
+if (!field_info_field('api_password')) {
+
+// Create the field base.
+$field = array(
+'field_name' => 'api_password',
+'type' => 'text',
+);
+field_create_field($field);
+
+// Create the field instance on the bundle.
+$instance = array(
+'field_name' => 'api_password',
+'entity_type' => 'user',
+'label' => 'api password',
+'bundle' => 'user',
+// If you don't set the "required" property then the field wont be required by default.
+'required' => TRUE,
+'settings' => array(
+// Here you inform either or not you want this field showing up on the registration form.
+'user_register_form' => 1,
+),
+'widget' => array(
+'type' => 'textfield',
+),
+);
+field_create_instance($instance);
+}
+
+}
+```
