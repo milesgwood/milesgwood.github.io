@@ -144,3 +144,22 @@ drush en admin_toolbar -y
 ## Preferences and code formatting
 
 [PHP Code Formatting tutorial](https://medium.com/icf-church-developers/php-formatting-for-cloud9-ide-9f90ca6fbbad)
+
+```
+wget wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer -O ~/php-cs-fixer
+sudo mkdir ~/bin
+sudo mv ~/php-cs-fixer ~/bin
+sudo chmod a+x ~/bin/php-cs-fixer
+```
+
+Go into Preferences, enable PHP format code on save and set the formatter rules to `php-cs-fixer fix "$file" --rules=@Symfony,@PSR2`
+
+
+## Apache not starting
+
+```
+sudo service mysqld restart
+sudo service httpd restart
+sudo service mysqld status
+sudo service httpd status
+```
