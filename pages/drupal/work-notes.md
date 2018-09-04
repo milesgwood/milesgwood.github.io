@@ -2638,3 +2638,7 @@ field_create_instance($instance);
 
 }
 ```
+
+# Upgrading to PHP 7.1
+
+Deadline is Oct 1.
