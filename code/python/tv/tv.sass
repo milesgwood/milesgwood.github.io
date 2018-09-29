@@ -1,0 +1,82 @@
+$c1 :  #1000FF
+$c2:  #0161E8
+$c3: #00F1FF
+$c4: black
+$c5: #FF019A
+
+@import fonts
+
+html
+  background: $c4
+  *
+    box-sizing: border-box
+
+body
+  background: url(backgrounds/4.gif)
+  background-size: 100% 100%
+  font-family: "Adobe Clean", serif
+  color: white
+  h1, h2, h3, h4, h5
+    text-align: center
+  div.show
+    -webkit-padding-start: 0px
+    div.playable
+      position: relative
+      text-align: left
+      color: white
+      height: 40px
+      font-size: 20px
+      -webkit-margin-before: 0
+      -webkit-margin-after: 0
+      -webkit-margin-start: 0
+      -webkit-margin-end: 0
+      -webkit-padding-start: 0
+      cursor: pointer
+      padding-left: 20px
+      background: black
+      bottom: 10px
+      padding-top: 10px
+      width: 100%
+    div.playable:hover
+      color: red
+
+
+
+.container .child:hover
+  overflow: visible
+
+
+.container
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  align-content: flex-start
+  justify-content: center
+  .child
+    height: 200px
+    min-width: 300px
+    flex-grow: 1
+    border: solid 1px black
+    margin: 10px 0px
+    background: $c1
+    overflow: hidden
+    position: relative
+    img
+      width: -webkit-fill-available
+      height: -webkit-fill-available
+    .title-bk
+      position:  absolute
+      bottom: 0
+      text-align:  center
+      width:  100%
+      background:  $c4
+      opacity: .8
+      height:  30%
+      margin:  0
+      padding:  0px
+
+.child
+  transition: all .2s ease-in-out
+.child:hover
+  transform: scale(1.1)
+  z-index: 100

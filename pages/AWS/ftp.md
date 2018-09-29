@@ -12,4 +12,4 @@ layout: default
   - Copy Username from the connect example on AWS - usually it's `ubuntu`
   - Logon Type is `Normal`
   - Leave the rest empty
-4. Make sure port 22 is open for your IP in security groups
+4. Make sure port 22 is open for your IP in security groups 

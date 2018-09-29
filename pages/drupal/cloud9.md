@@ -163,3 +163,45 @@ sudo service httpd restart
 sudo service mysqld status
 sudo service httpd status
 ```
+
+# Update to Core with issues
+
+Install Composer
+
+```
+curl -sS https://getcomposer.org/installer | php
+php composer require phpunit/phpunit
+```
+
+Copy over all of the core files and extra files after unpacking it all.
+
+```
+wget https://ftp.drupal.org/files/projects/drupal-8.6.1.tar.gz
+tar -xvzf drupal-8.6.1.tar.gz
+```
+
+Run the database updates script if needed. Here is the db_backup script for future reference.
+
+```bash
+# !/bin/bash
+docroot="/home/uvacooper/dev/livedev/docroot"
+backup_folder="/home/uvacooper/dev/livedev/db_backups/"
+today=`date +%Y-%m-%d.%H:%M`
+echo "Starting Database Backups" && \
+cd docroot/sites && \
+for SITE in ceps certify newsletter cooper csr demographics lead sei sorensen support vig
+do
+    cd $SITE && \
+    echo "Backing Up" $SITE && \
+    drush sql-dump --result-file=$SITE.sql && \
+    mv $docroot/$SITE.sql $backup_folder$today-$SITE.sql &&\
+    cd ..
+done
+cd ../../db_backups &&\
+zip -r db_backup_$today.zip $backup_folder
+```
+
+## Godaddy Setup Cloud9
+
+Failed because you can't use Python 2.7 on GoDaddy.
+https://ferugi.com/blog/nodejs-on-godaddy-shared-cpanel/

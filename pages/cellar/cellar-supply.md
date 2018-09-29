@@ -80,3 +80,16 @@ rsync -arvz --dry-run greatwmc@info-dev.jmu.edu:/var/www/html/uinfo/wp-content/u
 ```
 
 This is the dry-run command, obviously run it again without the dry-run option once you’re sure it is doing what you want.
+
+# Increase Max Uplaod size with htaccess
+
+Figured out how to increase teh max file upload size through .htaccess file in ~/public_html
+https://www.cloudways.com/blog/increase-media-file-maximum-upload-size-in-wordpress/
+
+```
+php_value upload_max_filesize 64M
+php_value post_max_size 128M
+php_value memory_limit 256M
+php_value max_execution_time 300
+php_value max_input_time 300
+```
