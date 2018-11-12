@@ -205,3 +205,22 @@ zip -r db_backup_$today.zip $backup_folder
 
 Failed because you can't use Python 2.7 on GoDaddy.
 https://ferugi.com/blog/nodejs-on-godaddy-shared-cpanel/
+
+## SASS on cloud9
+
+So sass is installed on the Cooper Center website livedev server. You can check with:
+
+```
+sass --version
+1.11.0 compiled with dart2js 2.0.0
+```
+
+To start watching the sass files run:
+
+```
+cd /home/uvacooper/dev/livedev/docroot/themes/coopercenter_units/css
+sass --watch .
+
+or
+sass --watch .:output_dir/
+```

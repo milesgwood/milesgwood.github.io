@@ -76,3 +76,30 @@ $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 ```
 
 3. Make sure that the ruby folder is added to the path. You can get to the windows path through start > Environment Variables
+
+
+## SASS on cloud9
+
+So sass is installed on the Cooper Center website livedev server. You can check with:
+
+```
+sass --version
+1.11.0 compiled with dart2js 2.0.0
+```
+
+To start watching the sass files run:
+
+```
+cd /home/uvacooper/dev/livedev/docroot/themes/coopercenter_units/css
+sass --watch .
+
+or
+sass --watch .:output_dir/
+```
+
+[You can also lighten and darken colors with sass functions.](https://robots.thoughtbot.com/controlling-color-with-sass-color-functions)
+
+```
+background: lighten( $lt_grey,  5% )
+background: lighten( $lt_grey,  10% )
+```
