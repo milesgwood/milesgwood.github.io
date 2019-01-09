@@ -114,3 +114,12 @@ e.all_fields_rev(type, fields, custom_data)
 e.files_added(type)
 file.write("commit;\n")
 ```
+
+# Delete All Nodes of Type with Execute PHP
+
+```php
+$result = \Drupal::entityQuery('node')
+      ->condition('type', 'publications')
+      ->execute();
+  entity_delete_multiple('node', $result);
+```
