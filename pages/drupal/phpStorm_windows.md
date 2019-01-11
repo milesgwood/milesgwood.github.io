@@ -34,6 +34,9 @@ bash
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php --install-dir=bin --filename=composer
 export PATH=$PATH:/w/path
+export PATH=/w/acquia/stack/php7_1_x64:$PATH
+export PATH=$PATH:/w/acquia/sites/uvacooper-dev/docroot
+export PATH=$PATH:/w/acquia/sites/uvacooper-dev
 ```
 
 Manually add w/path through windows environment variable editor so it also sees composer. It will tell you where it installed composer.
