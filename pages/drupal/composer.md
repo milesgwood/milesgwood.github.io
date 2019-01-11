@@ -180,3 +180,6 @@ class DrupalInspector
     }
 }
 ```
+
+
+# Attempt 2 at home with PHP_Storm

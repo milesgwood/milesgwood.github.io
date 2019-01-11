@@ -23,7 +23,28 @@ C:\Users\<USERNAME>\AppData\Roaming\MediaMonkey\MetadataCache\
 
 # phpStorm on Windows
 
-Download and install it from jetbrains.
+Download and install it from jetbrains. You'll need to open the docroot folder in phpStorm and enable drupal module.
+
+Add php that your site is using and the composer executable to the path by adding the containing folders.
+
+Update php.ini to have higher memory limit.
+
+```
+; Maximum amount of memory a script may consume (128MB)
+; http://php.net/memory-limit
+memory_limit = -1
+```
+
+Set the php version in composer as well
+```
+"config": {
+    "vendor-dir": "vendor",
+    "platform": {
+        "php": "7.1.1"
+    }
+},
+```
+
 
 ### Getting SASS Working on Windows
 
