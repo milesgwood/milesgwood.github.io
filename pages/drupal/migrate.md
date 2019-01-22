@@ -336,3 +336,94 @@ We have four fields to transfer over :
 - field_mandatory_elective
 - field_prerequisites
 - field_target_audience
+
+# VDOT USER migration from CSV
+
+Create all the fields on the User profile. Format the CSV file correctly. Create the custom migration module and enable it.
+
+```
+drush --version = 8.1.17
+drush en vdot_user_csv_migraion
+drush en config
+drush en entity_usage
+drush config-import -y --partial --source=modules/custom/vdot_user_csv_migration/config/install/
+```
+
+Error on config import - Entity Usage is not properly installed.
+
+```
+Configuration <em class="placeholder">entity_usage.settings</em> depends on the <em
+class="placeholder">Entity Usage</em> module that will not be installed after import.
+Configuration <em class="placeholder">views.view.paragraphs_library</em> depends on the
+<em class="placeholder">Entity Usage</em> module that will not be installed after
+import. in Drupal\Core\Config\ConfigImporter->validate() (line 737 of
+/mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Config/ConfigImporter.php).
+The import failed due for the following reasons:                                       [error]
+Configuration <em class="placeholder">entity_usage.settings</em> depends on the <em
+class="placeholder">Entity Usage</em> module that will not be installed after import.
+Configuration <em class="placeholder">views.view.paragraphs_library</em> depends on the
+<em class="placeholder">Entity Usage</em> module that will not be installed after
+import.
+```
+
+So to fix this I need to enable Entity Usage on the VDOT site but when I do that I get an error stating it already exists in active configuration.
+
+```
+Unable to install Entity Usage, entity_usage.settings already exists in active configuration.
+```
+
+So I need to manually delete that entry in the VDOT config table. [How to connect PHP to database](https://community.c9.io/t/connecting-php-to-mysql/1606).
+
+```
+mysql -u s33747 -h 127.0.0.1 -p -D uvacooperdb256517
+
+mysql> DESCRIBE config;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| collection | varchar(255) | NO   | PRI |         |       |
+| name       | varchar(255) | NO   | PRI |         |       |
+| data       | longblob     | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+SELECT * FROM config WHERE name = "entity_usage.settings";
+
+|            | entity_usage.settings | a:3:{s:25:"track_enabled_base_fields";b:0;s:31:"local_task_enabled_entity_types";a:1:{i:0;s:23:"paragraphs_library_item";}s:5:"_core";a:1:{s:19:"default_config_hash";s:43:"D0RcOA_aIiwSPXOZSHQOTm5FXzziEsJHdfXGaF4nhIQ";}} |
+
+DELETE FROM config WHERE name = "entity_usage.settings";
+```
+
+Errors on enabling the entity_usage module
+
+```
+Drupal\Core\Config\ConfigImporterException: There were errors validating the config synchronization. Configuration <em class="placeholder">entity_usage.settings</em> depends on the <em class="placeholder">Entity Usage</em> module that will not be installed after import. Configuration <em class="placeholder">views.view.paragraphs_library</em> depends on the <em class="placeholder">Entity Usage</em> module that will not be installed after import. in Drupal\Core\Config\ConfigImporter->validate() (line 737 of /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Config/ConfigImporter.php).
+
+Drupal\Core\Config\ConfigImporterException: There were errors validating the config synchronization. Configuration <em class="placeholder">entity_usage.settings</em> depends on the <em class="placeholder">entity_usage</em> extension that will not be installed after import. Configuration <em class="placeholder">views.view.paragraphs_library</em> depends on the <em class="placeholder">entity_usage</em> module that will not be installed after import. in Drupal\Core\Config\ConfigImporter->validate() (line 737 of /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Config/ConfigImporter.php).
+
+Drupal\Core\Database\SchemaObjectExistsException: Table entity_usage already exists. in Drupal\Core\Database\Schema->createTable() (line 618 of /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Database/Schema.php).
+```
+
+Site seems to be working but the paragraphs_library module may be broken.
+
+Now you can import the partial configuration for the vdot_user_csv_migraion modlule.
+
+```
+drush config-import -y --partial --source=modules/custom/vdot_user_csv_migration/config/install
+drush ms
+
+Group: vdot (vdot)  Status  Total  Imported  Unprocessed  Last imported
+ vdot_users          Idle    2      0         2
+
+drush mi vdot_users
+```
+
+Now that this config is imported properly you can [view the migration within the Dashboard.](https://vdotdev1.coopercenter.org/admin/structure/migrate)
+
+Four localities are broken after the import:
+
+Salem City 2018	Salem City	uva-cooper-admin
+Strasburg Town 2018	Strasburg Town	uva-cooper-admin
+Clifton Forge Town 2018	Clifton Forge Town	uva-cooper-admin
+
+Strasburg and Clifton don't have a Locality profile.
