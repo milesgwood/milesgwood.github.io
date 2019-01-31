@@ -224,3 +224,53 @@ sass --watch .
 or
 sass --watch .:output_dir/
 ```
+
+# Clone live site to module dev environment
+
+Use composer to install backup_migrate and then enable it in the dashboard.
+```
+composer require drupal/backup_migrate
+```
+
+Add the following to .htaccess to allow larger file uploads.
+
+```
+php_value upload_max_filesize 32M
+php_value post_max_size 64M
+```
+
+Manually import the database sql dump. You may need to [reset the mysqld password for root](https://www.a2hosting.com/kb/developer-corner/mysql/reset-mysql-root-password).
+
+```
+sudo service mysqld stop
+sudo mysqld_safe --skip-grant-tables &
+mysql
+UPDATE mysql.user SET Password=PASSWORD('NEW-PASSWORD') WHERE User='root';
+FLUSH PRIVILEGES;
+exit;
+mysqladmin -u root -p shutdown
+sudo service mysqld start
+mysql -u root -p develop < vdot.sql
+```
+
+If the mysql server refuses the import increase the size of allowed packets and restart mysqld.
+
+```
+sudo vim /etc/my.cnf
+max_allowed_packet=64M
+wq
+sudo service mysqld restart
+```
+
+Now the database should work. You need to sync the config database by improting the config files. Export them all, copy them over and import them.
+
+```
+../../vendor/drush/drush/drush config-import
+```
+
+Backup the working database from inside the site directory
+
+```
+../../vendor/drush/drush/drush sql-dump --result-file=/home/ec2-user/environment/db_backup.sql
+mysql -u root -p develop < vdot.sql
+```

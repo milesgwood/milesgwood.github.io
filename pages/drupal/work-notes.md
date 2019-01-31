@@ -5281,7 +5281,33 @@ field_create_instance($instance);
 }
 ```
 
-# Upgrading to PHP 7.1
+# Update demographics maps
 
-Deadline is Oct 1.
->>>>>>> a42b51f2ce40dad3d73ba2b0437b168b912093b6
+You need to place the file on the live server with this command.
+
+```
+scp -i acquiaWCC  2018-va-estimates.csv uvacooper.prod@web-17484.prod.hosting.acquia.com:~/prod/sites/demographics/files/va_maps_minimal_test/data
+```
+
+Then check that the file is live by typing in the url.
+
+https://demographics.coopercenter.org/sites/demographics/files/va_maps_minimal_test/data/2018-va-estimates.csv
+
+# VDOT import of data into webform
+
+I'm using a custom module to import the webform submissions for past years. In D7 I'm using a viewsdata export module to create the csv and then I'm parsing the CSV to import the submission manually into drupal. [Here's the template code I'm using for this migration.](https://github.com/krrishnajee/webform-submission-import)
+
+```
+$name = "Abingdon Town";
+$users = \Drupal::entityTypeManager()->getStorage('user')
+  ->loadByProperties(['name' => $name]);
+$user = reset($users);
+if ($user) {
+  $uid = $user->id();
+  $rids = $user->getRoles();
+  echo $uid;
+}
+else{
+echo "No UID for " . $name;
+}
+```
