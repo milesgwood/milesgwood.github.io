@@ -43,3 +43,16 @@ if(document.getElementById('view-field-locality-table-column') != null){
   document.getElementById('edit-total-receipts')['value'] = parseFloat(totalReceipts);
 }
 ```
+
+
+## I want to download the currently playing song with js function
+```js
+(function(){
+  var songs = document.getElementsByTagName('video');
+  for(var i = 0 ; i < songs.length ; i++ ){
+    if(songs[i].getAttribute("jw-played") == ""){
+      window.open(songs[i]["src"]);
+    }
+  }
+}) ();
+```
