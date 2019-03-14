@@ -182,4 +182,266 @@ class DrupalInspector
 ```
 
 
-# Attempt 2 at home with PHP_Storm
+# Composer Setup on Existing sites
+
+So Composer only adds and removes code from a site. It doesn't handle any configurations or touch the databases at all. So I need to add composer to my sites but to do that I have to add all the modules at once it seems.
+
+https://github.com/grasmash/composerize-drupal
+
+We need to move the contributed code to specific folders. We want to have only one .gitignore and one composer.json. I moved all my modules to the custom folder and all the contributed modules to the contrib folder. [Anatomy of Composer Project](https://drupalize.me/tutorial/anatomy-composer-project?p=3233)
+
+The require section has `[vendor]/[package-name]": "[version constraint]"` format with a carrat ^ for the most recent version. For example `"drupal/webform_bootstrap": "^5.0",` would install the most recent webform_bootstrap module.
+
+After installing the composerize-drupal plugin I ran this command and got an error in the Acquia Logs saying it can't locate module files. I need to clear the cache somehow.
+
+```
+composer composerize-drupal --composer-root=/mnt/gfs/uvacooperdev/livedev --drupal-root=/mnt/gfs/uvacooperdev/livedev/docroot --exact-versions --no-update
+```
+
+So after moving all of the files the site is broken. I need to reset the cache. `drush cr` has no effect.
+
+I'm going to clear the opcache by making an executable bash script called `/usr/local/bin/opcache-clear`. I can't put things in bin so I had to put it above my docroot and run it.
+
+```
+#!/bin/bash
+WEBDIR=/mnt/gfs/uvacooperdev/livedev/docroot
+RANDOM_NAME=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13)
+echo "<?php opcache_reset(); ?>" > ${WEBDIR}${RANDOM_NAME}.php
+curl http://coopercenter.org/${RANDOM_NAME}.php
+rm ${WEBDIR}${RANDOM_NAME}.php
+```
+
+I also tried to clear the APC cache by running this php file. You have to stick it below the docroot to navigate to it in the browser. Acquia said it was not able to run the function. So I don't think this worked.
+
+```
+<?php
+apc_clear_cache();
+```
+
+What seemed to work was runnint the drush cr command from the docoot and the actual site folder. I also changed the memory size for all the caches in acquia and that seemed to do something. I got a 500 error instead of the WSOD.
+
+I then had to fix the theme template branding file so that the cooper center logo displayed.
+
+Now the media site is working so I will clear the cache for all the other sites and make sure they are working. I want to figure out how to clone the sites to a new Amazon EC2 instance and make a tutorial about it. My understanding is that I need to backup the database, config files, and then transfer over the custom code. Then all I need to do is run the composer lines to install the modules and dependencies.
+
+So I ran the composer generate command from the `~/dev/livedev` folder and got an actual output composer.json file.
+
+```
+composer composerize-drupal --composer-root=/home/uvacooper/dev/livedev --drupal-root=/home/uvacooper/dev/livedev/docroot --exact-versions --no-update
+```
+
+composer.json
+```
+{
+    "name": "my/project",
+    "description": "Project template for Drupal 8 projects with composer",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "",
+            "role": ""
+        }
+    ],
+    "repositories": {
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "asset-packagist": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    },
+    "require": {
+        "php": "^5.5.9|>=7.0.8",
+        "composer/installers": "^1.2.0",
+        "cweagans/composer-patches": "^1.6.5",
+        "drupal-composer/drupal-scaffold": "^2.5.4",
+        "grasmash/drupal-security-warning": "^1.0.0",
+        "oomphinc/composer-installers-extender": "^1.1",
+        "wikimedia/composer-merge-plugin": "^1.4.1",
+        "drupal/backup_migrate": "4.0.0",
+        "drupal/bootstrap_paragraphs": "2.0.0-beta6",
+        "drupal/captcha": "1.0.0-beta1",
+        "drupal/csv_serialization": "1.4.0",
+        "drupal/ctools": "3.0.0",
+        "drupal/devel": "1.2.0",
+        "drupal/externalauth": "1.1.0",
+        "drupal/google_analytics": "2.3.0",
+        "drupal/imce": "1.7.0",
+        "drupal/paragraphs": "1.5.0",
+        "drupal/pathauto": "1.3.0",
+        "drupal/quick_node_clone": "1.8.0",
+        "drupal/recaptcha": "2.3.0",
+        "drupal/token": "1.1.0",
+        "drupal/contribute": "1.0.0-beta7",
+        "drupal/calendar": "1.x-dev",
+        "drupal/colorbox": "1.4.0",
+        "drupal/config_update": "1.5.0",
+        "drupal/contact_formatter": "1.1.0",
+        "drupal/admin_toolbar": "1.25.0",
+        "drupal/entity_reference_revisions": "1.6.0",
+        "drupal/entity_usage": "2.0.0-alpha8",
+        "drupal/examples": "1.x-dev",
+        "drupal/features": "3.7.0",
+        "drupal/field_permissions": "1.0.0-rc1",
+        "drupal/first_time_login": "1.1.0",
+        "drupal/group": "1.0.0-rc2",
+        "drupal/mailchimp": "1.8.0",
+        "drupal/migrate_plus": "4.1.0",
+        "drupal/migrate_source_csv": "2.2.0",
+        "drupal/migrate_tools": "4.1.0",
+        "drupal/projects": "1.2.0",
+        "drupal/redirect_after_login": "2.3.0",
+        "drupal/shortcode": "1.0.0-rc1",
+        "drupal/simplesamlphp_auth": "3.0.0-rc6",
+        "drupal/views_data_export": "1.0.0-beta1",
+        "drupal/views_templates": "1.0.0-alpha1",
+        "drupal/viewsreference": "1.4.0",
+        "drupal/vocab": "*",
+        "drupal/webform": "5.1.0",
+        "drupal/webform_views": "5.0.0-alpha6",
+        "drupal/bootstrap": "3.16.0",
+        "drupal/core": "8.6.7"
+    },
+    "require-dev": {},
+    "config": {
+        "sort-packages": true,
+        "discard-changes": true
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "extra": {
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "patches": [],
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ],
+        "installer-paths": {
+            "drush/Commands/{$name}": [
+                "type:drupal-drush"
+            ],
+            "docroot/core": [
+                "type:drupal-core"
+            ],
+            "docroot/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "docroot/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "docroot/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "docroot/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
+            ],
+            "docroot/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "docroot/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
+            ]
+        },
+        "merge-plugin": {
+            "include": [
+                "docroot/modules/custom/*/composer.json"
+            ],
+            "replace": false,
+            "ignore-duplicates": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+```
+
+# Composer workflow
+
+```
+Backup the databases and configurations.
+./db_backup.sh
+./export_config.sh
+
+Update a single module
+$ composer update drupal/ctools --with-all-dependencies
+
+Install a new module
+$ composer require drupal/ctools:^1.1.0 --update-with-all-dependencies
+
+Update all packages within version constraints
+$ composer update
+
+Remove a unused Plugin
+composer remove drupal/vocab
+```
+
+# Checking if module is installed anywhere
+
+`drush pm-info <module_name>` checks that one site and will list out all the module's info.
+
+This command will check the current list of enabled modules which we can iterate through all the sites to check.
+
+`drush pm-list --pipe --type=module --status=enabled --no-core | grep "projects"`
+
+Here is a script that runs through all the sites and will tell you if it is installed.
+
+```
+# !/bin/bash
+docroot="/home/uvacooper/dev/livedev/docroot"
+echo "Searching for module : " $1 && \
+
+cd docroot/sites && \
+for SITE in media ceps certify newsletter cooper csr demographics lead sei sorensen support vig vdot beheardcva
+do
+    cd $SITE && \
+    echo "---Searching" $SITE && \
+    drush pm-list --pipe --type=module --status=enabled --no-core | grep $1
+    cd ..
+done
+```
+
+# Error on Updates
+
+```bash
+Updating Media
+Class Drupal\Core\Extension\Extension has no unserializer
+The following theme is missing from the file system:  bootstrap.inc:276                                                                                                      [warning]
+TypeError: Argument 1 passed to Drupal\Core\Extension\ExtensionList::Drupal\Core\Extension\{closure}() must be an instance of Drupal\Core\Extension\Extension, instance of   [error]
+stdClass given in Drupal\Core\Extension\ExtensionList->Drupal\Core\Extension\{closure}() (line 443 of
+/mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php) #0 [internal function]:
+Drupal\Core\Extension\ExtensionList->Drupal\Core\Extension\{closure}(Object(stdClass))
+#1 /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php(445): array_map(Object(Closure), Array)
+#2 /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php(422): Drupal\Core\Extension\ExtensionList->recalculatePathnames()
+#3 /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php(519): Drupal\Core\Extension\ExtensionList->getPathnames()
+#4 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/bootstrap.inc(247): Drupal\Core\Extension\ExtensionList->getPathname('entity_usage')
+#5 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/bootstrap.inc(293): drupal_get_filename('module', 'entity_usage')
+#6 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/module.inc(134): drupal_get_path('module', 'entity_usage')
+#7 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/module.inc(93): module_load_include('install', 'entity_usage')
+#8 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/install.inc(83): module_load_install('entity_usage')
+#9 /usr/local/drush8/vendor/drush/drush/commands/core/drupal/update.inc(130): drupal_load_updates()
+#10 /usr/local/drush8/vendor/drush/drush/commands/core/core.drush.inc(462): update_main()
+#11 /usr/local/drush8/vendor/drush/drush/includes/command.inc(422): drush_core_updatedb()
+#12 /usr/local/drush8/vendor/drush/drush/includes/command.inc(231): _drush_invoke_hooks(Array, Array)
+#13 /usr/local/drush8/vendor/drush/drush/includes/command.inc(199): drush_command()
+#14 /usr/local/drush8/vendor/drush/drush/lib/Drush/Boot/BaseBoot.php(67): drush_dispatch(Array)
+#15 /usr/local/drush8/vendor/drush/drush/includes/preflight.inc(66): Drush\Boot\BaseBoot->bootstrap_and_dispatch()
+#16 /usr/local/drush8/vendor/drush/drush/drush.php(12): drush_main()
+#17 {main}.
+TypeError: Argument 1 passed to Drupal\Core\Extension\ExtensionList::Drupal\Core\Extension\{closure}() must be an instance of Drupal\Core\Extension\Extension, instance of stdClass given in Drupal\Core\Extension\ExtensionList->Drupal\Core\Extension\{closure}() (line 443 of /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php).
+Drush command terminated abnormally due to an unrecoverable error.
+```
+
+The simplesamlphp composer updates breaks the sites. You need to copy the contents of simplesaml_backups to the correct locations which is the `/vendor/simplesamlphp/simplesamlphp` folder. There should be a config, metadata, cert, and log folder there.

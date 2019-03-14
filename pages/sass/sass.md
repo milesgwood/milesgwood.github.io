@@ -94,6 +94,9 @@ cd /home/uvacooper/dev/livedev/docroot/themes/coopercenter_units/css
 sass --watch .
 
 or
+sass --watch .:.
+
+or
 sass --watch .:output_dir/
 ```
 
