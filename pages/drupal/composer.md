@@ -445,3 +445,12 @@ Drush command terminated abnormally due to an unrecoverable error.
 ```
 
 The simplesamlphp composer updates breaks the sites. You need to copy the contents of simplesaml_backups to the correct locations which is the `/vendor/simplesamlphp/simplesamlphp` folder. There should be a config, metadata, cert, and log folder there.
+
+Those 4 folders are usually already populated. The log folder is empty but you need to make sure it exists. You can delete the contents of those four folders and copy the correct version from the simplesaml_backups folder.
+
+![folders1](..images/simplesamlfolder1.PNG)
+![folders2](..images/simplesamlfolder2.PNG)
+
+After replacing these folders/files, adding the missing pieces to the htaccess file, and clearing the cache, you should be able to get to the actual dev website as well as the /simplesaml admin screen. Commit the code and start testing.
+
+I'd like to be able to automate the testing of the sites after running these updates. There must be some automated testing tools available. 
