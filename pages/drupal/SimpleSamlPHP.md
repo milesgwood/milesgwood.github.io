@@ -136,6 +136,14 @@ else{
 }
 ```
 
+## Updated settings.php
+
+This works on production and dev server. For dev server you only get to the simplesaml login. On the support site you can authenticate the `cooper-dev-sp`.
+```
+$conf['simplesamlphp_auth_installdir'] = '/var/www/html/' . $_ENV['AH_SITE_NAME'] . '/simplesamlphp';
+$settings['simplesamlphp_dir'] = "/mnt/www/html/{$_ENV['AH_SITE_GROUP']}.{$_ENV['AH_SITE_ENVIRONMENT']}/vendor/simplesamlphp/simplesamlphp/";
+```
+
 ### Edit the .htaccess file in docroot
 - Add the two lines with + diff to the docroot/.htaccess
 
@@ -193,7 +201,7 @@ You should be able to login to the simplesaml admin page and see your SP configu
 
 ### Make ITS request for the support site IDP
 
-[Link to Request Page](https://virginia.service-now.com/com.glideapp.servicecatalog_cat_item_view.do?v=1&sysparm_id=6e4e233a6fc726007aeffee09d3ee433&sysparm_link_parent=966aaf8f6f9e0200287a2d65ad3ee40a&sysparm_catalog=25dfeeb46f004200287a2d65ad3ee46e&sysparm_catalog_view=service_request_catalog_portal_page)
+[Link to Request Page](https://virginia.service-now.com/nav_to.do?uri=/com.glideapp.servicecatalog_cat_item_view.do%3Fv%3D1%26sysparm_id=6e4e233a6fc726007aeffee09d3ee433)
 
 1. Add a SP to authsources.php (library/config/authsources.php)
 2. Go to the [/simplesaml admin page](https://ceps.coopercenter.org/simplesaml)

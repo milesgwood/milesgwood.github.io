@@ -16,6 +16,8 @@ Don't be a lazy pile of garbage Miles. Write something useful.
 
 ## Drupal
 
+[Config Import Export](pages/drupal/config)
+
 [SimpleSamlPHP and Drupal Netbadge setup](pages/drupal/SimpleSamlPHP)
 
 [Using Composer](pages/drupal/composer)
