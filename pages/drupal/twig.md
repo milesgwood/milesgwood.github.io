@@ -2,7 +2,7 @@
 layout: default
 ---
 
-To even start working with the templates, I need the template engine to tell me what templates are being used to display the page. I want to add a white bar to the top of the homepage with the name of the Unit on it. **Turn on Twid Debugging in sites/default/services.yml** Also turn on auto template reloading by setting **auto_reload to true** . Both of these changes need to be turned off in production as they destroy performance. 
+To even start working with the templates, I need the template engine to tell me what templates are being used to display the page. I want to add a white bar to the top of the homepage with the name of the Unit on it. **Turn on Twid Debugging in sites/default/services.yml** Also turn on auto template reloading by setting **auto_reload to true** . Both of these changes need to be turned off in production as they destroy performance.
 
 # Overriding the Front page Template
 
@@ -52,3 +52,39 @@ I found out that I can mix SASS and SCSS. I just have to make sure the file watc
     </div>
     </div>
 </div>```
+```
+
+# Poor man's debugger
+
+poor man's debugger for twig under item in items iteration
+
+```
+      <ol>
+          {% for key, value in _context.item.content  %}
+            <li>{{ key }}</li>
+            <li>{{ value }}</li>
+          {% endfor %}
+        </ol>
+```
+
+field_podcast_previous_episode
+field_cover_photo
+
+
+#attached
+#cache
+#type
+#name
+#display_id
+#arguments
+#embed
+#view
+#cache_properties
+#view_id
+#view_display_show_admin_links
+#view_display_plugin_id
+#views_contextual_links
+#pre_rendered
+view_build
+#theme_wrappers
+#title
