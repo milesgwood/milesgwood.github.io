@@ -56,16 +56,28 @@ drush --version
 
 You should now have composer installed and drush version greater than 8.0. I have 9.4-dev installed after all that code ran.
 
+Before installing drupal, clean the amazon environment of old versions of PHP. I want to use 7.1 from now on so let's erase php56 and install 71.
+
+```
+sudo yum remove php56*
+sudo yum install php71
+php --version
+
+PHP 7.1.27 (cli) (built: Mar  8 2019 18:22:16) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.1.0, Copyright (c) 1998-2018 Zend Technologies
+```
+
 Find how much memory is allowed for php. Composer will need a lot to install drupal. 128 is certainly not enough.
 
 ```
 php -r "echo ini_get('memory_limit').PHP_EOL;"
 ```
 
-Increase the allowed memory by editing your php.ini file. Set the memory limit = -1. Also set `date.timezone = America/New_York`. In vi youuse the / character to search.
+Increase the allowed memory by editing your php.ini file. Set the memory limit = -1. Also set `date.timezone = America/New_York`. In vi you use the / character to search.
 
 ```
-sudo vi /etc/php-5.6.ini
+sudo vi /etc/php-7.1.ini
 ```
 
 These lines go in the php.ini file
@@ -89,13 +101,18 @@ Restart the web server. After the install of drupal you can set the php limit ag
 sudo yum install php56-gd
 sudo yum install php56-mbstring
 sudo service httpd restart
+sudo service mysqld restart
+
+
+/usr/libexec/mysql55/mysqladmin -u root password 'new-password'
+/usr/libexec/mysql55/mysqladmin -u root -h ip-172-31-27-204 password 'new-password'
 ```
 
 Now that those settings are set, you can install drupal using composer or by downloading the package manually and unpacking it where you want it.
 
 
 ```
-composer create-project drupal-composer/drupal-project:8.x-dev my_site --stability dev --no-interaction
+composer create-project drupal-composer/drupal-project:8.x-dev website --stability dev --no-interaction
 
 curl -O https://ftp.drupal.org/files/projects/drupal-8.5.6.tar.gz
 tar xvf drupal-8.5.6.tar.gz
@@ -108,8 +125,9 @@ Now that drupal is installed, you should be able to click run in cloud9 while th
 If you are told youre missing the gd or other extensions, install it using yum.
 
 ```
-sudo yum install php56-gd
-sudo yum install php56-mbstring
+sudo yum install php71-gd
+sudo yum install php71-mbstring
+sudo yum install php71-pdo
 ```
 
 Now let's setup the database, create a root user and password.
@@ -119,6 +137,13 @@ sudo service mysqld start
 /usr/libexec/mysql55/mysql_secure_installation
 mysql -u root -p
 ```
+
+I installed core in the environment folder.
+
+```
+git clone --branch 8.8.x https://git.drupalcode.org/project/drupal.git
+
+````
 
 At this point your should be able to go through the rest of the site setup and view the finished blank site.
 
@@ -274,3 +299,103 @@ Backup the working database from inside the site directory
 ../../vendor/drush/drush/drush sql-dump --result-file=/home/ec2-user/environment/db_backup.sql
 mysql -u root -p develop < vdot.sql
 ```
+
+
+# Fresh install from scratch. I want a script for it all.
+
+## Download and install drupal
+
+Create a fresh environment and use an Amazon Linux distro, not ubuntu.
+
+```
+curl -O https://ftp.drupal.org/files/projects/drupal-8.6.14.tar.gz
+tar xvf drupal-8.6.14.tar.gz
+mv drupal-8.6.14/* ~/environment/
+mv drupal-8.6.14/.htaccess ~/environment/
+```
+
+Run the index.php file. Then preview the running application and it should take you to the install screen. The URL is NOT an ip address. It looks like this:
+
+https://e3044f433a1946d98862e9f7be037687.vfs.cloud9.us-east-2.amazonaws.com/core/install.php
+
+[Required PHP extensions](https://www.drupal.org/docs/8/system-requirements/php-requirements)
+
+```
+sudo yum remove php56*
+sudo yum install php71 -y
+sudo yum install php71-gd -y
+sudo yum install php71-mbstring -y
+sudo yum install php71-pdo -y
+sudo yum install php71-opcache -y
+sudo yum install php71-mysqlnd -y
+
+OR just enable them all
+
+sudo yum install php71* -y
+
+php --version
+
+PHP 7.1.27 (cli) (built: Mar  8 2019 18:22:16) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.1.0, Copyright (c) 1998-2018 Zend Technologies
+```
+
+After changing PHP it should still work. You can navigate to the install screen. Still don't install yet.
+
+Now let's edit the php features and settings.
+
+```
+sudo vi /etc/php-7.1.ini
+```
+
+Use / to search for memory limit and set it to 256M from 128M. Search for date.timezone and set it as below. Additionally, enable opcache which we installed above.
+
+```
+memory_limit = 256M
+date.timezone = America/New_York
+
+opcache.enable=1
+opcache.memory_consumption=128
+opcache.interned_strings_buffer=8
+opcache.max_accelerated_files=4000
+opcache.revalidate_freq=60
+opcache.fast_shutdown=1
+opcache.enable_cli=1
+```
+
+Install composer so you can easily add modules.
+
+```
+curl -sS https://getcomposer.org/installer | php && \
+sudo mv composer.phar /usr/local/bin/composer && \
+export PATH="$HOME/.composer/vendor/bin:$PATH" && \
+source ~/.bash_profile && \
+composer global require drush/drush:dev-master && \
+composer global update && \
+drush --version
+```
+
+composer --version
+Composer version 1.8.5 2019-04-09 17:46:47
+
+
+## Setup the database.
+
+Now let's setup the database, create a root user and password.
+
+```
+sudo service mysqld start
+/usr/libexec/mysql55/mysql_secure_installation
+mysql -u root -p
+CREATE DATABASE website;
+exit;
+Set the password based on your lastpass saved password
+```
+
+Start the MYSQL database
+
+```
+sudo service mysqld start
+```
+
+Now you can actually use the database and go through the install. Set database name to the one you created `website`. Set user to root and enter the password.
