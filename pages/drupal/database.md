@@ -2,6 +2,50 @@
 layout: default
 ---
 
+# Cleaning up the databases
+
+Open Hyper on laptop
+```
+cd to the /ssh-keys directory
+```
+
+Copy the user made backups and then log them into a dated folder once copied.
+```
+scp -i id_rsa2 uvacooper.prod@web-17484.prod.hosting.acquia.com:/home/uvacooper/prod/backups/on-demand/* /mnt/c/Users/miles/Sites/coopercenter/
+
+or for stage
+
+scp -i id_rsa2 uvacooper.test@staging-17490.prod.hosting.acquia.com:/home/uvacooper/test/backups/on-demand/* /mnt/c/Users/miles/Sites/coopercenter/
+```
+
+Clear out the files on prod
+```
+ssh -i id_rsa2 uvacooper.prod@web-17484.prod.hosting.acquia.com
+cd prod/backups/on-demand
+rm backup-* -f
+```
+
+Within Cloud9 you can clear out the dev and test env
+
+```
+cd ~/dev/backups/on-demand
+rm backup-* -f
+cd ~/test/backups/on-demand
+rm backup-* -f
+```
+
+Too check the file sizes of the backups run
+
+```
+ls -l --block-size=M
+```
+
+Before cleaning up the DB we had demographics at 604MB and it looks like the new DB is just as large.
+
+```
+-r--r----- 1 uvacooper www-data  604M Jun 17 23:41 backup-2019-06-17-23-11-demographics-111321630.sql
+```
+
 # Manually adding nodes from a Drupal 7 site
 ![Drupal 8 database schema](Drupal8_UPsitesWeb_Schema_10-19-2013)
 
