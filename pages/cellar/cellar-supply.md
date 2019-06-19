@@ -93,3 +93,98 @@ php_value memory_limit 256M
 php_value max_execution_time 300
 php_value max_input_time 300
 ```
+
+# Backup and Update routine - SSH
+
+All you need to do to create a backup is go into the cpanel and Download a `Home Directory Backup` and then download a `MYSQL database backup`.
+
+You can ssh into the site. You have to manually enter the password. There isn't a keyfile. Go to lastpass and search for the ssh password for the command. SSH into the site and then add the cloud9 key to the site. You get this key when you create a new environment.
+
+```
+cd ~/.ssh
+vim authorized_keys
+```
+
+Press `i` to insert text and then paste the public key into that authorized_keys file. To save hit `ESC` - `:wq`.
+
+The installer isn't working so I am going to try to [manually install c9.](https://github.com/c9/install) [Additonal tutorial](https://docs.c9.io/docs/running-your-own-ssh-workspace)
+
+This installer from github requires python 2.7 to run so you need to install it. I can't seem to install it through yum or apt-get so I am installing it manually. Current version of python is 2.6.6. I need to have at least 2.7. [This tutorial talks about how to install python without breaking the 2.6.6 version](https://tecadmin.net/install-python-2-7-on-centos-rhel/)
+
+[Go Daddy tutorial about installing python and running it in a virtual environment](https://www.godaddy.com/garage/how-to-install-and-configure-python-on-a-hosted-server/)
+
+## Installing local python copy
+
+```
+wget https://www.python.org/ftp/python/2.7.16/Python-2.7.16.tgz
+tar xzf Python-2.7.16.tgz
+cd Python-2.7.16
+```
+
+I had to create the ~/.local directory to follow the go daddy tutorial. This prefix option specifies that we want python 2.7 installed in the folder I created.
+
+```
+./configure --prefix=$HOME/.local --enable-optimizations
+make install
+```
+
+Now python 2.7 is installed in `/home/e52089674/.local/bin` and can be run from there as `./python2.7`.
+
+## Changing bash profile
+
+the Bash profile exists in the home ~ directoy. Edit the bash profile so that the 2.7 version is favored. I temporarily updated the path to favor the 2.7 version of python. I'm going to switch it back before starting cloud9 to see it that works.
+
+```
+vim .bash_profile
+source ~/.bash_profile
+```
+
+.bash_profile Original
+
+```
+PATH=$PATH:$HOME/bin
+```
+
+.bash_profile Changed
+
+```
+PATH=$HOME/.local/bin:$PATH:$HOME/bin
+```
+
+PATH before change
+
+```
+/home/e52089674/.nvm/versions/node/v10.10.0/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/home/e52089674/perl5/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/cpanel/composer/bin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin:/usr/local/bin:/usr/X11R6/bin:/home/e52089674/bin:/usr/local/bin:/usr/X11R6/bin:/home/e52089674/.local/bin:/home/e52089674/bin
+```
+
+After change
+```
+/home/e52089674/.local/bin:/home/e52089674/.nvm/versions/node/v10.10.0/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/home/e52089674/perl5/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/cpanel/composer/bin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin:/usr/local/bin:/usr/X11R6/bin:/home/e52089674/bin:/usr/local/bin:/usr/X11R6/bin:/home/e52089674/.local/bin:/home/e52089674/bin:/usr/local/bin:/usr/X11R6/bin::/home/e52089674/bin
+```
+
+```
+curl -L https://raw.githubusercontent.com/c9/install/master/install.sh | bash
+```
+
+SUCCESS!!! At the end of the cloud9 is working however this error remains.
+
+```
+Couldn't load node modules sqlite3 and sequelize from /home/e52089674/.c9/node_modules node version: v10.10.0; node execPath /home/e52089674/.nvm/versions/node/v10.10.0/bin/node Error: Cannot find module '/home/e52089674/.c9/node_modules/sqlite3/lib/binding/node-v64-linux-x64/node_sqlite3.node' Error: Cannot find module '/home/e52089674/.c9/node_modules/sqlite3/lib/binding/node-v64-linux-x64/node_sqlite3.node
+```
+
+## Update WP and Jessica
+
+The WP update to 5.2 worked well. The WooCommerce DB update worked as well. Now I need to update the jessica woocommerce theme templates.
+
+These jessica templates are out of date
+
+```
+jessica/woocommerce/emails/admin-new-order.php version 2.5.0 is out of date. The core version is 3.5.0,
+jessica/woocommerce/emails/email-header.php,
+jessica/woocommerce/single-product/meta.php
+jessica/taxonomy-product_tag.php
+```
+
+I am unable to update the `Ignite Woo updater` plugin. It fails to update. I'm hoping that once the theme is updated the plugin will sucessfully update.
+
+To update jessica I had to login to the [9seeds account](https://9seeds.com) and reactivate the jessica theme annual subscripttion. The current version is 1.3.4 and the new version is 1.7.1. I renewed the annual purchase and downloaded the new theme files.
