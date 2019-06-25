@@ -187,7 +187,7 @@ Setting the mode of the request to cors and the response header to "Access-Contr
 response.addHeader("Access-Control-Allow-Origin", "*");
 ```
 
-In the react app where we fetch the data
+In the react app where we fetch the data 
 ```
 fetch(
       `http://moebot.audio/justListen`,
@@ -195,4 +195,106 @@ fetch(
           mode: 'cors',
        }
      )
+```
+
+## Updating Node
+
+
+## 30 Days of React notes
+
+- Pure react components don't have state and are faster.
+- You can use ES6 syntax for props variables, but not props that are functions (i think)
+
+```
+// these lines do the same thing
+const activity = this.props.activity;
+const {activity} = this.props;
+```
+
+![es6 syntax](../../images/es6react.png)
+
+- Curly braces are used in `object syntax` - plain js
+
+```
+const myObject = {
+  title: "Hello",
+  id: 12345,
+  children : ["steve", "hailey", "jon"]
+}
+```
+
+- Curly braces are also used to `notate JSX template tags` which you can put plain js inside of
+
+```
+const App = (props) => {
+  return (
+    <ul>
+      {a.map(i => {      <--- note the regular js map function is inside the JSX template tag
+        return <li>{i}</li>
+      })}
+      </ul>
+    )
+}
+```
+
+- Constructors are for defining props and state
+This constuctor sets props for 3 functions which require you to bind the functions to the prop variable. The assignment takes the function declaration from the containing class and attaches it to the prop variable (i think). For regular props you can use the ES6 curly braces syntax.
+
+```
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    {/* Assigning Functions to props */}
+    this.fetchCurrentTime = this.fetchCurrentTime.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
+    {/* Assigning Variables to Props */}
+    const activity = this.props.activity;
+    const {activity} = this.props;
+
+  {/* Setting state */}
+    this.state = {
+      currentTime: null, msg: 'now'
+    }
+}
+```
+
+## Photo Slider with react
+
+To Do:
+- Figure out how to update node and nvm
+- Go through reading and highlight key learnings
+- Add JSX syntax to atom editor
+- Get atom to compile and show your notes while you edit
+- Why do they use `const` declarations instead of var or let? When do you use each?
+- Figure out how to get the compiled javascript from the JSX you create for adding to the site
+- Implement Promises using BeheardCVA JSON API
+- Create tests and test suite
+- Do all the .js files need `import React from 'react'` at the top of the file?
+- Can you use this syntax on classes and reuse components? The tutorial says it's for single use?
+
+```
+export class PhotoGrid extends React.Component {
+}
+export default PhotoGrid
+```
+
+I want to create a photo grid for BeHeardCVA using react. I'd like to explore css annimations and how to use react with JSON API on a drupal site.
+
+[Dev Tips Loading Code](https://codepen.io/devtips/pen/zBgYmy/)
+
+Using an old version of node cause I don't have time to update it in the airport. For reference `node v4.2.6`.
+
+```
+create-react-app photo-tiles
+nvm start
+```
+
+Create your own sass file and start the sass watcher.
+
+```
+cd src
+sass --watch .:.
 ```
