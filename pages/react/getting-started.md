@@ -100,7 +100,63 @@ create-react-app moe
 cd moe
 npm start
 ```
+
+Upate npm (node package manager) to the current version on laptop.
+
+```
+sudo npm install -g npm
+```
+
+Then update nod.js to the latest version [how to](https://www.hostingadvice.com/how-to/update-node-js-latest-version/)
+
+```
+node --version
+v4.2.6
+npm install npm@latest -g
+```
+
 [Basic React Tutorial and setup video](https://www.youtube.com/watch?v=A71aqufiNtQ)
+
+## Installing react on linux subsystem on windows
+
+
+Before update/install
+
+node --version v4.2.6
+nvm --version `command not found`
+npm --version `error`
+
+```
+/usr/local/lib/node_modules/npm/bin/npm-cli.js:84
+      let notifier = require('update-notifier')({pkg})
+```
+
+[Tutorial](https://gist.github.com/noygal/6b7b1796a92d70e24e35f94b53722219)
+
+First update your system. Then use the curl script to install node version manager `nvm`. Verify that nvm is installed and then run `nvm install stable` to get the latest node version.
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
+
+Close and reopen terminal
+nvm --version
+0.33.5
+
+nvm install stable
+```
+
+node --version = `v12.6.0`
+npm --version  = `v6.9.0`
+nvm --version  = `v0.33.5`
+
+Now we can create our app
+
+```
+npx create-react-app beheard-photos
+```
 
 ### Playing MP# in a html document
 
@@ -187,7 +243,7 @@ Setting the mode of the request to cors and the response header to "Access-Contr
 response.addHeader("Access-Control-Allow-Origin", "*");
 ```
 
-In the react app where we fetch the data 
+In the react app where we fetch the data
 ```
 fetch(
       `http://moebot.audio/justListen`,
