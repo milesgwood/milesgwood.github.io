@@ -354,3 +354,35 @@ Create your own sass file and start the sass watcher.
 cd src
 sass --watch .:.
 ```
+
+# BeHeardCVA Photo Grid
+
+I created a new git repo for this project and am adding bootstrap to the project for implementation on the site.
+
+```
+import 'bootstrap/dist/css/bootstrap.css';
+```
+
+React files need to be imported into one another. By adding `export default ClassName` to the end of the file, you can remove the brackets in the import statements
+
+```
+import {GalleryModal} from './GalleryModal';
+
+becomes
+
+import GalleryModal from './GalleryModal';
+```
+
+You can also simplify class definitions by importing only the React Component class
+
+```
+import React from 'react';
+export class GalleryModal extends React.Component {
+
+becomes
+
+import React, { Component } from 'react';
+export class GalleryModal extends Component;
+```
+
+Creating a photo gallery with react using [this tutorial](https://blog.alexdevero.com/learn-react-practice-create-gallery/) and [example](https://codepen.io/alexdevero/pen/pEXjmJ).
