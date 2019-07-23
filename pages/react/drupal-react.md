@@ -83,6 +83,7 @@ npm install --save react react-dom
 npm install -g babel babel-cli babel-preset-react
 npm install --save-dev @babel/preset-react
 npm install --save-dev webpack webpack-dev-server webpack-cli
+npm install --save-dev css-loader
 ```
 
 Define `.babelrc` at project root level, with following content. Currently working version.
@@ -155,7 +156,11 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ]
   },
   resolve: {
@@ -174,11 +179,28 @@ module.exports = {
 
 Now we are setup to transpile our code into useable javascript by running `npm run build`. Note that this is not the build command from the original react app. We changed it so that babel and webpack are building the `bundle.js` file which we will copy into the live drupal site.  
 
+## CSS loader for webpack
+
 The only issue remaining is the css will not work in this configuration. We need to tell webpack how to inline the css. Unfortunately creating this webpack builder has broken the react server. I will need to have two servers running. One for development and this webpack compiling version for deployment. We need a `css loader for webpack and react`.
 
 ```
 npm install --save-dev css-loader
+```
 
+Now you just need to tell webpack to include the css in the build by adding the follwing to `webpack.config.js`
+
+```
+rules: [
+  {
+    test: /\.(js|jsx)$/,
+    exclude: /node_modules/,
+    use: ['babel-loader']
+  },
+  {
+    test: /\.css$/i,
+    use: ['style-loader', 'css-loader'],
+  },
+]
 ```
 
 
