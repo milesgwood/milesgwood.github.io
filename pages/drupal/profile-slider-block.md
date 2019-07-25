@@ -147,3 +147,83 @@ The `--kill` deletes all the previously made content.
 drush genc 20 --types=profile
 drush genc 20 --types=profile --kill
 ```
+
+nodes -> 43 -> values -> field_profile_email -> x-default -> 0 -> value
+nodes -> 43 -> values -> title -> x-default
+
+```
+<h2>Output3</h2>
+{% for key, profile in content.profiles %}
+
+  {% if profile.field_profile_facebook.uri %}
+    <div class="field--item profile-link"><a href="{{ profile.field_profile_facebook.uri }}"><img class='grow' src="/themes/custom/coopercenter_units/_assets/retina-circular-icons/32/facebook.png"/></a></div>
+  {% endif %}
+  {% if profile.field_profile_linkedin.uri %}
+    <div class="field--item profile-link"><a href="{{ profile.field_profile_linkedin.uri }}"><img class='grow' src="/themes/custom/coopercenter_units/_assets/retina-circular-icons/32/linkedin.png"/></a></div>
+  {% endif %}
+  {% if profile.field_profile_twitter.uri %}
+    <div class="field--item profile-link"><a href="{{ profile.field_profile_twitter.uri }}"><img class='grow' src="/themes/custom/coopercenter_units/_assets/retina-circular-icons/32/twitter.png"/></a></div>
+  {% endif %}
+
+  {#{{ file_url(profile.field_profile_photo_square.entity.fileuri) }}#}
+
+  {#{{ profile.field_profile_photo_square.entity.url() }}#}
+  {{ profile.field_profile_photo_square.entity.fileuri }}
+
+{% endfor %}
+```
+
+Second version of the slider
+
+
+```
+<!-- Base MasterSlider style sheet -->
+<link href="/masterslider/style/masterslider.css" rel="stylesheet" /><!-- MasterSlider Template Style -->
+<link href="/masterslider/style/ms-staff-style.css" rel="stylesheet" type="text/css" /><!-- google font Lato -->
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css" />
+<!-- jQuery --><script src='/masterslider/jquery.min.js'></script><script src='/masterslider/jquery.easing.min.js'></script>
+<!-- Master Slider --><script src='/masterslider/masterslider.min.js'></script>
+<!-- template for the round images-->
+<div class="ms-staff-carousel ms-round">
+<!--Template for the square exclueds the ms-round class--><!--<div class='ms-staff-carousel'>--><!-- masterslider -->
+  <div class="master-slider" id="masterslider">
+
+    <div class="ms-slide"><img alt="lorem ipsum dolor sit" data-src="/sites/csr/files/pictures/staff-slider/8.jpg" src="/masterslider/style/blank.gif" />
+    <div class="ms-info">
+      <h3>Thomas M. Guterbock</h3>
+
+<h4>Director, Center for Survey Research</h4>
+
+<p class="email">E-Mail: <a href="mailto:tomg@virginia.edu">tomg@virginia.edu</a></p>
+
+<p class="phone">Phone: (434) 243-5223</p>
+
+<p>Thomas M. Guterbock, founding director of CSR, received extensive training in quantitative, multivariate methods and has applied these in CSR research, publications and his applied work. In his role as senior project designer and project director for the Center, he has originated and implemented numerous studies, including many that involve either complex sampling, complex questionnaire protocols, or complex analysis strategies.</p>
+
+<ul class="ms-socials ">
+	<li class="ms-ico-1 link"><a href="https://www.linkedin.com/in/tom-guterbock-3596b4/">linkedin</a></li>
+	<li class="ms-ico-tw gs"><a href="https://scholar.google.com/citations?user=8FOi1iIAAAAJ&amp;hl=en">google</a></li>
+</ul>
+</div>
+</div>
+
+<div class="ms-staff-info" id="staff-info">&nbsp;</div>
+<script type='text/javascript'>
+      var slider = new MasterSlider();
+      slider.setup('masterslider', {
+        loop: true,
+        width: 240,
+        height: 240,
+        speed: 20,
+        view: 'flow',
+        preload: 0,
+        space: 0,
+        wheel: true
+      });
+      slider.control('arrows');
+      slider.control('slideinfo', {
+        insertTo: '#staff-info'
+      });
+    </script></div>
+</div>
+```

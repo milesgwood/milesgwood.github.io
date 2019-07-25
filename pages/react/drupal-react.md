@@ -78,12 +78,24 @@ gallery-app:
 
 So develpment is easy with the `create react app` command. However deployment requires you to transpile the code with `babel` and join the files with `webpack`.
 
+To get this to work you need to run the following and then edit the package.json file to change the build command to the webpack command.
+
 ```
 npm install --save react react-dom
 npm install -g babel babel-cli babel-preset-react
 npm install --save-dev @babel/preset-react
-npm install --save-dev webpack webpack-dev-server webpack-cli
 npm install --save-dev css-loader
+
+Edit the package.json so that the build line is "build": "webpack --mode production"
+
+npm run build
+yes
+```
+
+This next line is optional to run as it will ask to install this if you run `npm run build` with the modified command `"build": "webpack --mode production"` in the package.json file.
+
+```
+npm install --save-dev webpack webpack-dev-server webpack-cli
 ```
 
 Define `.babelrc` at project root level, with following content. Currently working version.
