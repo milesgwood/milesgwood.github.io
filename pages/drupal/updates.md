@@ -332,14 +332,14 @@ I'm attempting to update the webform module separately since it is causing issue
 
 - Manually transfer the Webform module code and then run drush updb
 - Don't update the simplesamlphp module
-- Don't update the Quick Node Clone module 
+- Don't update the Quick Node Clone module
 
-# Cloud9 Updates 
+# Cloud9 Updates
 
-Since Dev Desktop takes forever to actually copy the databases, I will perform all my code and cored updates on cloud9 now. It connects directly to the DEV environment so I can quickly copy all of the databases from the live sites if something goes wrong. Then I can run the script to preform all of the database updates. 
+Since Dev Desktop takes forever to actually copy the databases, I will perform all my code and cored updates on cloud9 now. It connects directly to the DEV environment so I can quickly copy all of the databases from the live sites if something goes wrong. Then I can run the script to preform all of the database updates.
 
 1. Sync Databases from the live sites
-2. Create a new branch using the SSH connector on dev desktop or by simply connecting directly with command 
+2. Create a new branch using the SSH connector on dev desktop or by simply connecting directly with command
 ```
 ssh uvacooper.dev@staging-17490.prod.hosting.acquia.com
 git branch my-new-branch
@@ -352,16 +352,27 @@ git push --set-upstream origin core-8-5-6
 weget https://ftp.drupal.org/files/projects/drupal-8.5.6.tar.gz
 tar -xzf drupal-8.5.6.tar.gz
 ```
-4. Clear the cache with `drush cr` and then clear the varnish on acquia 
+4. Clear the cache with `drush cr` and then clear the varnish on acquia
 5. Verify all the dev sites are working and you can sign in.
 6. Run the DB update script that's above the docroot
-7. Test the sites on dev 
-8. Test the sites on stage 
+7. Test the sites on dev
+8. Test the sites on stage
 9. Copy all DB and swith the code on live
 10. Clear cache and debug errors on all live sites
 
+# Delete erroneous table manually from dev database
 
+```
+ssh -i priv_key staging-17490.prod.hosting.acquia.com
+mysql -u xxxxx -p
+enter the password on the database page
+SHOW DATABASES;
+USE xxxxxx;
+DROP TABLE entity_usage;
+```
 
+Looks like 4 sites are using a module that requires entity_usage without having it.
 
-
-
+```
+drush pm-uninstall paragraphs_library
+```
