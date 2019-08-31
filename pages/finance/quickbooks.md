@@ -29,8 +29,15 @@ Go to chart of accounts and right click on the account you're interested in. The
 
 # Sync with Bank account
 
-- Go to the `bank feeds` tab to see the last date you entered transactions (8/5/2019)
+- Go to the `bank feeds` tab to see the last date you entered transactions (8/31/2019) - cc payment made and not logged yet that day
 - Login to bank account
 - Filter transactions to all the ones that aren't entered into QB yet
 - Download the .qbo file and click it to import it
-- Review the transactions in the bank feeds tab 
+- Review the transactions in the bank feeds tab
+
+# Match Payment to already created invoice
+
+- Import the transactions by downloading the transactions as described above.
+- Click on the eDeposit transaction and go to `more options/details`
+- In that window select the matching invoices that are paid
+- If you go to income tracker now you should see the bill is no longer overdue
