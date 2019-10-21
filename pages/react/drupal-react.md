@@ -235,3 +235,92 @@ Babel gets us half way there but only translates the jsx into javascript. We sti
 ## npm run build - Fails
 
 `npm run build` offers a way to build your site but only works if it is the only thing on the site. It doesn't work for embedded drupal react components as it builds it as if it is a stand alone site.
+
+
+# JSON API
+
+Install the JSON API Module and get your content type name. The request we'll be making is `https://beheardcvadev1.coopercenter.org/jsonapi/node/gallery_image`. Note the end of the request is `/jsonapi/node/gallery_image` we'll be using that to request our assets in react.
+
+This longer form of the request gets the URL to the photo included as well.
+
+```
+https://beheardcvadev1.coopercenter.org/jsonapi/node/gallery_image?include=field_gallery_photo
+/jsonapi/node/gallery_image?include=field_gallery_photo
+
+You can add this to end to sort by date created.
+
+&sort=-created
+```
+
+The request is getting blocked by the browser since I am requesting assets from beheardcva.org from my local machine of localhost. To get around this issue simply run chrome without the security checks
+
+```
+cmd+R
+chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
+```
+
+Make sure to delete C:/Chrome dev session after every launch as it won't work a second time.
+
+We get our data in a JSON object. The data and included arrays within that object are what we want. The data array stores all the titles and the included array stores all the photo URLs.
+
+We access elements of a JSON object with a `.` so responseData.data would get us the data array. We'll want to use map to iterate through that array.
+
+When not iterating you can access an array index directly with array brackets. So you access objects elements with a `.` and array indexes with an index. Here we have a responseData object with an array called data, the first element of which is an object with an attributes object within it that contains a title string within that attributes object.
+
+```
+responseData.data[0].attributes.title
+```
+
+Render function without JSON
+
+```js
+render() {
+  return(
+    <div refs='gallery-container' className='container-fluid gallery-container'>
+      <div className='row'>
+        {
+          this.props.imgUrls.map((url, index) => {
+             return <div className='col-md-4 col-xl-3'>
+                <div className='gallery-card'>
+                  <GalleryImage className='gallery-thumbnail' src={url} alt={'Image number ' + (index + 1)} />
+
+                  <span className='card-icon-open glyphicon glyphicon-fullscreen' value={url} onClick={(e) => this.openModal(url, e)}></span>
+                </div>
+              </div>
+           })
+         }
+      </div>
+       <GalleryModal isOpen={this.state.showModal} onClick={this.closeModal} src={this.state.url} />
+    </div>
+    )
+  }
+```
+
+Render function with JSON.
+
+Note that we are accessing the included and data arrays which were received through the JSON api call.
+
+```js
+render() {
+  return(
+    <div refs='gallery-container' className='container-fluid gallery-container'>
+
+      <div className='row'>
+        {
+          this.state.included.map((image, index) => {
+             return <div key={index} className='col-xs-12 col-sm-6 col-md-4 col-xl-3'>
+                <div className='gallery-card'>
+                  <GalleryImage key={index}image className='gallery-thumbnail' src={this.state.root + image.attributes.uri.url} alt={'Image number ' + (index + 1)} />
+
+                  <span className='card-icon-open glyphicon glyphicon-fullscreen' value={image.attributes.uri.url} onClick={(e) => this.openModal(this.state.root + image.attributes.uri.url, this.state.data[index].attributes.title, e)}></span>
+                </div>
+              </div>
+           })
+         }
+      </div>
+
+       <GalleryModal key="modal" isOpen={this.state.showModal} onClick={this.closeModal} src={this.state.url} caption={this.state.caption} />
+    </div>
+    )
+  }
+```
