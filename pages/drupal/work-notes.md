@@ -5311,3 +5311,58 @@ else{
 echo "No UID for " . $name;
 }
 ```
+
+# Config sync for profile photos
+
+These are the files that need to change.
+
+Collection  Config                                                 Operation                
+            field.storage.node.field_high_quality_headshot         create
+            field.field.node.profile.field_high_quality_headshot   create
+            field.field.node.profile.field_profile_photo_square    update
+            field.field.node.profile.field_portrait_profile_photo  update
+            core.entity_form_display.node.profile.default          update
+            core.entity_view_display.node.profile.default          update
+
+To add this content type to beheardcva I have to manually find all the files. In the future, just name all fields starting with profile or some simalar word so they are easy to locate together.
+
+# Updates to perform 8.7.8
+
+These are the core and module updates that need to occour
+
+webform
+views data Export
+simplesaml_auth
+pathauto
+mailchimp
+file_permissions
+enternal_auth
+entity_reference_revisions
+captcha
+core
+
+Still to update `composer update --dry-run`
+
+Package operations: 2 installs, 20 updates, 0 removals
+  - Updating composer/installers (v1.6.0) to composer/installers (v1.7.0)
+  - Updating cweagans/composer-patches (1.6.5) to cweagans/composer-patches (1.6.7)
+  - Updating drupal-composer/drupal-scaffold (2.5.4) to drupal-composer/drupal-scaffold (2.6.1)
+  - Updating drupal/webform (5.1.0) to drupal/webform (5.4.0)
+  - Updating drupal/webform_ui (5.1.0) to drupal/webform_ui (5.4.0)
+  - Updating drupal/webform_templates (5.1.0) to drupal/webform_templates (5.4.0)
+  - Updating drupal/webform_node (5.1.0) to drupal/webform_node (5.4.0)
+  - Updating symfony/var-dumper (v3.4.21) to symfony/var-dumper (v3.4.32)
+  - Updating drupal/webform_devel (5.1.0) to drupal/webform_devel (5.4.0)
+  - Updating drupal/webform_bootstrap (5.1.0) to drupal/webform_bootstrap (5.4.0)
+  - Updating drupal/migrate_plus (4.1.0) to drupal/migrate_plus (4.2.0)
+  - Installing symfony/filesystem (v4.3.5)
+  - Installing symfony/config (v4.3.5)
+  - Updating jaimeperez/twig-configurable-i18n (v1.2) to jaimeperez/twig-configurable-i18n (v2.1)
+  - Updating gettext/gettext (v3.6.1) to gettext/gettext (v4.7.0)
+  - Updating webmozart/assert (1.4.0) to webmozart/assert (1.5.0)
+  - Updating simplesamlphp/saml2 (v3.2.6) to simplesamlphp/saml2 (v3.4.1)
+  - Updating simplesamlphp/simplesamlphp (1.16.3) to simplesamlphp/simplesamlphp (v1.17.6)
+  - Updating symfony/finder (v3.4.21) to symfony/finder (v3.4.32)
+  - Updating consolidation/output-formatters (3.4.0) to consolidation/output-formatters (3.5.0)
+  - Updating consolidation/annotated-command (2.11.0) to consolidation/annotated-command (2.12.0)
+  - Updating nikic/php-parser (v4.1.1) to nikic/php-parser (v4.2.4)
