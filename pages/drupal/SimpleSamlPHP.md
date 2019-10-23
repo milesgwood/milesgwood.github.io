@@ -384,3 +384,7 @@ if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
 
 $config['baseurlpath'] = $basepath;
 ```
+
+# Updating the simplesaml library
+
+This is an easy update. It's not managed by composer. [Download the latest zip file of the library](https://simplesamlphp.org/download). I'm upgrading to 1.7.6 now. Then you move it to the livedev server, delete the cert metadata log and config directories in the unzipped archive. In the old version under `vendor/simplesaml/simplesaml` remove everything except those four files. Then copy all the new contents into that directory. You should see no warning on the /simplesaml page now.

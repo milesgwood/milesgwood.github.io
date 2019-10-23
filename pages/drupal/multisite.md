@@ -77,3 +77,11 @@ I edited the crap out of the http.conf file for Apahce
 `chmod 444 sites/default/settings.php`
 
 I am having no success getting the install to work with the subdomain of http://sei.coopercenter.org:8083/install.php.
+
+## Creating new site on Cloud9
+
+1. Add domains to dev site in acquia cloud - solardev1.coopercenter.org
+2. Add A records to Network Solutions DNS - www.solar and solar
+3. Edit sites.php to add a new site
+4. Download Dev Desktop and create a new multisite `More > New Drupal Multisite`
+5.
