@@ -27,6 +27,8 @@ Go to chart of accounts and right click on the account you're interested in. The
 - Make sure to set the Item to `Build Cooper Center Websites`
 - Print the invoice and save it as a PDF to send it.
 
+Current invoice 2107934 has paid out 28,100 out of 45k so far as of 11/12/2019.
+
 # Sync with Bank account
 
 - Go to the `bank feeds` tab to see the last date you entered transactions (8/31/2019) - cc payment made and not logged yet that day
