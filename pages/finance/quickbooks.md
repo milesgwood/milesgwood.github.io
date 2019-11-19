@@ -27,7 +27,9 @@ Go to chart of accounts and right click on the account you're interested in. The
 - Make sure to set the Item to `Build Cooper Center Websites`
 - Print the invoice and save it as a PDF to send it.
 
-Current invoice 2107934 has paid out 28,100 out of 45k so far as of 11/12/2019. I also put in 11100 invoice leaving 500 hours???
+Current invoice 2107934 has paid out 28,100 out of 45k so far as of 11/12/2019.
+
+So far received 28100 + 11100 on my latest invoice. Total 39200. 5800 left or 232 hours.
 
 # Sync with Bank account
 
