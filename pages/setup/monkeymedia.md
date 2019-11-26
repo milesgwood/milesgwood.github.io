@@ -55,3 +55,24 @@ This requires analyzing almost all of the tracks!
 
 Skin - Eclipse 3
 Font size for lyric view - `Right click lyric view -> Choose Fields -> Text Size  20`
+
+# Moving to new drive
+
+[Wiki](https://www.mediamonkey.com/wiki/index.php/Moving_MM_to_a_new_computer)
+
+1. Sync all tags (I ignored the videos) by selecting everything and `ctrl + s`
+2. Backup the database in GitHub
+```
+Here are the default locations of these files:
+MediaMonkey 4.x:
+
+Windows 10 / 8.1 / 8 / 7 / Vista:
+C:\Users\<USERNAME>\AppData\Roaming\MediaMonkey\MM.DB
+C:\Users\<USERNAME>\AppData\Roaming\MediaMonkey\MediaMonkey.ini
+C:\Users\<USERNAME>\AppData\Roaming\MediaMonkey\MetadataCache\
+```
+3. [Update location of files in database](http://www.mediamonkey.com/forum/viewtopic.php?f=2&t=63823)
+
+Go to scripts and identify the base path for the old and new locations. I was moving from D:/Music to just M: so I entered those into the two boxes. The old path had an extra folder so I had to specify that. The new drive just has the drive letter.
+
+4. Close the program and reopen it to save the changes. 
