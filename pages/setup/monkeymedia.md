@@ -10,8 +10,13 @@ layout: default
 
 # Adding New Music
 
-Download the music to the `Dropbox/New Music Folder`
+Download the music to the `Dropbox/New Music` Folder
+Move ready files to the `SendToMonkeyMedia` folder
+On startup MM will auto organize those files.
 
+If you then edit the tags then you need to:
+1. Sync Tags - `Ctrl + s`
+2. Auto Organize - `Ctrl - r`
 
 ## New Music Settings
 
