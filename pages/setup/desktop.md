@@ -67,3 +67,43 @@ C:/Ruby24/bin/sass.bat
 $FileName$:$FileNameWithoutExtension$.css
 $FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map
 ```
+
+# Delete Large Folders on windows quickly
+
+[Tutorial](https://www.ghacks.net/2017/07/18/how-to-delete-large-folders-in-windows-super-fast/)
+
+I am trying to delete the FileHistory folder on the J drive. Here's what I ended up running.
+
+```
+j:
+cd FileHistory
+del /f /q /s *.* > NUL
+rmdir /q /s FileHistory
+```
+
+Explanation:
+
+`DEL /F/Q/S *.* > NUL`
+
+/F -- forces the deletion of read-only files.
+/Q -- enables quiet mode. You are not ask if it is ok to delete files (if you don't use this, you are asked for any file in the folder).
+/S -- runs the command on all files in any folder under the selected structure.
+`*.*` -- delete all files.
+`> NUL` -- disables console output. This improves the process further, shaving off about one quarter of the processing time off of the console command.
+
+`RMDIR /Q/S foldername`
+
+/Q -- Quiet mode, won't prompt for confirmation to delete folders.
+/S -- Run the operation on all folders of the selected path.
+foldername -- The absolute path or relative folder name, e.g. o:/backup/test1 or test1
+
+If this works then I'll delete the music folder the same way.
+
+```
+j:
+cd FileHistory
+del /f /q /s *.* > NUL
+rmdir /q /s FileHistory
+```
+
+Ditched this in favor of `Shift Delete`
