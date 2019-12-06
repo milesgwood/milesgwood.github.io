@@ -188,3 +188,26 @@ jessica/taxonomy-product_tag.php
 I am unable to update the `Ignite Woo updater` plugin. It fails to update. I'm hoping that once the theme is updated the plugin will sucessfully update.
 
 To update jessica I had to login to the [9seeds account](https://9seeds.com) and reactivate the jessica theme annual subscripttion. The current version is 1.3.4 and the new version is 1.7.1. I renewed the annual purchase and downloaded the new theme files.
+
+Current Jessica version is 1.7.1. Now there is a 1.8.2 that I need to upgrade to before doing the PHP update.
+
+[Update Jessica Instructions](https://9seeds.com/forum/jessica-instructions/)
+
+
+# Updating PHP
+
+Use the backup wizard under the cpanel to download a full backup of the site.
+
+Currently the site is on PHP 5.6
+
+Updating your PHP version shouldn't be a problem, however we can't guarantee that it's not. To protect your site, perform all of the following as part of changing the PHP version:
+
+1. Backup WordPress.
+2. Update WordPress.
+3. Update WordPress Theme.
+4. Update WordPress Plugins.
+5. Check PHP 7 compatibility of WordPress plugins and themes.
+6. Install the "PHP Compatibility Checker" plugin in WordPress.
+Change the PHP version by selecting the steps that correspond to the hosting platform your WordPress site is hosted on:
+cPanel
+Verify that your site is running on the correct version of PHP by using a phpinfo file.
