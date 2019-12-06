@@ -193,15 +193,23 @@ Current Jessica version is 1.7.1. Now there is a 1.8.2 that I need to upgrade to
 
 [Update Jessica Instructions](https://9seeds.com/forum/jessica-instructions/)
 
+I removed the old jessica files leaving the .git directory in place. Then I copied the new files to the jessica folder. Checked the `woocommerce status` page and it now reads jessica 1.8.2. Copying the files suceeded.
+
+Now I just need to make sure the email templates transferred. I need to [update the outdated templates.](https://docs.woocommerce.com/document/fix-outdated-templates-woocommerce/)
+
+Copy the default template from wp-content/plugins/woocommerce/templates/[path-to-the-template] and paste it in your theme folder found at: wp-content/themes/[path-to-theme].
+
+The admin-new-order.php has no custom text. The `email-header.php` does have custom code.
 
 # Updating PHP
 
 Use the backup wizard under the cpanel to download a full backup of the site.
 
-Currently the site is on PHP 5.6
+Currently the site is on PHP 5.6.. WooCommerce 3.8.1, WordPress 5.3
 
 Updating your PHP version shouldn't be a problem, however we can't guarantee that it's not. To protect your site, perform all of the following as part of changing the PHP version:
 
+[update instructions](https://www.godaddy.com/help/recommended-php-version-for-wordpress-32201)
 1. Backup WordPress.
 2. Update WordPress.
 3. Update WordPress Theme.

@@ -388,6 +388,35 @@ Remove a unused Plugin
 composer remove drupal/vocab
 ```
 
+Updating numerous packages without touching simplesamlphp_auth is tricky. You need to list all the updates in a single line.
+
+composer.json is missing
+```
+"drupal/config_update": "^1",
+"drupal/field_permissions": "^1",
+"drupal/views_data_export": "^1.0",
+
+shortcode
+migrate_tools
+group
+examples
+```
+
+simplesamlphp was set to rc6 when it should be 3.0. I set it manually to 3.0
+
+Ran `composer update` with json updated and hard coded simplesaml and externalauth.
+
+Removed this module - `"drupal/admin_toolbar_tools": "1.25.0",`
+
+simplesamlphp/simplesamlphp got updated anyway 1.16.3->1.18.2
+
+Even with that update the sites are working.
+
+
+For if it fails...
+
+composer update drupal/bootstrap:^3.2 drupal/webform:^5.0 drupal/views_data_export:^1.0 drupal/pathauto:^1 drupal/paragraphs:^1 drupal/mailchimp:^1 drupal/field_permissions:^1   drupal/entity_reference_revisions:^1 drupal/contribute:^1 drupal/admin_toolbar:^2
+
 # Checking if module is installed anywhere
 
 `drush pm-info <module_name>` checks that one site and will list out all the module's info.
@@ -453,4 +482,4 @@ Those 4 folders are usually already populated. The log folder is empty but you n
 
 After replacing these folders/files, adding the missing pieces to the htaccess file, and clearing the cache, you should be able to get to the actual dev website as well as the /simplesaml admin screen. Commit the code and start testing.
 
-I'd like to be able to automate the testing of the sites after running these updates. There must be some automated testing tools available. 
+I'd like to be able to automate the testing of the sites after running these updates. There must be some automated testing tools available.
