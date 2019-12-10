@@ -427,3 +427,143 @@ Strasburg Town 2018	Strasburg Town	uva-cooper-admin
 Clifton Forge Town 2018	Clifton Forge Town	uva-cooper-admin
 
 Strasburg and Clifton don't have a Locality profile.
+
+## CSR Old Migration Notes
+
+```
+drush en -y csr_projects_refresh
+drush config-import -y --partial --source=modules/custom/csr_projects_refresh/config/install/
+drush ms
+drush migrate-import csr_projects_refresh
+```
+
+```
+field_external_principal_investi‎:
+  plugin: entity_generate
+  entity_type: taxonomy_term
+  source: outside_principal_investigator
+
+NO CONFIG FOR THE TRANSFERRED TAXONOMY TERMS
+```
+
+After making it live I have some issues to correct. Mainly the problem is the CSRData field which means Surveys and Data Collection vs. Consulting services. For some reason the field did not map properly and is now in error.
+
+Fatal error again
+`Fatal error: Call to a member function getConfig() on null in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/migrate_plus/src/Plugin/migrate/process/EntityLookup.php on line 191`
+
+```
+field_project_type‎:
+  plugin: entity_generate
+  entity_type: taxonomy_term
+  source: project_type
+```
+
+After typing that same information in, I got the migration to success. THEY AREN'T THE SAME! In the top one there is a U+200E mark before the colon. That is a Left to Right mark or cairage return! WHAT THE FUCK
+```
+field_project_type:
+  plugin: entity_generate
+  entity_type: taxonomy_term
+  source: project_type
+```
+
+# CSR Migrate in old projects
+
+I want to use the migrate tools plugin to import a bunch of CSR projects into the site while deleting all the old projects. The past project type has `470` pieces of content.
+
+The old migration had 472 lines in it. It's a module called csr_projects_refresh. Now there are 508 lines in the new file.
+
+I have 13 fields to transfer over. I'm treating them all as plain text since the client is providing junk data.
+
+```
+dependencies:
+  module:
+    - migrate_source_csv
+id: csr_projects_refresh2019
+migration_tags:
+  - CSV
+migration_group: csr
+label: Refresh the CSR projects from a csv for 2019
+source:
+  plugin: csv
+  path: /mnt/gfs/uvacooperdev/livedev/docroot/modules/custom/csr_projects_refresh/2019-csr-refresh-attempt-2.csv
+  header_row_count: 1
+  keys:
+    - id
+  column_names:
+    -
+      id: id
+    -
+      name: name
+    -
+      year: year
+    -
+      description: description
+    -
+      sample: sample
+    -
+      sponsor: sponsor
+    -
+      client_name: client_name
+    -
+      project_coordinator: project_coordinator
+    -
+      principal_investigator: principal_investigator
+    -
+      mails_surveys_completed: mails_surveys_completed
+    -
+      survey_mode: survey_mode
+    -
+      survey_type: survey_type
+    -
+      client_type: client_type
+process:
+  type:
+    plugin: default_value
+    default_value: csr_projects
+  title: name
+  field_csr_project_id: id
+  field_csr_project_description: description
+  field_csr_project_client_name: client_name
+  field_csr_project_client_type: client_type
+  field_csr_project_mail_surveys: mails_surveys_completed
+  field_csr_project_investigators: principal_investigator
+  field_csr_project_coordinator: project_coordinator
+  field_csr_project_sample: sample
+  field_csr_project_sponsor: sponsor
+  field_csr_project_survey_mode: survey_mode
+  field_csr_project_survey_type: survey_type
+destination:
+  plugin: 'entity:node'
+```
+
+So now I have all the data cleaned as best I can. Now I cd into the csr folder and run the config import for my new migration. The module is already enabled since I did this before. I changed the ID to my new config file `csr_projects_refresh2019`
+
+[tutorial](https://www.drupal.org/docs/8/api/migrate-api/migrate-source-plugins/migrating-data-from-a-csv-source)
+
+```
+drush en -y csr_projects_refresh
+drush config-import -y --partial --source=modules/custom/csr_projects_refresh/config/install/
+---Now my new config shows up
+Collection  Config                                           Operation                
+            migrate_plus.migration.csr_projects_refresh2019  create
+            migrate_plus.migration.csr_projects_refresh      update
+drush ms
+drush migrate-import csr_projects_refresh2019
+drush --version
+8.1.17
+```
+
+On the migration page I see that there are 485 entities to import so I can work with that. It looks like it is working.
+
+I can't actually run the drush command. I suspect that it require drush 9 and I have drush 8. I get [this memory error](https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors) with php maxing out. I have a 512M limit.
+
+I was able to get around the memory limit and install drush9 `php -d memory_limit=-1 | composer require drush/drush:~9` Now drush is updated to
+
+```
+drush --version
+Drush Commandline Tool 9.7.1
+```
+
+Then I created a new terminal and ran `drush migrate:import csr_projects_refresh2019`
+
+It seems to have installed drush9 inside the csr site folder so I'm simply not going to track that in git. I'll ignore it.

@@ -765,46 +765,6 @@ Before I publish I need to restrict permissions possibly using this Group Module
 [Instructions](https://drupal.stackexchange.com/questions/249393/how-to-restrict-access-to-specific-content-types-by-role)
 
 
-
-
-## CSR migrations
-
-```
-drush en -y csr_projects_refresh
-drush config-import -y --partial --source=modules/custom/csr_projects_refresh/config/install/
-drush ms
-drush migrate-import csr_projects_refresh
-```
-
-```
-field_external_principal_investi‎:
-  plugin: entity_generate
-  entity_type: taxonomy_term
-  source: outside_principal_investigator
-
-NO CONFIG FOR THE TRANSFERRED TAXONOMY TERMS
-```
-
-After making it live I have some issues to correct. Mainly the problem is the CSRData field which means Surveys and Data Collection vs. Consulting services. For some reason the field did not map properly and is now in error.
-
-Fatal error again
-`Fatal error: Call to a member function getConfig() on null in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/migrate_plus/src/Plugin/migrate/process/EntityLookup.php on line 191`
-
-```
-field_project_type‎:
-  plugin: entity_generate
-  entity_type: taxonomy_term
-  source: project_type
-```
-
-After typing that same information in, I got the migration to success. THEY AREN'T THE SAME! In the top one there is a U+200E mark before the colon. That is a Left to Right mark or cairage return! WHAT THE FUCK
-```
-field_project_type:
-  plugin: entity_generate
-  entity_type: taxonomy_term
-  source: project_type
-```
-
 ## Support Site for Cooper Center
 
 I have a bunch of projects that are all over the place. Next big one is the support.cooperceter site with a trello ticketing system. I'll build one for myself and then create one for everybody else. Smaller projects if I get bored...
@@ -3404,47 +3364,6 @@ I am getting messages saying that the csv line endings are all wrong. That is wh
 
 Before I publish I need to restrict permissions possibly using this Group Module.
 [Instructions](https://drupal.stackexchange.com/questions/249393/how-to-restrict-access-to-specific-content-types-by-role)
-
-
-
-
-## CSR migrations
-
-```
-drush en -y csr_projects_refresh
-drush config-import -y --partial --source=modules/custom/csr_projects_refresh/config/install/
-drush ms
-drush migrate-import csr_projects_refresh
-```
-
-```
-field_external_principal_investi‎:
-  plugin: entity_generate
-  entity_type: taxonomy_term
-  source: outside_principal_investigator
-
-NO CONFIG FOR THE TRANSFERRED TAXONOMY TERMS
-```
-
-After making it live I have some issues to correct. Mainly the problem is the CSRData field which means Surveys and Data Collection vs. Consulting services. For some reason the field did not map properly and is now in error.
-
-Fatal error again
-`Fatal error: Call to a member function getConfig() on null in /Users/miles/Sites/devdesktop/uvacooper-dev/docroot/modules/migrate_plus/src/Plugin/migrate/process/EntityLookup.php on line 191`
-
-```
-field_project_type‎:
-  plugin: entity_generate
-  entity_type: taxonomy_term
-  source: project_type
-```
-
-After typing that same information in, I got the migration to success. THEY AREN'T THE SAME! In the top one there is a U+200E mark before the colon. That is a Left to Right mark or cairage return! WHAT THE FUCK
-```
-field_project_type:
-  plugin: entity_generate
-  entity_type: taxonomy_term
-  source: project_type
-```
 
 ## Support Site for Cooper Center
 
