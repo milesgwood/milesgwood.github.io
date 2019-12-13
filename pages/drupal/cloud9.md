@@ -31,6 +31,8 @@ echo 'export PATH=$HOME/.c9/node/bin:$PATH' >> ~/.bashrc
 . ~/.bashrc
 ```
 
+In advanced settings set the environment root to `/home/uvacooper/dev/livedev` and the nodejs binary path to `/mnt/gfs/home/uvacooper/.c9/node/bin/node`
+
 ## Module Development for Drupal on cloud9
 
 We're going to setup a fresh drupal site with could9 on an ec2 instance and get all of the essential components to start developing a module.
