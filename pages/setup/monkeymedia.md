@@ -5,7 +5,6 @@ layout: default
 # TO DO
 
 1. Condense Occasion and Comment Fields
-2. Setup the volume leveling settings - auto analyze before work
 
 
 # Adding New Music
@@ -75,4 +74,4 @@ C:\Users\<USERNAME>\AppData\Roaming\MediaMonkey\MetadataCache\
 
 Go to scripts and identify the base path for the old and new locations. I was moving from D:/Music to just M: so I entered those into the two boxes. The old path had an extra folder so I had to specify that. The new drive just has the drive letter.
 
-4. Close the program and reopen it to save the changes. 
+4. Close the program and reopen it to save the changes.
