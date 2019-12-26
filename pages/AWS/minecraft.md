@@ -30,7 +30,7 @@ cd /minecraft
 wget https://launcher.mojang.com/v1/objects/4d1826eebac84847c71a77f9349cc22afd0cf0a1/server.jar
 
 java -Xmx1024M -Xms1024M -jar server.jar nogui
-java -Xmx2G -Xms1G -jar server.jar nogui
+java -Xmx4G -Xms2G -jar server.jar nogui
 
 echo '#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
 #Mon Aug 06 18:11:14 UTC 2018
