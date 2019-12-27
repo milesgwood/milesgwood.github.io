@@ -75,7 +75,25 @@ Next I created a new role that allows s3 access through the ec2 instnace.
 
 To copy the world you have to grant access to the s3 bucket picard2020 to the ec2 instance and then run. Go to the instance settings on the ec2 dashboard and then attach the IAM role that has the policy we created above. The role is called `Minecraft_S3Bucket_Access_Role`.
 
-Copy the world to s3
+Backing up
 ```
-aws s3 cp --recursive world s3://picard2020/backups/world
+cd /minecraft
+mkdir backup-folder
+cp server.properties setup/server.properties
+cp whitelist.json setup/whitelist.json
+zip -r world.zip world
+cp world.zip setup/world.zip
+aws s3 cp --recursive setup s3://picard2020/backups/20191226-3
 ```
+
+Restoring
+```
+cd /minecraft
+aws s3 cp s3://picard2020/backups/20191226-1/Home.zip .
+unzip Home.zip
+vim server.properties
+```
+
+# See how you can restore EC2 instance from EBS volume that was saved 20GiB.
+
+# Change your launch template to avoid making too many EBS volumes saved. 
