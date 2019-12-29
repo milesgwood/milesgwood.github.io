@@ -92,8 +92,13 @@ cd /minecraft
 aws s3 cp s3://picard2020/backups/20191226-1/Home.zip .
 unzip Home.zip
 vim server.properties
+
+aws s3 cp s3://picard2020/backups/20191226-3/server.properties .
+aws s3 cp s3://picard2020/backups/20191226-3/whitelist.json .
+aws s3 cp s3://picard2020/backups/20191226-3/world.zip .
+java -Xmx7G -Xms5G -jar server.jar nogui
 ```
 
 # See how you can restore EC2 instance from EBS volume that was saved 20GiB.
 
-# Change your launch template to avoid making too many EBS volumes saved. 
+# Change your launch template to avoid making too many EBS volumes saved.
