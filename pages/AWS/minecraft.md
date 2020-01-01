@@ -23,6 +23,7 @@ Vanilla Install
 cd ~/.ssh
 chmod 400 minecraft.pem
 ssh -i "minecraft.pem" ec2-user@ec2-54-158-199-175.compute-1.amazonaws.com
+sudo yum update -y
 sudo yum -y install java-1.8.0
 sudo mkdir /minecraft
 sudo chown -R ec2-user:ec2-user /minecraft
@@ -78,12 +79,12 @@ To copy the world you have to grant access to the s3 bucket picard2020 to the ec
 Backing up
 ```
 cd /minecraft
-mkdir backup-folder
-cp server.properties setup/server.properties
-cp whitelist.json setup/whitelist.json
+mkdir backup
+cp server.properties backup/server.properties
+cp whitelist.json backup/whitelist.json
 zip -r world.zip world
-cp world.zip setup/world.zip
-aws s3 cp --recursive setup s3://picard2020/backups/20191226-3
+cp world.zip backup/world.zip
+aws s3 cp --recursive backup s3://picard2020/backups/20191231
 ```
 
 Restoring
@@ -93,9 +94,10 @@ aws s3 cp s3://picard2020/backups/20191226-1/Home.zip .
 unzip Home.zip
 vim server.properties
 
-aws s3 cp s3://picard2020/backups/20191226-3/server.properties .
-aws s3 cp s3://picard2020/backups/20191226-3/whitelist.json .
-aws s3 cp s3://picard2020/backups/20191226-3/world.zip .
+aws s3 cp s3://picard2020/backups/20191231/server.properties .
+aws s3 cp s3://picard2020/backups/20191231/whitelist.json .
+aws s3 cp s3://picard2020/backups/20191231/world.zip .
+aws s3 cp s3://picard2020/backups/20191231/Home.zip .
 java -Xmx7G -Xms5G -jar server.jar nogui
 ```
 
