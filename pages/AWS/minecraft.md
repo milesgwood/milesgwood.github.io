@@ -111,6 +111,10 @@ aws s3 cp s3://picard2020/backups/20190104/Home.zip .
 java -Xmx7G -Xms5G -jar server.jar nogui
 ```
 
+# Domain setup
+
+I created a subdomain `mc.dilatory.fun` which points to the server IP. All you need to do is add an A record in cloudflare that points to the server and doesn't proxy traffic through cloudflare (meaning you uncheck the cloud icon). The A record gets entered as just the subdomain `mc` not the whole domain. 
+
 # See how you can restore EC2 instance from EBS volume that was saved 20GiB.
 
 # Change your launch template to avoid making too many EBS volumes saved.
