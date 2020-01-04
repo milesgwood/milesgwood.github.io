@@ -84,7 +84,14 @@ cp server.properties backup/server.properties
 cp whitelist.json backup/whitelist.json
 zip -r world.zip world
 cp world.zip backup/world.zip
-aws s3 cp --recursive backup s3://picard2020/backups/20191231
+zip -r Home.zip Home
+cp Home.zip backup/Home.zip
+aws s3 cp --recursive backup s3://picard2020/backups/20190104
+
+
+or you can zip all the files into one stoarge
+zip -r backup.zip backup
+aws s3 cp backup.zip s3://picard2020/backups/20190104/
 ```
 
 Restoring
@@ -97,10 +104,10 @@ screen -S "Minecraft server"
 screen –ls
 screen –r <screen_id>
 
-aws s3 cp s3://picard2020/backups/20191231/server.properties .
-aws s3 cp s3://picard2020/backups/20191231/whitelist.json .
-aws s3 cp s3://picard2020/backups/20191231/world.zip .
-aws s3 cp s3://picard2020/backups/20191231/Home.zip .
+aws s3 cp s3://picard2020/backups/20190104/server.properties .
+aws s3 cp s3://picard2020/backups/20190104/whitelist.json .
+aws s3 cp s3://picard2020/backups/20190104/world.zip .
+aws s3 cp s3://picard2020/backups/20190104/Home.zip .
 java -Xmx7G -Xms5G -jar server.jar nogui
 ```
 
