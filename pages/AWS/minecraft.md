@@ -93,6 +93,9 @@ cd /minecraft
 aws s3 cp s3://picard2020/backups/20191226-1/Home.zip .
 unzip Home.zip
 vim server.properties
+screen -S "Minecraft server"
+screen –ls
+screen –r <screen_id>
 
 aws s3 cp s3://picard2020/backups/20191231/server.properties .
 aws s3 cp s3://picard2020/backups/20191231/whitelist.json .
