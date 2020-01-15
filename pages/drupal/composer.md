@@ -444,35 +444,6 @@ done
 
 # Error on Updates
 
-```bash
-Updating Media
-Class Drupal\Core\Extension\Extension has no unserializer
-The following theme is missing from the file system:  bootstrap.inc:276                                                                                                      [warning]
-TypeError: Argument 1 passed to Drupal\Core\Extension\ExtensionList::Drupal\Core\Extension\{closure}() must be an instance of Drupal\Core\Extension\Extension, instance of   [error]
-stdClass given in Drupal\Core\Extension\ExtensionList->Drupal\Core\Extension\{closure}() (line 443 of
-/mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php) #0 [internal function]:
-Drupal\Core\Extension\ExtensionList->Drupal\Core\Extension\{closure}(Object(stdClass))
-#1 /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php(445): array_map(Object(Closure), Array)
-#2 /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php(422): Drupal\Core\Extension\ExtensionList->recalculatePathnames()
-#3 /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php(519): Drupal\Core\Extension\ExtensionList->getPathnames()
-#4 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/bootstrap.inc(247): Drupal\Core\Extension\ExtensionList->getPathname('entity_usage')
-#5 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/bootstrap.inc(293): drupal_get_filename('module', 'entity_usage')
-#6 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/module.inc(134): drupal_get_path('module', 'entity_usage')
-#7 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/module.inc(93): module_load_include('install', 'entity_usage')
-#8 /mnt/gfs/uvacooperdev/livedev/docroot/core/includes/install.inc(83): module_load_install('entity_usage')
-#9 /usr/local/drush8/vendor/drush/drush/commands/core/drupal/update.inc(130): drupal_load_updates()
-#10 /usr/local/drush8/vendor/drush/drush/commands/core/core.drush.inc(462): update_main()
-#11 /usr/local/drush8/vendor/drush/drush/includes/command.inc(422): drush_core_updatedb()
-#12 /usr/local/drush8/vendor/drush/drush/includes/command.inc(231): _drush_invoke_hooks(Array, Array)
-#13 /usr/local/drush8/vendor/drush/drush/includes/command.inc(199): drush_command()
-#14 /usr/local/drush8/vendor/drush/drush/lib/Drush/Boot/BaseBoot.php(67): drush_dispatch(Array)
-#15 /usr/local/drush8/vendor/drush/drush/includes/preflight.inc(66): Drush\Boot\BaseBoot->bootstrap_and_dispatch()
-#16 /usr/local/drush8/vendor/drush/drush/drush.php(12): drush_main()
-#17 {main}.
-TypeError: Argument 1 passed to Drupal\Core\Extension\ExtensionList::Drupal\Core\Extension\{closure}() must be an instance of Drupal\Core\Extension\Extension, instance of stdClass given in Drupal\Core\Extension\ExtensionList->Drupal\Core\Extension\{closure}() (line 443 of /mnt/gfs/uvacooperdev/livedev/docroot/core/lib/Drupal/Core/Extension/ExtensionList.php).
-Drush command terminated abnormally due to an unrecoverable error.
-```
-
 The simplesamlphp composer updates breaks the sites. You need to copy the contents of simplesaml_backups to the correct locations which is the `/vendor/simplesamlphp/simplesamlphp` folder. There should be a config, metadata, cert, and log folder there.
 
 Those 4 folders are usually already populated. The log folder is empty but you need to make sure it exists. You can delete the contents of those four folders and copy the correct version from the simplesaml_backups folder.
