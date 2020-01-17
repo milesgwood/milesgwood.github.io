@@ -5285,3 +5285,7 @@ Package operations: 2 installs, 20 updates, 0 removals
   - Updating consolidation/output-formatters (3.4.0) to consolidation/output-formatters (3.5.0)
   - Updating consolidation/annotated-command (2.11.0) to consolidation/annotated-command (2.12.0)
   - Updating nikic/php-parser (v4.1.1) to nikic/php-parser (v4.2.4)
+
+# Paste as plain text
+
+`Cntrl + shift + v`
