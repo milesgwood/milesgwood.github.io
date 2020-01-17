@@ -148,9 +148,6 @@ drush genc 20 --types=profile
 drush genc 20 --types=profile --kill
 ```
 
-nodes -> 43 -> values -> field_profile_email -> x-default -> 0 -> value
-nodes -> 43 -> values -> title -> x-default
-
 ```
 <h2>Output3</h2>
 {% for key, profile in content.profiles %}
