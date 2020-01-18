@@ -17,7 +17,15 @@ If you then edit the tags then you need to:
 1. Sync Tags - `Ctrl + s`
 2. Auto Organize - `Ctrl - r`
 
+# Finding Duplicates
+
+In Library setting make sure that `Analyze for duplicates` is turned on. Then you can go to the Music > Files to Edit > Advanced Duplicate Search to find the duplicates and extract them.
+
+Go through the duplicates dialogues. If you recently downloaded a lot then us the recent added auto playlist to delete duplicates in just that area.
+
 ## New Music Settings
+
+DO NOT TURN ON VOLUME LEVELING!!! IT BREAKS SONGS!!!
 
 ![Leveling Volume](../../images/VolumeLeveling.png)
 
@@ -28,7 +36,7 @@ If you...
  - Edited a song to cut out the crowd noise - just let Monkey Media rescan the file.
  - Just fixed the tags for a bunch of new files - select the files and save the changes with `ctrl+s`
 
- To avoid songs I fixed the tags for from getting bumped to the top of the library I deselected the `modify timestamp when updating tags` option. I may want to change that. I JUST SET IT TO BUMP THEM UP AGAIN
+ To avoid songs I fixed the tags for from getting bumped to the top of the library I deselected the `modify timestamp when updating tags` option. I may want to change that.
 
 ## Auto Organize Schema
 
