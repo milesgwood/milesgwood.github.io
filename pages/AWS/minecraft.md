@@ -113,8 +113,37 @@ java -Xmx7G -Xms5G -jar server.jar nogui
 
 # Domain setup
 
-I created a subdomain `mc.dilatory.fun` which points to the server IP. All you need to do is add an A record in cloudflare that points to the server and doesn't proxy traffic through cloudflare (meaning you uncheck the cloud icon). The A record gets entered as just the subdomain `mc` not the whole domain. 
+I created a subdomain `mc.dilatory.fun` which points to the server IP. All you need to do is add an A record in cloudflare that points to the server and doesn't proxy traffic through cloudflare (meaning you uncheck the cloud icon). The A record gets entered as just the subdomain `mc` not the whole domain.
 
 # See how you can restore EC2 instance from EBS volume that was saved 20GiB.
+
+Login and reattach volume. You must put the instance in the same Availability Zone.
+
+`lsblk` to show disks
+
+NAME          MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+nvme0n1       259:0    0  20G  0 disk
+ nvme0n1p1   259:1    0  20G  0 part /
+ nvme0n1p128 259:2    0   1M  0 part
+nvme1n1       259:3    0  20G  0 disk
+ nvme1n1p1   259:4    0  20G  0 part
+ nvme1n1p128 259:5    0   1M  0 part
+
+Check if there are files on a partition
+```
+sudo file -s /dev/nvme1n1p1
+/dev/nvme1n1p1: SGI XFS filesystem data (blksz 4096, inosz 512, v2 dirs)
+
+This means there is data on there.
+```
+
+The device you want to mount is 20G and doesn't have a mountpoint.
+
+```
+sudo mount -t xfs -o nouuid /dev/nvme1n1p1 /new
+sudo umount -d /dev/nvme1n1p1
+```
+
+3.230.118.222
 
 # Change your launch template to avoid making too many EBS volumes saved.
