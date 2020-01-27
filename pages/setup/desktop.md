@@ -107,3 +107,9 @@ rmdir /q /s FileHistory
 ```
 
 Ditched this in favor of `Shift Delete`
+
+# Computer wake settings
+
+[How to choose which devices to wake the machine](https://windowsreport.com/windows-8-windows-10-wakes-sleep-fix/)
+
+Go to device manager and make sure only the devices you want to wake your machine from sleep can. Right now I have keyboard and mouse doing it. The realtek internet card was waking the computer when I didn't want to. It was part of a wake on LAN option.
