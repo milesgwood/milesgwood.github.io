@@ -106,3 +106,7 @@ sass --watch .:output_dir/
 background: lighten( $lt_grey,  5% )
 background: lighten( $lt_grey,  10% )
 ```
+
+# Animations
+
+Tip for chrome. You can inspect animations in the devtools. It's next to the console.

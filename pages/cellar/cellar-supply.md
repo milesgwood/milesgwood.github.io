@@ -219,3 +219,7 @@ Updating your PHP version shouldn't be a problem, however we can't guarantee tha
 Change the PHP version by selecting the steps that correspond to the hosting platform your WordPress site is hosted on:
 cPanel
 Verify that your site is running on the correct version of PHP by using a phpinfo file.
+
+#CSS updates
+
+Red color `#C42030`

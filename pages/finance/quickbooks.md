@@ -2,6 +2,14 @@
 layout: default
 ---
 
+# Tips
+
+Make sure you view reports on a `cash` basis, not accrual. `Cash` style means you only log it when money changes hands. You don't log income when you invoice it. You log it when you get the check.  
+
+# View all Expenses
+
+There is a view of everything under reports. `Reports > Company Financial > Profit Loss`. This is the best view for finding things that you missed. You can specify the time period just make sure the use the `cash` report basis.
+
 # View Payroll entries so far
 
 To view the payroll entries so far this year. They should be recorded when you update the bank feeds and I should be listed as the payee.

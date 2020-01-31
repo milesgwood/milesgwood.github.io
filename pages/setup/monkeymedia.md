@@ -6,6 +6,13 @@ layout: default
 
 1. Condense Occasion and Comment Fields
 
+# Auto Organize
+
+Make sure if you use `Ctrl R` that this is the new path it uses.
+
+```
+M:\<Artist>\<Album>\<Track#>-<Title>
+```
 
 # Adding New Music
 
