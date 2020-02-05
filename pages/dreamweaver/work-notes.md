@@ -27,7 +27,7 @@ I still need to generate a git key so that I don't need to enter a git password.
 `F12`  - opens up the browser live preview
 `CNTRL + E` - Quick edit the stylesheet from within the HTML  
 
-I was really hopeful for the quick edit function for sass. Unfortunatly quick edit only lets you edit the compiled css and not the sass. That sucks.
+I was really hopeful for the quick edit function for sass. Unfortunately quick edit only lets you edit the compiled css and not the sass. That sucks.
 
 ## Dynamically creating New Items
 

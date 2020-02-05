@@ -2,6 +2,7 @@
 layout: default
 ---
 #SASS phpFileStorm setup Sass
+
 ![Screenshot of setup](assets/images/Screen Shot 2017-09-05 at 3.17.44 PM.png)
 
 ```
@@ -110,3 +111,21 @@ background: lighten( $lt_grey,  10% )
 # Animations
 
 Tip for chrome. You can inspect animations in the devtools. It's next to the console.
+
+# Border box
+
+By default the box sizing is `content-box`.  That means that the width doesn't include the padding or border which is annoying. When you set something to be 200px you expect it to be 200px.
+
+How do I set the box-sizing to border-box everywhere?
+
+[source](https://w3bits.com/box-sizing-reset/)
+
+```
+html
+  box-sizing: border-box
+
+*,
+*:before,
+*:after
+  box-sizing: inherit
+```
