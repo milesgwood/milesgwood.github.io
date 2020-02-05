@@ -86,7 +86,7 @@ zip -r world.zip world
 cp world.zip backup/world.zip
 zip -r Home.zip Home
 cp Home.zip backup/Home.zip
-aws s3 cp --recursive backup s3://picard2020/backups/20190104
+aws s3 cp --recursive backup s3://picard2020/backups/20200204
 
 
 or you can zip all the files into one stoarge

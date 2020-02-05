@@ -6,6 +6,29 @@ layout: default
 
 Make sure you view reports on a `cash` basis, not accrual. `Cash` style means you only log it when money changes hands. You don't log income when you invoice it. You log it when you get the check.  
 
+You can see the entire history of one account (say my NFCU checking account or the Expenses to be repaid accounts.) That way you can `view all transactions for that specific account`
+
+# K-1 payments to fix logs
+
+Best way is to add the transactions with a real transaction from my bank account to me. That said I have so many purchases that happen outside of the Biz Bank account that I frequently need to re-emburse accounts like `Miles General Transfers` (which should be closed soon) and mainly the `reimbursed expenses account`
+
+
+Need to be manually entered in a check entry `ctrl + w` where:
+----
+
+- Bank Account is where the money needs to come from. For example it could come form
+  - Miles General Transfers - needs to be empty
+  - NFCU Checking account
+- Account under Expenses is `Miles K-1 Distributions EOY`
+- Memo `FY 2017 K-1 Pass Through Distribution of profits - not subject to payroll taxes - 1040 needs a K-1 attached`
+- Amount is the ordinary income on your personal k-1 after you compete your 1120s
+
+
+
+# Chart of Accounts
+
+I deleted the two banks that had no real data in them. That was the Suntrust and wells fargo bank accounts I opened for the purpose of simply getting a bank bonus. I had to move their transaction entries to my personal NFCU account which represents transfers that are not expenses.
+
 # View all Expenses
 
 There is a view of everything under reports. `Reports > Company Financial > Profit Loss`. This is the best view for finding things that you missed. You can specify the time period just make sure the use the `cash` report basis.
@@ -15,6 +38,10 @@ There is a view of everything under reports. `Reports > Company Financial > Prof
 To view the payroll entries so far this year. They should be recorded when you update the bank feeds and I should be listed as the payee.
 
 `Reports > Memorized reports > payroll 2019`
+
+# Add a Journal Entry (not an expense!!! usually just a tranfer or note of that a K-1 payment was paid)
+
+
 
 # Add a new expense (Write a check)
 
