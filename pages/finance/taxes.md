@@ -2,6 +2,11 @@
 layout: default
 ---
 
+# City Business License
+
+- No new property to report
+- 2019 Gross sales 59596
+
 # Why am I an S-corp
 
 S corps are pass through entities. A pass-through entity is a special business structure that is used to reduce the effects of double taxation. Pass-through entities `don't pay income taxes at the corporate level`. Instead, corporate income is allocated among the owners, and income taxes are only levied at the individual owners' level.
