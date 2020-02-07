@@ -14,3 +14,10 @@ npm --version
 npm install http-server -g
 http-server /mnt/w/milesgreatwood.com
 ```
+
+# Format Code
+
+Go to `Edit > Code > Apply Source Formatting` or use the hotkey you set in `Edit > Keyboard Shortcuts`.
+
+Apply Source Formatting: `Ctrl + /`
+Apply Source Formatting to Selection: `Ctrl + Shift + /`

@@ -98,3 +98,18 @@ So you need to create a dwt template for all of the home pages.
 5. Make sidemenu links with Windows > Properties window and the Design View
 6. Click HTML and then drag the target to the html page you want to edit
 7. Make Editable regions (Select the area > Insert > Template > Editable Region)
+
+# Starting local npm server
+
+You can use a node server instead of the dreamweaver one. That way the markup is cleaner.
+```
+npm --version
+6.10.0
+npm install http-server -g
+http-server /mnt/w/milesgreatwood.com
+```
+
+2/6/20
+# Adding and using bootstrap
+
+How do I optionally add it to pages. And give me an overview of bootstrap.
