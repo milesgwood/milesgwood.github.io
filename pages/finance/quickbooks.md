@@ -23,8 +23,6 @@ Need to be manually entered in a check entry `ctrl + w` where:
 - Memo `FY 2017 K-1 Pass Through Distribution of profits - not subject to payroll taxes - 1040 needs a K-1 attached`
 - Amount is the ordinary income on your personal k-1 after you compete your 1120s
 
-
-
 # Chart of Accounts
 
 I deleted the two banks that had no real data in them. That was the Suntrust and wells fargo bank accounts I opened for the purpose of simply getting a bank bonus. I had to move their transaction entries to my personal NFCU account which represents transfers that are not expenses.
@@ -65,6 +63,8 @@ Go to chart of accounts and right click on the account you're interested in. The
 Current invoice 2107934 has paid out 28,100 out of 45k so far as of 11/12/2019.
 
 So far received 28100 + 11100 on my latest invoice. Total 39200. 5800 left or 232 hours.
+
+2/14/2020 - Invoicing for 192 hours on 2/15/2020. That leaves 40 hours left of the 232.
 
 # Sync with Bank account
 
