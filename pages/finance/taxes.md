@@ -45,7 +45,7 @@ I need to figure out what percent Federal Income Tax and State Income Tax I shou
 
 For federal income tax I calculated on a 36000 salary I owe $4126 or 0.1146111111%.
 
-With `5716.09` additional income from the business for the year that increases my income slightly. Calculations are in the sheet but the total federal income tax owed by me is `$5036.14`. I have already paid  `$4,125.60` to the IRS through my payroll service which is exactly how much I'm supposed to be paying were it not for the dividend income.
+With `5716.09` additional income from the business for the year that increases my income slightly. Calculations are in the sheet but the total federal income tax owed by me is `$5036.14`. I have already paid  `$4,125.60` to the IRS through my payroll service which is exactly how much I'm supposed to be paying were it not for the extra income.
 
 What May Happen
 ----
@@ -116,3 +116,7 @@ This is a personal tax return due March 15th. You filed it through `turbotax onl
 # Property Tax
 
 For Charlottesville I'm required to list all business property and pay tax on it. I need to create a way to describe this in Quickbooks. This includes computers, desk furniture, all office supplies etc. It does NOT include software and consumable items like paper products etc.
+
+# 2020 Taxes
+
+You download your W-2 through the payroll for free app. Go to Tax Forms and load the 2019 W-2 for all employees.

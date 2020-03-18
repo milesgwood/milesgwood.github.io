@@ -16,6 +16,14 @@ Basic HTML editor
 "editor.editor.basic_html"
 ```
 
+Permissions
+
+```
+user.role.editor
+user.role.anonymous
+user.role.authenticated
+```
+
 
 # Flex Grid - All New Files
 
@@ -62,4 +70,51 @@ These are associated with allowing the remote video field to be included in othe
 "field.field.paragraph.bp_columns_two_uneven.bp_column_content_2"
 "field.field.paragraph.bp_columns.bp_column_content"              
 "field.field.node.page.field_paragraphs"      
+```
+
+# Spotlight Section
+
+New Files
+```
+"field.storage.paragraph.field_spotlight_section_title"            
+"field.storage.paragraph.field_spotlight_link"                     
+"field.storage.paragraph.field_spotlight_image"                    
+"field.storage.paragraph.field_spotlight_body"                     
+"field.storage.paragraph.field_spotlight_background_color"         
+"paragraphs.paragraphs_type.spotlight"                             
+"field.field.paragraph.spotlight.field_spotlight_section_title"    
+"field.field.paragraph.spotlight.field_spotlight_link"             
+"field.field.paragraph.spotlight.field_spotlight_image"            
+"field.field.paragraph.spotlight.field_spotlight_body"             
+"field.field.paragraph.spotlight.field_spotlight_background_color"
+"core.entity_view_display.paragraph.spotlight.default"             
+"core.entity_form_display.paragraph.spotlight.default"             
+```
+
+Files updated or modified
+```
+field.field.node.page.field_paragraphs
+user.role.editor
+user.role.anonymous
+user.role.authenticated
+```
+
+# News Update
+
+Fields that are required to create the news update content type.
+```
+field.storage.node.field_news_update_image            
+node.type.news_update                                 
+field.field.node.news_update.field_news_update_image  
+field.field.node.news_update.body                     
+core.entity_form_display.node.news_update.default     
+core.entity_view_display.node.news_update.teaser      
+core.entity_view_display.node.news_update.default     
+```
+
+Block Configuration for the news update block
+
+```
+block.block.newsupdates
+
 ```
