@@ -41,6 +41,10 @@ To view the payroll entries so far this year. They should be recorded when you u
 
 Journal entries are NOT expenses!!! These are corrections to transfers you have made in the past.
 
+Memorized Reports > Accountant > General Ledger
+
+This will let you see all of the Miles General Transfer foolishness.
+
 # K-1 Payments
 
  K-1 is how you pass through the biz income to your personal return. These payments are not subject to payroll taxes, just income tax.  On your personal 1040 `form 8453-s` the ordinary business income shows up in `Part 1 Line 3` Ordinary business income.
