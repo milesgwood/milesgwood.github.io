@@ -112,9 +112,9 @@ core.entity_view_display.node.news_update.teaser
 core.entity_view_display.node.news_update.default     
 ```
 
-Block Configuration for the news update block
+Block Configuration for the news update block. The view creates the block.
 
 ```
-block.block.newsupdates
-
+views.view.news_updates
+block.block.views_block__news_updates_block_1
 ```

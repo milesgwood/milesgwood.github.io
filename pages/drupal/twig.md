@@ -88,3 +88,16 @@ field_cover_photo
 view_build
 #theme_wrappers
 #title
+
+
+# Retrieve the image field url
+
+The only peice you need to change is the `field_news_update_image` part. The second `field_media_image` comes from the image being uploaded as a Image media type.
+
+
+```
+<img src="{{ file_url(node.field_news_update_image.entity.field_media_image.entity.fileuri) }}"/>
+```
+
+https://gist.github.com/raphaellarrinaga/c1d71f69873c967ff74f8ec09cbdf9e1
+https://gbyte.co/blog/get-image-url-from-media-field-twig

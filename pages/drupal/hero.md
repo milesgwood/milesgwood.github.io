@@ -16,7 +16,7 @@ The video gets displayed in the `page--node.html.twig` file right after the main
 {# Hero Video #}
 {% if node.field_hero_video_direct_link.value %}
     <div class="hero-container">
-      <video autoplay loop muted class="hero-bg">
+      <video autoplay loop muted playsinline class="hero-bg">
         <source src="{{ node.field_hero_video_direct_link.value }}" type="video/webm" alt="HTML5 background video">
       </video>
     </div>
