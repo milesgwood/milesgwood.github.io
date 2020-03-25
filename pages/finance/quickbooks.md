@@ -37,8 +37,22 @@ To view the payroll entries so far this year. They should be recorded when you u
 
 `Reports > Memorized reports > payroll 2019`
 
-# Add a Journal Entry (not an expense!!! usually just a tranfer or note of that a K-1 payment was paid)
+# Journal Entry
 
+Journal entries are NOT expenses!!! These are corrections to transfers you have made in the past.
+
+# K-1 Payments
+
+ K-1 is how you pass through the biz income to your personal return. These payments are not subject to payroll taxes, just income tax.  On your personal 1040 `form 8453-s` the ordinary business income shows up in `Part 1 Line 3` Ordinary business income.
+
+ On the `K-1 of your 1020S` the Ordinary income is in `part 3 line 1` - ordinary business income.
+
+2018 - $8342 is accurate
+2019 - $2338 - not yet paid out as of 3/24/20
+
+The currently existing journal entries are transfers or notes of that a K-1 payment was paid. The payer account should be your business checking account. Right now it is not.
+
+These journal entries are in error. They should be coming out of the NFCU checking account.
 
 
 # Add a new expense (Write a check)

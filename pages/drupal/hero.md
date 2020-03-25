@@ -31,6 +31,9 @@ The video gets displayed in the `page--node.html.twig` file right after the main
 {% endif %}
 ```
 
+Safari doesn't allow autoplaying videos without user input.
+
+
 # Displaying full width
 
 This is a hack to get the video to display full width within the container no matter the page size. You add the surrounding div and the styling on the iframe itself.
