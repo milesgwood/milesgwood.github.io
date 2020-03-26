@@ -1,4 +1,4 @@
-# General Sync
+# General Sync - In sections
 
 Allow remote video to appear in additional content as well as column content.
 ```                       
@@ -9,6 +9,11 @@ Allow remote video to appear in additional content as well as column content.
 "field.storage.paragraph.bp_column_content"
 ```
 
+View for seeking out advanced HTML pages
+```
+"views.view.pages_with_advanced_html"
+```
+
 Basic HTML editor
 
 ```
@@ -16,14 +21,13 @@ Basic HTML editor
 "editor.editor.basic_html"
 ```
 
-Permissions
+Permissions - `MUST BE CUSTOM TO THE SITE`
 
 ```
 user.role.editor
 user.role.anonymous
 user.role.authenticated
 ```
-
 
 # Flex Grid - All New Files
 
