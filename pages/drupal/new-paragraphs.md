@@ -52,7 +52,7 @@ user.role.authenticated
 ```
 
 
-# Remove Video
+# Remote Video
 
 ```
 "paragraphs.paragraphs_type.remote_video"    
@@ -103,18 +103,22 @@ user.role.authenticated
 
 Fields that are required to create the news update content type.
 ```
-field.storage.node.field_news_update_image            
-node.type.news_update                                 
-field.field.node.news_update.field_news_update_image  
-field.field.node.news_update.body                     
-core.entity_form_display.node.news_update.default     
-core.entity_view_display.node.news_update.teaser      
-core.entity_view_display.node.news_update.default     
+"field.storage.node.field_news_update_image"            
+"node.type.news_update"                                 
+"field.field.node.news_update.field_news_update_image"  
+"field.field.node.news_update.body"
+"field.field.node.news_update.field_news_update_additional_con"
+"field.storage.node.field_news_update_additional_con"                     
+"core.entity_form_display.node.news_update.default"     
+"core.entity_view_display.node.news_update.teaser"      
+"core.entity_view_display.node.news_update.default"  
 ```
 
 Block Configuration for the news update block. The view creates the block.
 
 ```
-views.view.news_updates
-block.block.views_block__news_updates_block_1
+"views.view.news_updates"
+"views.view.news_updates_full_grid"
+"block.block.views_block__news_updates_full_grid_block_1"
+"block.block.views_block__news_updates_block_1"
 ```
