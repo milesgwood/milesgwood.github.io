@@ -56,7 +56,7 @@ user.role.authenticated
 ```
 
 
-# Remote Video
+# Youtube Video
 
 ```
 "paragraphs.paragraphs_type.remote_video"    

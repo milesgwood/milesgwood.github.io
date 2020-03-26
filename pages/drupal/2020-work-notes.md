@@ -67,3 +67,39 @@ The only peice you need to change is the `field_news_update_image` part. The sec
 # CSS fucked up on PC browser - bootstrap not loading from CDN
 
 Changed CDN provider to CDNJS from jsDeliver. That seems to have solved the local issue..
+
+# Playing hero video on safari
+
+Needed to add the `playsinline` attribute on `page--node.html.twig` I WAS LOOKING AT THE WRONG TEMPLATE FILE AGAIN
+
+# Composer Updates Core 882-884
+
+Prod is on 20200303-modules
+
+Attempting to update everything except simplesaml and external_auth.
+
+```
+composer update --dry-run
+
+- Updating psr/log (1.1.2) to psr/log (1.1.3)
+- Updating doctrine/reflection (v1.1.0) to doctrine/reflection (1.2.0)
+- Updating doctrine/persistence (1.3.6) to doctrine/persistence (1.3.7)
+- Updating drupal/core (8.8.2) to drupal/core (8.8.4)
+- Updating drupal/admin_toolbar (2.0.0) to drupal/admin_toolbar (2.2.0)
+- Updating drupal/entity_reference_revisions (1.7.0) to drupal/entity_reference_revisions (1.8.0)
+- Updating drupal/webform (5.8.0) to drupal/webform (5.9.0)
+- Updating drupal/webform_ui (5.8.0) to drupal/webform_ui (5.9.0)
+- Updating drupal/webform_templates (5.8.0) to drupal/webform_templates (5.9.0)
+- Updating drupal/webform_node (5.8.0) to drupal/webform_node (5.9.0)
+- Updating drupal/webform_devel (5.8.0) to drupal/webform_devel (5.9.0)
+- Updating drupal/webform_bootstrap (5.8.0) to drupal/webform_bootstrap (5.9.0)
+- Updating webmozart/assert (1.7.0) to webmozart/assert (1.5.0)
+- Updating simplesamlphp/simplesamlphp (v1.18.4) to simplesamlphp/simplesamlphp (v1.18.5)
+- Updating simplesamlphp/simplesamlphp-module-discopower (v0.9.1) to simplesamlphp/simplesamlphp-module-discopower (v0.9.3)
+- Updating simplesamlphp/simplesamlphp-module-authorize (v0.9.1) to simplesamlphp/simplesamlphp-module-authorize (v0.9.2)
+- Updating simplesamlphp/simplesamlphp-module-authfacebook (v0.9.2) to simplesamlphp/simplesamlphp-module-authfacebook (v0.9.3)
+- Updating simplesamlphp/saml2 (v4.1.4) to simplesamlphp/saml2 (v4.1.7)
+- Updating phpmailer/phpmailer (v6.1.4) to phpmailer/phpmailer (v6.1.5)
+- Updating psy/psysh (v0.9.12) to psy/psysh (v0.10.2)
+- Updating phpspec/prophecy (v1.10.2) to phpspec/prophecy (v1.10.3)
+```
