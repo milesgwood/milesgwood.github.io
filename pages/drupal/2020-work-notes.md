@@ -102,4 +102,10 @@ composer update --dry-run
 - Updating phpmailer/phpmailer (v6.1.4) to phpmailer/phpmailer (v6.1.5)
 - Updating psy/psysh (v0.9.12) to psy/psysh (v0.10.2)
 - Updating phpspec/prophecy (v1.10.2) to phpspec/prophecy (v1.10.3)
+
+composer update
 ```
+
+Copied the simplesaml 4 directories
+
+Ran DB updates 
