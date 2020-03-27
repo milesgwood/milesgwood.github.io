@@ -2,6 +2,19 @@
 layout: default
 ---
 
+# Running Composer
+
+```
+composer update drupal/core --with-all-dependencies
+```
+
+Always use tagged versions! Ideally you use a relaxed version requirement that allows for compatible updates. This should be expressed as a tilde-two-number version requirement: ~1.2 would install a version 1.2.0 and up (like 1.2.99 or 1.2.100), and also 1.3 and up. If you need a certain patch release: Caret-three-number version ^1.2.10 will install 1.2.10 or up, also 1.3 and up.
+
+
+```
+composer self-update
+```
+
 # Installing Composer
 
 I need the composer command line tools to install dependencies for a csv_serialization module needed for the CEPS site. It allows you to directly install dependencies from the command line like `composer require drupal/csv_serialization`. So I'm starting on [the composer site.](https://getcomposer.org/doc/00-intro.md)
@@ -454,3 +467,60 @@ Those 4 folders are usually already populated. The log folder is empty but you n
 After replacing these folders/files, adding the missing pieces to the htaccess file, and clearing the cache, you should be able to get to the actual dev website as well as the /simplesaml admin screen. Commit the code and start testing.
 
 I'd like to be able to automate the testing of the sites after running these updates. There must be some automated testing tools available.
+
+# Understand Composer
+
+[Composer Tricks](https://www.droptica.com/blog/10-tricks-work-efficiently-composer-drupal-8/)
+
+Updating core
+
+```
+composer update drupal/core --with-all-dependencies
+
+```
+
+Increase speed of composer by letting it do parallel downloads. Will become redundant after Composer version 2.0. I am in composer version 1.9.2
+
+```
+composer global require hirak/prestissimo
+```
+
+
+## Composer optimizations
+
+```
+composer require zaporylie/composer-drupal-optimizations:^1.1
+
+If that fails
+
+php -d memory_limit=-1 /home/uvacooper/.c9/node/bin/composer require zaporylie/composer-drupal-optimizations:^1.1
+
+```
+
+Optimise your production version
+
+There are some basic rules regarding using Composer in a production environment. Adhering to them will increase the security of your website and speed it up:
+
+Use only the composer install command in the production environment and make sure that composer.lock is always in the repository. If you allow composer update to run, you might run into some unforeseen consequences. You should always do updates in a development environment – This approach will allow you to avoid problems with incompatibilities of new versions.
+Use the composer install --no-dev option to stop development libraries from installing. These are declared in the require-dev section of composer.json.
+Use the composer install --optimize-autoloader option to build a class map. Thanks to this, the autoloader will not search for files on disk according to PSR-4/PSR-0 rules, instead, it will get a path to a file with its definition based on the class name. Activating this optimisation in the development environment is troublesome, as it requires cleaning the cache after each change in the project file structure.
+
+
+Composer memory Limits
+
+You can run single composer commands with no memory limit.
+
+```
+php -d memory_limit=-1 /home/uvacooper/.c9/node/bin/composer
+```
+
+There has to be some way to use the output of `php -ini` to get the PHP_MEMORY_LIMIT variable. Look into grep
+
+## composer.json
+
+The `tilda` in a composer json file means that the last digit specified can go up.
+
+The `~` operator is best explained by example: ~1.2 is equivalent to >=1.2 <2.0.0, while ~1.2.3 is equivalent to >=1.2.3 <1.3.0.
+
+`Caret Version Range (^)`
+The ^ operator behaves very similarly but it sticks closer to semantic versioning, and will always allow non-breaking updates. For example ^1.2.3 is equivalent to >=1.2.3 <2.0.0 as none of the releases until 2.0 should break backwards compatibility. For pre-1.0 versions it also acts with safety in mind and treats ^0.3 as >=0.3.0 <0.4.0.

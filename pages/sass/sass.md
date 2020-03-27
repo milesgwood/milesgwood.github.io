@@ -129,3 +129,50 @@ html
 *:after
   box-sizing: inherit
 ```
+
+# Sass Ampresand tutorial
+https://css-tricks.com/the-sass-ampersand/
+
+The ampresand symbol refers to all of the parent compiled classes
+
+```
+.parent {
+  .child {
+    .grand-child & {
+      &.sibling { }
+    }
+  }
+}
+```
+
+Compiles to
+
+```
+.grand-child .parent .child.sibling {}
+```
+
+Notice that the compiled version starts at the outside most layer `parent child` and then adds that into the `grand-child` on the right.
+
+If you want to keep things nested you can do that without making the sass too specific.
+
+`@at-root` to the rescue
+
+You can exit the sass tree with `@at-root` . That makes that level taken out of the tree as if it were its own thing.
+
+```
+.grand-parent {
+  .parent {
+    @at-root .child {}
+  }
+}
+```
+
+https://cssanimation.rocks/pseudo-elements/
+
+Pseudo elements are added in for free before or after elements. You need to give them content to make them visible.
+
+Psuedo elements are not psuedo classes. Pseudo elements use two :: while classes only use one : .
+
+# Grep
+
+You can use grep to find function definitions. `grep -rli 'function_name_here'` will recursivley search the current directory for (case insensitive) function names and return matching files.
