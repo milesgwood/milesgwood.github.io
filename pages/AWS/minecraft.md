@@ -28,7 +28,7 @@ sudo yum -y install java-1.8.0
 sudo mkdir /minecraft
 sudo chown -R ec2-user:ec2-user /minecraft
 cd /minecraft
-wget https://launcher.mojang.com/v1/objects/4d1826eebac84847c71a77f9349cc22afd0cf0a1/server.jar
+wget https://launcher.mojang.com/v1/objects/bb2b6b1aefcd70dfd1892149ac3a215f6c636b07/server.jar
 
 java -Xmx1024M -Xms1024M -jar server.jar nogui
 java -Xmx4G -Xms2G -jar server.jar nogui
@@ -104,10 +104,11 @@ screen -S "Minecraft server"
 screen –ls
 screen –r <screen_id>
 
-aws s3 cp s3://picard2020/backups/20190104/server.properties .
-aws s3 cp s3://picard2020/backups/20190104/whitelist.json .
-aws s3 cp s3://picard2020/backups/20190104/world.zip .
-aws s3 cp s3://picard2020/backups/20190104/Home.zip .
+20191231
+aws s3 cp s3://picard2020/backups/20191231/server.properties .
+aws s3 cp s3://picard2020/backups/20191231/whitelist.json .
+aws s3 cp s3://picard2020/backups/20200204/world.zip .
+aws s3 cp s3://picard2020/backups/20200204/Home.zip .
 java -Xmx7G -Xms5G -jar server.jar nogui
 ```
 
