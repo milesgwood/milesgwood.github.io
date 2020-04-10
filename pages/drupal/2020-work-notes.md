@@ -276,3 +276,225 @@ Alt+Ctrl+S + Languages and Frameworks > PHP Set PHP Language Level dropdown
 The .idea folder tracks all of your project settings. You should track that in version control.
 
 To improve performance you can tell phpstorm what directories to index and what directories to ignore. You go to settings ctrl+alt+s and in the directories tab setup the Sources folder.
+
+# Play Button on Hero Video
+
+[tutorial](https://blog.teamtreehouse.com/building-custom-controls-for-html5-videos)
+
+Edit `page--node.html.twig` to add in the video controls.
+
+```
+<div class="hero-container">
+    <div class="hero_overlay"></div>
+    <video id="hero-video" autoplay loop muted playsinline class="hero-bg">
+        <source src="{{ node.field_hero_video_direct_link.value }}" type="video/mp4" alt="HTML5 background video">
+    </video>
+    <div id="hero-controls">
+        <a title="Pause/Unpause Video" aria-label="Pause/Unpause Video" class="btn btn-link">
+            <span class="glyphicon glyphicon-play-circle"></span>
+            <span class="glyphicon glyphicon-pause"></span>
+        </a>
+    </div>
+</div>
+```
+
+[Convert tabs to spaces when sass compile breaks](https://tabstospaces.com/)
+
+# Demographics Sync Config
+
+Group altered config into a folder.
+
+```
+"block.block.views_block__news_updates_block_1"
+"block.block.views_block__news_updates_full_grid_block_1"
+"core.entity_form_display.node.news_update.default"     
+"core.entity_form_display.paragraph.flex_grid.default"
+"core.entity_form_display.paragraph.flex_grid_1_4.default"
+"core.entity_form_display.paragraph.flex_grid_child.default"
+"core.entity_form_display.paragraph.remote_video.default"
+"core.entity_form_display.paragraph.spotlight.default"
+"core.entity_view_display.node.news_update.default"  
+"core.entity_view_display.node.news_update.teaser"      
+"core.entity_view_display.paragraph.flex_grid.default"
+"core.entity_view_display.paragraph.flex_grid_1_4.default"
+"core.entity_view_display.paragraph.flex_grid_child.default"
+"core.entity_view_display.paragraph.remote_video.default"         
+"core.entity_view_display.paragraph.spotlight.default"             
+"editor.editor.basic_html"
+"editor.editor.full_html"
+"field.field.media.audio.field_media_audio_file"
+"field.field.media.file.field_media_file"
+"field.field.media.image.field_media_image"
+"field.field.media.video.field_media_video_file"
+"field.field.node.news_update.body"
+"field.field.node.news_update.field_news_update_additional_con"
+"field.field.node.news_update.field_news_update_image"  
+"field.field.node.page.field_paragraphs"
+"field.field.paragraph.bp_columns.bp_column_content"              
+"field.field.paragraph.bp_columns_two_uneven.bp_column_content_2"
+"field.field.paragraph.flex_grid.field_flex_grid_child"
+"field.field.paragraph.flex_grid_1_4.field_flex_grid_child"
+"field.field.paragraph.flex_grid_child.field_flex_body"
+"field.field.paragraph.flex_grid_child.field_flex_body"
+"field.field.paragraph.flex_grid_child.field_flex_child"
+"field.field.paragraph.flex_grid_child.field_flex_image"
+"field.field.paragraph.flex_grid_child.field_flex_link"
+"field.field.paragraph.remote_video.field_youtube_video"
+"field.field.paragraph.spotlight.field_spotlight_background_color"
+"field.field.paragraph.spotlight.field_spotlight_body"             
+"field.field.paragraph.spotlight.field_spotlight_image"            
+"field.field.paragraph.spotlight.field_spotlight_link"             
+"field.field.paragraph.spotlight.field_spotlight_section_title"    
+"field.storage.media.field_media_audio_file"
+"field.storage.media.field_media_file"
+"field.storage.media.field_media_image  "
+"field.storage.media.field_media_video_file"
+"field.storage.node.field_news_update_additional_con"                     
+"field.storage.node.field_news_update_image"            
+"field.storage.paragraph.bp_column_content"
+"field.storage.paragraph.bp_column_content_2"                     
+"field.storage.paragraph.field_flex_body"
+"field.storage.paragraph.field_flex_child"
+"field.storage.paragraph.field_flex_grid_child"
+"field.storage.paragraph.field_flex_image"
+"field.storage.paragraph.field_flex_link"
+"field.storage.paragraph.field_spotlight_background_color"         
+"field.storage.paragraph.field_spotlight_body"                     
+"field.storage.paragraph.field_spotlight_image"                    
+"field.storage.paragraph.field_spotlight_link"                     
+"field.storage.paragraph.field_spotlight_section_title"            
+"field.storage.paragraph.field_youtube_video"
+"filter.format.basic_html"
+"filter.format.full_html"
+"node.type.news_update"                                 
+"paragraphs.paragraphs_type.flex_grid"
+"paragraphs.paragraphs_type.flex_grid_1_4"
+"paragraphs.paragraphs_type.flex_grid_child"
+"paragraphs.paragraphs_type.remote_video"    
+"paragraphs.paragraphs_type.spotlight"                             
+"views.view.news_updates"
+"views.view.news_updates_full_grid"
+"views.view.pages_with_advanced_html"
+```
+
+Move your cloud9 to tab 1 so you can use `ctrl 1` to get to it quickest.
+
+Export current Demographics Site config
+
+drush config-export vcs -y
+
+Copy over the config you wish to change and commit changes to git.
+
+Fix all of the pages that have FULL HTML sections `/advanced-pages`
+
+Fix all the /advanced-sections that need updating.
+
+# Demographics Testing Site Element Creation
+
+```
+drush export vcs -y
+branch 20200407
+```
+
+[Login](https://demographicsdev1.coopercenter.org/user/login)
+Username is test
+
+Search `create basic page`
+
+Enter Dummy Text
+
+[Publish Page](https://demographicsdev1.coopercenter.org/editor/test)
+
+Add a custom small banner of dimensions 1600x300 with custom class as `banner--top-replace`
+
+
+### Permission Changes
+
+1. Prune extra text formats - search `text formats`
+
+
+# Substitute Top Banner - Tutorial needed
+
+You add the banner to Additional content with custom class `banner--top-replace`
+
+The banner needs to be 1600x300
+
+This works on demographics site because of this javascript
+
+```  
+  function replace_large_banner(e) {
+        var url = $(".banner--top-replace").css("background-image");
+        $(".main-container .page-title-wrapper").css("background-image", url);
+    }
+```
+
+You can not do this on the homepage!
+
+Examples
+https://demographics.coopercenter.org/maps
+https://media.coopercenter.org/web/top-banner
+
+# Report Website Problem Link
+
+[Add Link to Admin Menu](https://demographicsdev1.coopercenter.org/admin/structure/menu/manage/admin/add?destination=/admin/structure/menu/manage/admin)
+
+Settings
+
+Report Website Problem
+https://support.coopercenter.org/saml_login
+Check Enabled and Expanded
+Help improve our sites by reporting a website problem
+--Administration
+Weight 11
+
+# Hero Tagline Edge fix
+
+width: fit-content on chrome and firefox is solved by `display: table` on edge.
+
+# Discard local modifications in git for one file
+
+`git checkout -- filename`
+
+# Remote Link News Update
+
+Created new field `field_news_update_external_link`
+
+Edit `node--news-update--teaser.html.twig`
+
+[Get twig values](https://blog.usejournal.com/getting-drupal-8-field-values-in-twig-22b80cb609bd)
+
+The check to see if the field is empty occurs on the **node** variable but while accessing the external link URL I use the **content** variable. Why?
+
+The node is the render array element.
+
+```
+{% if node.field_news_update_external_link is not empty%}
+  <a class="news-update-container external bounce-on-hover" href="{{ content.field_news_update_external_link.0['#url'] }}"  rel="bookmark">
+    <div class="news-update-img-wrapper">
+      <figure><img src="{{ file_url(node.field_news_update_image.entity.field_media_image.entity.fileuri) }}"/></figure>
+    </div>
+    <div class="news-update-content"><h2>{{ label }}</h2></div>
+  </a>    
+{% else %}
+  <a class="news-update-container bounce-on-hover" href="{{ url }}" rel="bookmark">
+    <div class="news-update-img-wrapper">
+      <figure><img src="{{ file_url(node.field_news_update_image.entity.field_media_image.entity.fileuri) }}"/></figure>
+    </div>
+    <div class="news-update-content"><h2>{{ label }}</h2></div>
+  </a>
+{% endif %}
+```
+
+# Employee Specific News Updates
+
+On Demographcis site, I used a Contextual filter on the News Update view.
+
+`Configure contextual filter: Content: Related Employee Profiles (field_related_employee_profiles)`
+
+The related employee profiles field is on the News Items that I want tied to the profile. When the filter value is not available a default value is provided from the `Content ID from URL`. So if the News Update `A` has Profile `B` listed as a related profile, A will show B.
+
+This is one of those rare occasions when drupal is actually satisfying.
+
+# Sorensen config first attempt
+
+The import failed due to the following reasons:                                                                                                                                                                            The Basic Page content type on demographics has a file attachment field that needs to get deleted. Sorensen lacked a Editor site role. Those two issues were the only things stopping the config sync from working.
