@@ -497,4 +497,241 @@ This is one of those rare occasions when drupal is actually satisfying.
 
 # Sorensen config first attempt
 
-The import failed due to the following reasons:                                                                                                                                                                            The Basic Page content type on demographics has a file attachment field that needs to get deleted. Sorensen lacked a Editor site role. Those two issues were the only things stopping the config sync from working.
+The import failed due to the following reasons:           
+
+The Basic Page content type on demographics has a file attachment field that needs to get deleted. Sorensen lacked a Editor site role. Those two issues were the only things stopping the config sync from working.
+
+# Support Site Config sync
+
+Export current support site config. `drush config-export vcs`
+
+Enabled Media and Media Library modules.
+
+The import failed due to the following reasons:  
+
+Missing Profile Content type `large-support` created
+
+```
+"node.type.profile"         
+"media.type.file"
+"field.storage.node.field_profile_facebook"
+"field.storage.node.field_profile_linkedin"
+"field.storage.node.field_profile_twitter"
+```
+
+# Support Site News Updates Continued
+
+Remove all sorensen staff user roles.
+
+Get all permissions onto the Editor role. Delete the Sorensen Staff role.
+
+Use git diff on the updated `user.editor.role.yml`
+
+Current editor permissions filtered through sorensen.
+
+```
+uuid: 6964f504-baf0-4031-8b73-ec6ec39042ab
+langcode: en
+status: true
+dependencies: {  }
+id: editor
+label: Editor
+weight: 3
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access comments'
+  - 'access content overview'
+  - 'access files overview'
+  - 'access in-place editing'
+  - 'access media overview'
+  - 'access shortcuts'
+  - 'access taxonomy overview'
+  - 'access toolbar'
+  - 'access tour'
+  - 'access user contact forms'
+  - 'access user profiles'
+  - 'access webform overview'
+  - 'access webform submission log'
+  - 'administer google analytics'
+  - 'administer imce'
+  - 'administer menu'
+  - 'administer nodes'
+  - 'administer shortcuts'
+  - 'administer taxonomy'
+  - 'administer url aliases'
+  - 'administer webform'
+  - 'administer webform element access'
+  - 'administer webform submission'
+  - 'change own username'
+  - 'clone news_item content'
+  - 'clone news_update content'
+  - 'clone page content'
+  - 'clone profile content'
+  - 'clone publications content'
+  - 'create audio media'
+  - 'create file media'
+  - 'create image media'
+  - 'create media'
+  - 'create news_item content'
+  - 'create news_update content'
+  - 'create page content'
+  - 'create profile content'
+  - 'create publications content'
+  - 'create remote_video media'
+  - 'create url aliases'
+  - 'create video media'
+  - 'create webform'
+  - 'customize shortcut links'
+  - 'delete all revisions'
+  - 'delete any audio media'
+  - 'delete any downloadable content'
+  - 'delete any file media'
+  - 'delete any image media'
+  - 'delete any image_attribution content'
+  - 'delete any media'
+  - 'delete any news_item content'
+  - 'delete any news_update content'
+  - 'delete any page content'
+  - 'delete any person content'
+  - 'delete any profile content'
+  - 'delete any publications content'
+  - 'delete any remote_video media'
+  - 'delete any video media'
+  - 'delete any web_content content'
+  - 'delete any webform content'
+  - 'delete any webform submission'
+  - 'delete media'
+  - 'delete own audio media'
+  - 'delete own downloadable content'
+  - 'delete own file media'
+  - 'delete own image media'
+  - 'delete own image_attribution content'
+  - 'delete own news_item content'
+  - 'delete own news_items content'
+  - 'delete own news_update content'
+  - 'delete own page content'
+  - 'delete own person content'
+  - 'delete own profile content'
+  - 'delete own publications content'
+  - 'delete own remote_video media'
+  - 'delete own video media'
+  - 'delete own web_content content'
+  - 'delete own webform'
+  - 'delete own webform content'
+  - 'delete own webform submission'
+  - 'delete webform submissions own node'
+  - 'edit any audio media'
+  - 'edit any file media'
+  - 'edit any image media'
+  - 'edit any news_item content'
+  - 'edit any news_items content'
+  - 'edit any news_update content'
+  - 'edit any page content'
+  - 'edit any person content'
+  - 'edit any profile content'
+  - 'edit any publications content'
+  - 'edit any remote_video media'
+  - 'edit any video media'
+  - 'edit any webform'
+  - 'edit any webform submission'
+  - 'edit own audio media'
+  - 'edit own downloadable content'
+  - 'edit own file media'
+  - 'edit own image media'
+  - 'edit own image_attribution content'
+  - 'edit own news_item content'
+  - 'edit own news_items content'
+  - 'edit own news_update content'
+  - 'edit own page content'
+  - 'edit own person content'
+  - 'edit own profile content'
+  - 'edit own publications content'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'edit own webform'
+  - 'edit own webform content'
+  - 'edit own webform submission'
+  - 'edit webform submissions any node'
+  - 'edit webform submissions own node'
+  - 'link to any page'
+  - 'revert all revisions'
+  - 'revert news_item revisions'
+  - 'revert news_items revisions'
+  - 'revert news_update revisions'
+  - 'revert page revisions'
+  - 'revert person revisions'
+  - 'revert profile revisions'
+  - 'revert publications revisions'
+  - 'revert webform revisions'
+  - 'skip CAPTCHA'
+  - 'switch shortcut sets'
+  - 'update any media'
+  - 'update media'
+  - 'use admin toolbar search'
+  - 'use text format basic_html'
+  - 'view all media revisions'
+  - 'view all revisions'
+  - 'view any webform submission'
+  - 'view news_item revisions'
+  - 'view news_update revisions'
+  - 'view own unpublished media'
+  - 'view own webform submission'
+  - 'view page revisions'
+  - 'view person revisions'
+  - 'view profile revisions'
+  - 'view publications revisions'
+  - 'view the administration theme'
+  - 'view unpublished paragraphs'
+  - 'view webform revisions'
+  - 'view webform submissions any node'
+  - 'view webform submissions own node'
+```
+
+Accidentally deleted a view that depended on the Sorensen Staff role. I purged the old config and replaced the role with the editor restriction.
+
+I checked what else could have been deleted by going through the role delete dialog on the prod site. All is well.
+
+Exporting Sorensen Config
+
+`field.field.node.news_update.field_category` includes two different taxonomies for the news update field. I need to change that in config before importing it to ta new file.
+
+Config before adding hero video
+
+```
+"field.field.node.news_update.field_category"
+"field.field.node.news_update.body"
+"field.storage.node.field_category"
+"taxonomy.vocabulary.category"
+"core.entity_form_display.node.news_update.default"
+"core.entity_view_display.node.news_update.default"
+"core.entity_view_display.node.news_update.teaser"
+"block.block.sorensensocialmedialinksforhomepage"
+```
+
+Updated advanced pages view to sort by last modification. Also made the news update view show promoted items first.
+
+```
+"views.view.news_updates"
+"views.view.pages_with_advanced_html"
+```
+
+# Support Form JSON Data
+
+```
+json:
+  key:
+  token:
+  pos: top
+  due: null
+  idList: 5ab160ed2e906a4f06871e9b
+  name: milesgwood@virginia.edu
+  i_want_to_: 'Request Training & Assistance'
+  url_of_page_you_want_edited: null
+  how_urgent_is_this_request_: 'Not Urgent'
+  video_of_problem: null
+  screenshot_of_problem: null
+  desc: test
+  idLabels: 5ab15ec14b8e8a87d266d7dd
+  uri: /request/sorensen
+  ```

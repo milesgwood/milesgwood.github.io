@@ -20,9 +20,11 @@ scp -i id_rsa2 uvacooper.test@staging-17490.prod.hosting.acquia.com:/home/uvacoo
 
 Clear out the files on prod
 ```
-ssh -i id_rsa2 uvacooper.prod@web-17484.prod.hosting.acquia.com
-cd prod/backups/on-demand
-rm backup-* -f
+From cloud9
+cd ~/.ssh
+ssh -i `copy the ssh url from the prod site in acquia`
+chmod 400 if permissions are too open
+enter passphrase from LastPass
 ```
 
 Within Cloud9 you can clear out the dev and test env
