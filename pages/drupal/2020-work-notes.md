@@ -799,3 +799,34 @@ Unable to add user role to multiple Users at once. Look into this `system.action
 but with the editor role
 
 Unable to add user role to multiple Users at once. Look into this `system.action.user_add_role_action.editor` and `system.action.user_remove_role_action.editor`
+
+# CSR News Update
+
+Made minor changes to editor permissions to allow for CSR Projects content type.
+
+Not having profile picture on the slider makes it so that the following images don't all load!
+
+Improved the News Updates view so that it works with individual profiles and individuals can hide their content from the front page view.
+
+`block.block.coopercenter_units_local_tasks.yml`
+
+Determines where your tabs show up (view edit clone delete etc.) and what region they are in.
+
+`field.field.paragraph.spotlight.field_spotlight_image`
+
+Added description to the image portion explaining how to edit the pictures. I created a page for the tutorial to exist in. [Direct Link](https://support.coopercenter.org/photo-editing)
+
+
+
+Copied all of these files from CSR to master set of config. They make the IMCE actually work for the specific image types people need.
+
+```
+"block.block.coopercenter_units_local_tasks"
+"field.field.paragraph.spotlight.field_spotlight_image"
+"views.view.news_updates"
+"imce.profile.member"
+"imce.settings"
+"field.storage.paragraph.field_image"
+"field.field.paragraph.banner.field_image"
+"field.field.paragraph.flex_grid_child.field_flex_image"
+```
