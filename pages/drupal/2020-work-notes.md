@@ -735,3 +735,67 @@ json:
   idLabels: 5ab15ec14b8e8a87d266d7dd
   uri: /request/sorensen
   ```
+
+# Add loading icon to video and screenshot section of support form
+
+Inside the label add a div with the spinner class
+
+Upload Video/ Screenshot then <div class="loader"></div>
+
+jQuery(".js-webform-image-file label").append("<div class='loader'></div>");
+jQuery(".js-webform-video-file label").append("<div class='loader'></div>");
+
+```
+(function($, document, window) {    
+
+    function addLoadingSpinner(inputFile) {
+  inputFile.append("<div class='loader'></div>");
+}
+
+$("#edit-screenshot-of-problem-upload-button--2").change(function(){
+      var inputImage= $(".js-webform-image-file label");
+      addLoadingSpinner(inputImage);
+      console.log("Screenshot Upload Start");
+ });
+
+ $("#edit-video-of-problem-upload-button--2").change(function(){
+       var inputVideo = $(".js-webform-video-file label")
+       addLoadingSpinner(inputVideo);
+       console.log("Video Upload Start");
+  });
+
+})(jQuery, document, window);
+```
+
+# Solar New Updates
+
+Config that comes from solar to next site:
+
+This allows for imce file uploads.
+
+```
+core.entity_form_display.paragraph.bp_image.default
+```
+
+# CEPS News updates
+
+The changes to make the IMCE file manager appear on image selections needs the caption field as well
+
+```
+field.field.paragraph.bp_image.field_caption
+field.storage.paragraph.field_caption
+```
+
+Got two errors on config import but it still worked
+
+```
+A non-existent config entity name returned by FieldStorageConfigInterface::getBundles(): entity type: taxonomy_term, bundle: local_option_sales_tax, field name: field_schooldivnum
+
+Drupal\Core\Field\FieldException: Attempt to create a field field_hero_video_direct_link that does not exist on entity type node. in Drupal\field\Entity\FieldConfig->getFieldStorageDefinition() (line 312 of /mnt/gfs/uvacooperdev/livedev/docroot/core/modules/field/src/Entity/FieldConfig.php).
+```
+
+Unable to add user role to multiple Users at once. Look into this `system.action.user_add_role_action.site_manager` and `system.action.user_remove_role_action.site_manager`
+
+but with the editor role
+
+Unable to add user role to multiple Users at once. Look into this `system.action.user_add_role_action.editor` and `system.action.user_remove_role_action.editor`
