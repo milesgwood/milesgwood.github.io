@@ -118,6 +118,8 @@ I created a subdomain `mc.dilatory.fun` which points to the server IP. All you n
 
 # See how you can restore EC2 instance from EBS volume that was saved 20GiB.
 
+## YOU ONLY NEED TO DO THIS IF YOU FAILED TO BACKUP YOUR PLAY
+
 Login and reattach volume. You must put the instance in the same Availability Zone.
 
 `lsblk` to show disks
@@ -148,3 +150,7 @@ sudo umount -d /dev/nvme1n1p1
 3.230.118.222
 
 # Change your launch template to avoid making too many EBS volumes saved.
+
+Instance Type - m4Large - on demand pricing is 0.1 USD per Hour.
+
+Yes M4 large works. Make sure to lauch using the m4Large
