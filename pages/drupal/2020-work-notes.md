@@ -1063,3 +1063,18 @@ composer require 'drupal/imce:^2.2'
 
 keep externalauth 1.1
 keep simplesamlauth 3.2
+
+# Font changes
+
+font-family: adobe-caslon-pro", serif;
+
+font-family: franklin-gothic-urw, wingdings;
+
+Added fonts using adobe fonts:
+
+
+Added the html.html.twig
+
+```
+<link rel="stylesheet" href="https://use.typekit.net/giv7wwf.css">
+```
