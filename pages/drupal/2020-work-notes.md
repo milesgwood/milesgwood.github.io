@@ -1020,3 +1020,46 @@ SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
   php_flag engine off
 </IfModule>
 ```
+
+# FireEye Randsomware
+
+IPs listed in the report
+
+128.143.86.3 - cncHost - demographics.virginia.edu
+52.109.2.30 - seems to be where the malware came from
+
+IP addresses from dig
+
+128.143.86.3 - demographics.virginia.edu
+128.143.21.137 - statchatva.org
+52.216.105.90 - racialdotmap.demographics.coopercenter.org
+52.87.30.162 - demographics.coopercenter.org
+
+104.26.10.156 and 104.26.11.156 - api.rss2json.com
+
+Here's what I think is happening:
+
+demographics.virginia.edu is IP 128.143.86.3 which is what appears in the log.
+demographics.virginia.edu is the old site prior to the drupal 8 migration. We can just turn that off.
+
+# Code updates
+
+
+Needed to check media and support site. JUST CHECK SUPPORT
+ctools 3.4
+colorbox 1.6
+image_widget_crop 2.3
+imce 2.2
+pathauto 1.8
+token 1.7
+views_data_export 1.0-rc1
+webform 5.11
+
+THIS ONE WAS MISSING FROM MEDIA
+
+redirect_after_login
+
+composer require 'drupal/imce:^2.2'
+
+keep externalauth 1.1
+keep simplesamlauth 3.2
