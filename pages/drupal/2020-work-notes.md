@@ -831,6 +831,253 @@ Copied all of these files from CSR to master set of config. They make the IMCE a
 "field.field.paragraph.flex_grid_child.field_flex_image"
 ```
 
+# VIG - News Updates
+
+Clone from prod.
+
+`image.style.media_library` prevented the config sync. I exported current config, deleted that config file and imported the change with the deleted config. Then I enabled the media library.
+
+#SEI and LEAD News Update
+
+`image.style.media_library` is already in active config. Need to export and delete for both sites. I'm doing the news updates at the same time for each site.
+
+#BeHeardCVA - News Udpate
+
+This News Update is different since the site is on a different theme. I'll need to copy over the template files from cooper center units.
+
+Sent update to Tom and Kara about site updates coming. They haven't logged on in two weeks so I doubt they needed the notification.
+
+## Transferring twig files for Spotlight and News Updates
+
+Here are all the files I identified as needed - they are in a folder called `new-twig-elements`
+
+```
+new file:   new-twig-elements/block--photo-slider-flow.html.twig
+new file:   new-twig-elements/block--photo-slider.html.twig
+new file:   new-twig-elements/block--profileslider.html.twig
+new file:   new-twig-elements/field--field-flex-grid-child.html.twig
+new file:   new-twig-elements/field--field-hero-video-link.html.twig
+new file:   new-twig-elements/field--node--field-additional-links--profile.html.twig
+new file:   new-twig-elements/field--node--field-high-quality-headshot.html.twig
+new file:   new-twig-elements/field--node--field-profile-facebook--profile.html.twig
+new file:   new-twig-elements/field--node--field-profile-linkedin--profile.html.twig
+new file:   new-twig-elements/field--node--field-profile-twitter--profile.html.twig
+new file:   new-twig-elements/node--news-update--teaser.html.twig
+new file:   new-twig-elements/node--profile.html.twig
+new file:   new-twig-elements/page--node.html.twig
+new file:   new-twig-elements/paragraph--flex-grid-child.html.twig
+new file:   new-twig-elements/paragraph--flex-grid.html.twig
+new file:   new-twig-elements/paragraph--flex-grid_1_4.html.twig
+new file:   new-twig-elements/paragraph--spotlight.html.twig
+```
+
+Templates are working without the CSS. However the NU views aren't displaying because there is no block region for them to display.
+
+I added the content full width region to the theme.info file. It doesn't have the views in it though. I will import the views again from config.
+
+Each block has a theme field in it for example this NU block of 12 which i changed to beheardcva in 2 locations.
+
+```
+uuid: 50593de6-9577-4e1d-9323-be3a83612d7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.news_updates_full_grid
+  module:
+    - system
+    - views
+  theme:
+    - beheardcva
+id: views_block__news_updates_full_grid_block_1
+theme: beheardcva
+region: cfw
+weight: -16
+provider: null
+plugin: 'views_block:news_updates_full_grid-block_1'
+settings:
+  id: 'views_block:news_updates_full_grid-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/web/news-grid\r\n/test/news-updates\r\n/all-news-updates"
+    negate: false
+    context_mapping: {  }
+```
+
+In Cloud9 there is a refactor option for twig config files. `Ctrl+Shift+F` or find in files. It searches whatever directory you select and offers a replace option.
+
+I searched all the beheardcva config files for `theme: coopercenter_units` and replaced it with `theme: beheardcva`. There is still the issue of the dependencies being incorrect.
+
+Deleting the ` config/beheardcva/block.block.coopercenter_units...` files from config gets rid of the duplicate blocks.
+
+CSS compared core to style and got rid of quite a bit of un-needed css.
+
+# Demographics News Update tutorial
+
+Create 2 news updates and log the process, then make the tutorial.
+
+Start at account login page.
+Find the external page you want to share.
+Decide on a photo
+Copy the title
+Copy the external link
+
+Created video. Make sure to limit the scope of the videos you are creating. Keep them small. No larger than 5 minutes.
+
+# Support Site Private Files Directory
+
+[acquia docs on setting private file path](https://support.acquia.com/hc/en-us/articles/360005307793-Setting-the-private-file-directory-on-Acquia-Cloud)
+
+I need to use environment variables to set the private file path. Looks like it is already set as it needs to be. The files just aren't being served from the private folder.
+
+The strategic plan is being served from this url:
+
+https://support.coopercenter.org/system/files/media/files/2020-04/StrategicPlan_FullDigitalVersion.pdf
+
+[File system config](https://support.coopercenter.org/admin/config/media/file-system) says that the private file path is `/mnt/files/uvacooper.prod/sites/support/files-private`
+
+I just changed the default download method to Private local files served by Drupal to see if that changes the access control.
+
+Still have full access to the file I uploaded before the radio button switch of "default download method".
+
+I also changed the file path on the Files media content type to include the word private in it so I can tell if the filepath has actually changed. It has
+
+https://support.coopercenter.org/system/files/private/media/files/2020-04/test1.docx
+
+Now it is working!!!
+
+To summarize
+
+1. On [File System Config](/admin/config/media/file-system) set the Default Download method to Private local files served by drupal.
+2. On the File field of the File Media type set the field visibility to custom permissions with only authenticated users being allowed to view the values of the field.
+3. Click the field settings tab of that field and set the upload destination to Private Files.
+4. Upload a test file and copy the direct link. Then logout and attempt to view the file again.
+5. Make sure that you can access the directories through the imce file browser so you can delete files.
+
+# News Updates - fix view of two on homepage
+
+Changed the sort for news updates - promoted needs to be `descending` not ascending. Promoted being selected puts it at a 1. Promoted not being selected puts it at a 0.
+
+# Sorensen Config Changes for Board Members
+
+```
+field.storage.node.field_profile_position_on_board                         | Create
+field.storage.node.field_profile_is_board_member                           | Create
+field.storage.node.field_profile_alumni_program                            | Create
+field.storage.node.field_board_member_location                             | Create
+field.field.node.profile.field_profile_position_on_board                   | Create
+field.field.node.profile.field_profile_is_board_member                     | Create
+field.field.node.profile.field_profile_alumni_program                      | Create
+field.field.node.profile.field_board_member_location                       | Create
+block.block.photosliderflowboardmembercustomblockuseforboardmemberprofiles | Create
+core.extension                                                             | Update
+field.field.node.profile.field_profile_email                               | Update
+core.entity_form_display.node.profile.default                              | Update
+core.entity_view_display.node.profile.teaser                               | Update
+core.entity_view_display.node.profile.default                              | Update
+views.view.profile_contact_info_table                                      | Update
+```
+
+All of these config entries got slightly changed in this config update for sorensen.
+
+Create alternate Admin account for Amy to use while I am away. - Done
+
+# Fix .htaccess in config directories
+
+```
+Security warning: Couldn't write .htaccess file. Please create a .htaccess file in your /mnt/www/html/uvacooper.prod/config/vig directory which contains the following lines:
+# Deny all requests from Apache 2.4+.
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+
+# Deny all requests from Apache 2.0-2.2.
+<IfModule !mod_authz_core.c>
+  Deny from all
+</IfModule>
+
+# Turn off all options we don't need.
+Options -Indexes -ExecCGI -Includes -MultiViews
+
+# Set the catch-all handler to prevent scripts from being executed.
+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006
+<Files *>
+  # Override the handler again if we're run later in the evaluation list.
+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003
+</Files>
+
+# If we know how to do it safely, disable the PHP engine entirely.
+<IfModule mod_php5.c>
+  php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+  php_flag engine off
+</IfModule>
+```
+
+# FireEye Randsomware
+
+IPs listed in the report
+
+128.143.86.3 - cncHost - demographics.virginia.edu
+52.109.2.30 - seems to be where the malware came from
+
+IP addresses from dig
+
+128.143.86.3 - demographics.virginia.edu
+128.143.21.137 - statchatva.org
+52.216.105.90 - racialdotmap.demographics.coopercenter.org
+52.87.30.162 - demographics.coopercenter.org
+
+104.26.10.156 and 104.26.11.156 - api.rss2json.com
+
+Here's what I think is happening:
+
+demographics.virginia.edu is IP 128.143.86.3 which is what appears in the log.
+demographics.virginia.edu is the old site prior to the drupal 8 migration. We can just turn that off.
+
+# Code updates
+
+
+Needed to check media and support site. JUST CHECK SUPPORT
+ctools 3.4
+colorbox 1.6
+image_widget_crop 2.3
+imce 2.2
+pathauto 1.8
+token 1.7
+views_data_export 1.0-rc1
+webform 5.11
+
+THIS ONE WAS MISSING FROM MEDIA
+
+redirect_after_login
+
+composer require 'drupal/imce:^2.2'
+
+keep externalauth 1.1
+keep simplesamlauth 3.2
+
+# Font changes
+
+font-family: adobe-caslon-pro", serif;
+
+font-family: franklin-gothic-urw, wingdings;
+
+Added fonts using adobe fonts:
+
+
+Added the html.html.twig
+
+```
+<link rel="stylesheet" href="https://use.typekit.net/giv7wwf.css">
+
 # Converting lots of mov to mp4
 
 ```

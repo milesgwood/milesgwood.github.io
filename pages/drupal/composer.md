@@ -505,7 +505,6 @@ Use only the composer install command in the production environment and make sur
 Use the composer install --no-dev option to stop development libraries from installing. These are declared in the require-dev section of composer.json.
 Use the composer install --optimize-autoloader option to build a class map. Thanks to this, the autoloader will not search for files on disk according to PSR-4/PSR-0 rules, instead, it will get a path to a file with its definition based on the class name. Activating this optimisation in the development environment is troublesome, as it requires cleaning the cache after each change in the project file structure.
 
-
 Composer memory Limits
 
 You can run single composer commands with no memory limit.

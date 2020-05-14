@@ -78,11 +78,7 @@ Go to chart of accounts and right click on the account you're interested in. The
 - Make sure to set the Item to `Build Cooper Center Websites`
 - Print the invoice and save it as a PDF to send it.
 
-Current invoice 2107934 has paid out 28,100 out of 45k so far as of 11/12/2019.
-
-So far received 28100 + 11100 on my latest invoice. Total 39200. 5800 left or 232 hours.
-
-2/14/2020 - Invoicing for 192 hours on 2/15/2020. That leaves 40 hours left of the 232.
+Current invoice has paid out 5k of the
 
 # Sync with Bank account
 
@@ -92,9 +88,17 @@ So far received 28100 + 11100 on my latest invoice. Total 39200. 5800 left or 23
 - Download the .qbo file and click it to import it
 - Review the transactions in the bank feeds tab
 
+# Set account for Credit Card payments
+
+In the CC transactions (not the checking account) set the Account to `NFCU Checking Account` as that is the account that this payment came from. We are deducting a payment that came from the NFCU checking account. Leave the Payee blank.
+
 # Match Payment to already created invoice
 
 - Import the transactions by downloading the transactions as described above.
 - Click on the eDeposit transaction and go to `more options/details`
 - In that window select the matching invoices that are paid
 - If you go to income tracker now you should see the bill is no longer overdue
+
+# How to handle PPP loan in quickbooks
+
+[PPP Quickbooks Tutorial](https://quickbooks.intuit.com/learn-support/en-us/banking/how-do-i-enter-the-ppp-loan-into-my-deposit/00/542685)
