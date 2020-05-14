@@ -830,3 +830,13 @@ Copied all of these files from CSR to master set of config. They make the IMCE a
 "field.field.paragraph.banner.field_image"
 "field.field.paragraph.flex_grid_child.field_flex_image"
 ```
+
+# Converting lots of mov to mp4
+
+```
+for i in *.mov;
+  do name=`echo "$i" | cut -d'.' -f1`
+  echo "$name"
+  ffmpeg -i "$i" "${name}.mp4"
+done
+```
