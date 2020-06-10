@@ -7,6 +7,25 @@ layout: default
 [General Setup Tutorial](https://char.gd/blog/2017/how-to-set-up-the-perfect-modern-dev-environment-on-windows).
 [Setup SASS preprocessor](https://helpx.adobe.com/dreamweaver/using/css-preprocessors.html)
 
+# Adding new site to dreamweaver
+
+This assumes you've already setup your site in Cloud9.
+
+### Site
+
+Go to manage sites. Add a new site with the full name `mycatisthebestcat.com`. Also create a new folder on the W drive with that identical name.
+
+### Server
+
+name - mycatisthebestcat.com
+connection  - SFTP
+SFTP address - 3.86.106.172
+Authenticate - Private key
+username - ec2-user
+ID file - check other sites for that
+Root directory - /home/ec2-user/public_html/mycatisthebestcat.com/
+Web URL - https://mycatisthebestcat.com/
+
 ## Install Hyper as bash tool
 
 Hyper is a command line emulator based in js html and css. I installed it default and then edited one line in the .hyper.js file ` C:\Users\{userName}\.hyper.js` to make it run bash instead of windows cmd. Now that I have hyper running bash, I needed to [reset my bash password](https://askubuntu.com/questions/772050/reset-the-password-in-linux-bash-in-windows) since I had forgotten it. I had to force windows to make a new password for milesgwood [using this help](https://docs.microsoft.com/en-us/windows/wsl/user-support).
@@ -43,3 +62,7 @@ npm --version
 npm install http-server -g
 http-server /mnt/w/milesgreatwood.com
 ```
+
+# Set SASS indent options
+
+I set the indent option to 4 spaces in the code format preferences. Each tab is treated as 4 spaces just like chrome dev tools options.

@@ -14,3 +14,12 @@ Here are two uneven columns. Notice how each size adds up to 12 max. The number 
 	</div>
 </div>
 ```
+
+# padding and margins set in classes
+
+{property}{sides}-{size}
+mr-1      : margin left 1 times $spacer
+pl-5      : padding right 5 times $spacer
+mt-auto   : margin top auto
+
+sides can be tblrxy or blank for all 4
