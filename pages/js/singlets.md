@@ -56,3 +56,62 @@ if(document.getElementById('view-field-locality-table-column') != null){
   }
 }) ();
 ```
+
+# Dynamically creating New Items from an XML document for VPR site
+
+```JavaScript
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script type="text/javascript">
+    function create(htmlStr) {
+      var frag = document.createDocumentFragment(),
+        temp = document.createElement('div');
+      temp.innerHTML = htmlStr;
+      while (temp.firstChild) {
+        frag.appendChild(temp.firstChild);
+      }
+      return frag;
+    }
+
+    $.ajax({
+      url: 'https://api.rss2json.com/v1/api.json',
+      method: 'GET',
+      dataType: 'json',
+      data: {
+        rss_url: 'https://us6.campaign-archive.com/feed?u=ad59b4c4385511a9ec177859c&id=16860b7f9e',
+        api_key: 'ourf2jvebbdifvv8g98zaunzzdky69ciafk8fzig', // put your api key here
+        count: 2
+      }
+    }).done(function(response) {
+      if (response.status != 'ok') {
+        throw response.message;
+      }
+
+      console.log('====== ' + response.feed.title + ' ======');
+
+      var item = response.items[0];
+      console.log(item.title);
+      console.log(item.content);
+      console.log(item.pubDate);
+      console.log(item.link);
+      console.log(item.pubDate);
+      console.log(item);
+
+      var fragment = create("<a href='" + item.link + "'><h3>" + item.title + "</h3></a><span>" + item.pubDate + "</span><p>" + item.content + "</p>");
+      document.getElementById('rss_feed').append(fragment);
+    });
+  </script>
+```
+
+http://www.facebook.com/uvavpr
+http://www.virginia.edu/vpr
+vpresearch@virginia.edu
+http://www.twitter.com/uvavpr
+
+If the xml data contains a &nbsp the title gets split up a lot. So to check for that you check the actual character.
+
+https://stackoverflow.com/questions/5237989/nonbreaking-space
+```
+var x = td.text();
+if (x == '\xa0') { // Non-breakable space is char 0xa0 (160 dec)
+  x = '';
+}
+```
