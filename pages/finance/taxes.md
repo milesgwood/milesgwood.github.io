@@ -55,59 +55,21 @@ With salary and distribution - `$5036.13`
 With salary dividend treated as income and 12k standard deduction - `$3371.93` - refund `753.66`
 With all above and QBI deduction - `$3234.74` - refund 890.8544
 
-I may also be able to take a `Qualified Business Income` deduction which accounts for 20% of the profits for my company. That amounts to a deduction of `$1143.21` which isn't really that much.
+W-2 income, amounts received as reasonable compensation from an S corporation, amounts received as guaranteed payments from a partnership, and payments received by a partner for services under section 707(a) are also not QBI.
+
+I may also be able to take a `Qualified Business Income` deduction which accounts for 20% of the profits for my company. This is the money on line 1 of the k-1 or $2,338.
+
+
 
 Predictions
 Federal Tax - I've paid  `$4,125.60` in FIT this year through my payroll service. Considering the extra income from the business and the standard deduction I calculate I only needed to pay `$3371.93`. So I think I'm owed `753.67`.
 
 # Terminology
 
-Gross Income - All the money you receive
-Net Income - Gross minus Expenses
-
-
-[Review This Souce](https://turbotax.intuit.com/tax-tips/tax-planning-and-checklists/8-tax-terms-you-should-know/L6wZxHl0q)
-
-```
-Adjusted gross income and taxable income
-Your adjusted gross income (AGI) is a modified version of the total income you receive from all sources, such as wages, salaries, dividends and capital gains. To calculate your AGI, you're allowed to subtract various adjustments from your total income, including IRA contributions, alimony, moving costs and certain business expenses. AGI is important, because it can affect things like how much you can claim for your itemized deductions, says Arthur Mendoza, M.B.A. and Principal of Hermosa Beach, CA-based Copia Solutions. Most states also base taxation amounts on your AGI, rather than your total income.
-
-At the end of the day, Mendoza says, "taxable income is the most relevant number on your tax return." That's because the amount of tax you owe is based on your taxable income, as opposed to any other figure. "Deductions, adjustments, anything that can lower your adjusted gross income ultimately trickles down to your taxable income," Mendoza says. This can mean lower taxes or a bigger refund.
-
-Standard deduction or itemized deductions
-"Proper use of deductions is an important way taxpayers can lower the amount they owe," according to Mendoza. The two main types of deductions are itemized deductions and the standard deduction. The standard deduction is the same for all taxpayers and is set by the IRS. The amount varies depending on your filing status, and it is also regularly adjusted for inflation. You subtract your standard deduction directly from your adjusted gross income.
-
-If you do not wish to use the standard deduction, you can claim itemized deductions. Doing so takes additional time, but that extra effort can result in big tax savings, especially if you have big deductions like mortgage interest. If the total amount of your itemized deductions exceeds the standard deduction, you're usually better off itemizing. Common itemized deductions include the following:
-
-mortgage interest
-medical expenses
-charitable contributions
-casualty losses
-state, local and property taxes
-For tax years prior to 2018, the IRS allows you to lower your AGI even further through the use of exemptions. "Exemptions work just like deductions, but they represent a different type of expense," says Mendoza. You're granted one exemption for every member of your household. This includes yourself, your spouse, and any dependents, such as younger children or any family member who relies on you for support. Unlike deductions, the value of each exemption is the same regardless of your filing status. As with the standard deduction, the amount you can deduct for each exemption can vary from year to year.
-
-Beginning in 2018, exemptions are no longer used in calculating your tax able income. Instead, there is a dependent credit and expanded child tax credit to help lower your tax bill.
-
-Credits
-Mendoza notes that tax credits are often even more effective than deductions at lowering your taxes. “Credits are a dollar-for-dollar offset to the amount of tax you owe," he says, "rather than a reduction of your taxable income."
-
-For example, if you owe $1,000 in taxes but qualify for a $600 tax credit, the tax you owe drops to $400. If that $600 was a deduction, you might save as little as $60, because it just reduces the amount of your income that can be taxed. Some credits, such as the earned income credit, are "refundable," meaning if the credit is larger than the total tax you owe, you receive a refund from the government.
-
-Filing status
-Your filing status determines which tax brackets apply to your return. Filing status options are:
-
-single
-head of household
-married filing jointly
-married filing separately
-qualifying widow(er) with qualifying child
-You can only select a status that applies to your situation, although in some cases you may have multiple options. For example, if you are married, you can choose to file separately or jointly, although Mendoza states that "in most cases, filing jointly offers the best tax option for married couples."
-
-Withholding
-Withholding is the process by which you pay your taxes directly to the IRS as you earn your income. Your employer can set up your paycheck so that a certain amount of tax is withheld every period. If you don't make withholding payments, the IRS might assess a penalty when you file your tax return, since the U.S. uses a "pay-as-you-go" method.
-
-If you over-withhold your taxes, you'll likely end up with a refund. Tempting as it may be to over-withhold and get a large refund, Mendoza says that's not a financially sound policy. "If the IRS is writing you a check every year, you've been extending the government an interest-free loan. Instead of having the IRS hold your money all year," Mendoza says, "at the very least, you could keep that money in a savings or investment account and earn interest on it. At the end of the tax year, you could withdraw that money—with interest—and have the 'rush' of getting an even bigger 'refund' check."
-```
+Gross Income or Total Income - All the money you receive
+Net Income or AGI (Adjusted Gross Income)- Gross minus Expenses
+Taxable Income - AGI less deductions and exemptions
+Credits - add money back after you calculate what you owe
 
 # 1040
 
@@ -119,4 +81,18 @@ For Charlottesville I'm required to list all business property and pay tax on it
 
 # 2020 Taxes
 
+[Estimate taxes owed with smart asset calculator](https://smartasset.com/taxes/income-taxes#lp0IfKFh3p)
+
 You download your W-2 through the payroll for free app. Go to Tax Forms and load the 2019 W-2 for all employees.
+
+I'm going to use Credit Karma this year to file my 1040.
+
+In 2019 I only purchased BTC so there are no taxes to pay. I didn't sell or convert any coins.
+
+The ordinary pass through income on line 1 of the k-1 gets logged as income from property and appears under the home header in CK.
+
+As part of the QBI deduction I get 20% of the pass through profits as a deduction. 20% of 2338 is 468. This 468 appears under self-employment.
+
+Paid extra `$339` to federal gov for bank bonuses and pass through income subject to FIT. Also paid VA `$101`.
+
+Completed June 10th 2020, one month earlier than needed to since covid pushed the due date to July. 

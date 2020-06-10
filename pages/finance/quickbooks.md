@@ -4,6 +4,8 @@ layout: default
 
 # Tips
 
+Always use the `Open Windows` tab on the far left panel. The shortcuts are useless.
+
 Make sure you view reports on a `cash` basis, not accrual. `Cash` style means you only log it when money changes hands. You don't log income when you invoice it. You log it when you get the check.  
 
 You can see the entire history of one account (say my NFCU checking account or the Expenses to be repaid accounts.) That way you can `view all transactions for that specific account`
@@ -99,6 +101,8 @@ In the CC transactions (not the checking account) set the Account to `NFCU Check
 - In that window select the matching invoices that are paid
 - If you go to income tracker now you should see the bill is no longer overdue
 
-# How to handle PPP loan in quickbooks
+# How to handle PPP loan in quickbooks 
 
 [PPP Quickbooks Tutorial](https://quickbooks.intuit.com/learn-support/en-us/banking/how-do-i-enter-the-ppp-loan-into-my-deposit/00/542685)
+
+Get PPP forgiven and [decrease the liability in QB with a journal entry](https://www.youtube.com/watch?v=2eTJBceecuM)
