@@ -1044,7 +1044,6 @@ demographics.virginia.edu is the old site prior to the drupal 8 migration. We ca
 
 # Code updates
 
-
 Needed to check media and support site. JUST CHECK SUPPORT
 ctools 3.4
 colorbox 1.6
@@ -1075,7 +1074,6 @@ Added fonts using adobe fonts:
 
 Added the html.html.twig
 
-```
 <link rel="stylesheet" href="https://use.typekit.net/giv7wwf.css">
 
 # Converting lots of mov to mp4
@@ -1087,3 +1085,128 @@ for i in *.mov;
   ffmpeg -i "$i" "${name}.mp4"
 done
 ```
+
+
+# Set spotlight section height through JS
+
+Get the height of the right side image
+jQuery("#spotlight-img").css("height")
+
+Set the height of the text section
+jQuery("#spotlight").css("height", "600px")
+
+In 2 lines
+var spotlight-img = $("#spotlight-img").css("height");
+$("#spotlight").css("height", spotlight-img);
+
+In one line
+jQuery("#spotlight").css("height", jQuery("#spotlight-img").css("height"));
+$("#spotlight").css("height", $("#spotlight-img").css("height"));
+
+# Validate custom form data for CEPS LOST data
+
+[Drupalize Me Tutorial](https://drupalize.me/tutorial/validate-form-form-controller?p=2766)
+
+Within the Controller for my LOST form, I want to add some validation code.
+
+`/docroot/modules/custom/lost_to_csv/src/Controller/LostToCsv.php`
+
+
+```php
+/**
+* Implements form validation.
+*
+* @param array $form
+*   The render array of the currently built form.
+* @param \Drupal\Core\Form\FormStateInterface $form_state
+*   Object describing the current state of the form.
+*/
+public function validateForm(array &$form, FormStateInterface $form_state) {
+$submission = $form_state->getValue('text');
+
+// Check that submission is of type string
+if(gettype($submission) != 'string'){
+    $form_state->setErrorByName('text', $this->t('Submission was not a text string.'));
+}
+
+if (strlen($submission) < 10){
+    $form_state->setErrorByName('text', $this->t('Submission was too short, please fill out the field as described.'));
+}
+
+
+// Split up the lines of the submission into an array called $lost
+$lost = str_getcsv($submission, "\n");
+
+// Make sure the top line is in the correct format and that it exists
+if($lost[0] == "month,year,tax,locality"){
+    array_shift($lost);
+}
+else{
+    $form_state->setErrorByName('text', $this->t('We have an error on the first line of your submission. Make sure the fields are in the right order and there are no trailing commas.<br>Error: <code>' . $lost[0] . '</code><br>Correct Format: <code>month,year,tax,locality</code>'));
+}
+
+if(gettype($lost) != 'array'){
+    $form_state->setErrorByName('text', $this->t('Error in processing form input. Lost field not parsed as an array.'));
+}
+
+// Deal with each line one at a time
+foreach ($lost as $line){
+    $lost_fields = explode(",", $line); //Array
+    $month = $lost_fields[0]; //String
+    $year = $lost_fields[1]; //String
+    $tax = $lost_fields[2]; //String
+    $locality_name = $lost_fields[3]; //String
+
+
+    // Check that month is a string
+    if(gettype($month) != 'string'){
+        $form_state->setErrorByName('text', $this->t('A month value was not parsed as a String when it should have been.'));
+    }
+    // Check that month is between 1 and 12 when parsed as an int
+    $month_int = intval($month);
+    if($month_int < 1 || $month_int > 12){
+        $form_state->setErrorByName('text', $this->t('The month needs to be between 1 and 12. <code>' . $line . '</code>'));
+    }
+
+
+    // Check that year is a string
+    if(gettype($year) != 'string'){
+        $form_state->setErrorByName('text', $this->t('A year value was not parsed as a String when it should have been.'));
+    }
+    // Check that year is between 1800 and 2100 when parsed as an int
+    $year_int = intval($year);
+    if($year_int < 1800 || $year_int > 2100){
+        $form_state->setErrorByName('text', $this->t('The year needs to be a valid 4 digit year.<code>' . $line . '</code>'));
+    }
+    if(strlen($year_int) != 4){
+        $form_state->setErrorByName('text', $this->t('The year needs to be a valid 4 digit year. <code>' . $line . '</code>'));
+    }
+
+    // Check that tax is a string
+    if(gettype($tax) != 'string'){
+        $form_state->setErrorByName('text', $this->t('The tax value was not parsed as a String when it should have been.'));
+    }
+
+    // Check that the tax is a number
+    if(!is_numeric($tax)){
+        $form_state->setErrorByName('text', $this->t('The tax needs to be a valid number.<code>' . $line . '</code> <br> Tax:' . $tax));
+    }
+
+    // Check that locality is a string
+    if(gettype($locality_name) != 'string'){
+        $form_state->setErrorByName('text', $this->t('The locality value was not parsed as a String when it should have been.'));
+    }
+    // Check that the locality has enought letters
+    if(strlen($locality_name) < 5){
+        $form_state->setErrorByName('text', $this->t('The locality needs to be a full name of a locality. It must match the localities in the database. <code>' . $line . '</code>' ));
+    }
+    // Check Locality for extra trailing commas
+    $comma = ',';
+    if( strpos($locality_name, $comma) !== false ) {
+         $form_state->setErrorByName('text', $this->t('The locality needs to be a full name of a locality with trailing commas removed. It must match the localities in the database. <code>' . $line . '</code>'));
+    }
+}
+}
+```
+
+Had to change the roles that are allowed to see the /import-lost-form forom within the .routing.yml file. administrator+editor means OR. Using a + means they must have both roles.
