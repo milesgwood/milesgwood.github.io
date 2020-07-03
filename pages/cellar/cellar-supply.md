@@ -220,6 +220,42 @@ Change the PHP version by selecting the steps that correspond to the hosting pla
 cPanel
 Verify that your site is running on the correct version of PHP by using a phpinfo file.
 
-#CSS updates
+# Errors in Cellar Supply Products Feeds
 
-Red color `#C42030`
+The `g:image_link` field has two erroneous characters in it for 2 products. Removing those backspace chars from the image links solved the issue.
+
+[Overview Tutorial for Product Feeds](https://www.youtube.com/watch?v=s76d0pfhfXg)
+
+```
+<g:id>1086</g:id>
+      <g:identifier_exists>FALSE</g:identifier_exists>
+      <g:tax>0</g:tax>
+      <g:title>Check Valve - Tri Clamp</g:title>
+      <g:description>Spring Loaded Check Valve, with tri clover Clamp Ends. Easy to disassemble with 3' tri clover clamp holding the units external cavity together. Four prong internal fins on valve gate help to keep valve gate seated properly. Spring Loaded tri clover Check Valve-- Spring Loaded Check Valves open when pressure below the valve seat is greater than above the valve seat. Therefore when pressure equalizes, the valve closes. Specifications of the T316L Sanitary Stainless Steel Clamp Check Valve : Operating Pressure to 145 PSI, Temperature Range ( 0 °F -- 250° F ), Cracking (opening pressure) 0.65 -- 1.35 psi</g:description>
+      <g:link>https://www.cellarsupply.com/product/spring-loaded-check-valve-clamp-ends/?utm_source=Google%20Shopping&amp;amp;utm_campaign=Cellar%20Supply%20Google%20Feeds&amp;amp;utm_medium=cpc&amp;amp;utm_term=1086</g:link>
+      <g:image_link>https://www.cellarsupply.com/wp-content/uploads/2016/03/Spring-Loaded-Check-Valve-Clamp-Ends.jpeg</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:price>USD 68.45</g:price>
+      <g:google_product_category>3577</g:google_product_category>
+      <g:condition>New</g:condition>
+      <g:shipping/>
+
+Line 266 image has a backspace char in it - CHAR 8 or %08 in address bar.
+
+      <item>
+        <g:id>1428</g:id>
+        <g:identifier_exists>FALSE</g:identifier_exists>
+        <g:tax>0</g:tax>
+        <g:title>Sanitizer Foamer Gun</g:title>
+        <g:description>This SANI-LAV hose end Sanitizer offers automatic dilution that is convenient and easy to control where and how the solution is applied.  Designed to help with cleaning, degreasing and disinfecting. Using air and water only produces a thick, rich foam spray. Use the quick disconnect coupling to release the spray nozzle to follow sanitizing with a clear water rinses. Includes:   (1) Model N2 spray nozzle (1) Model N2FC aluminum coupler (1) Model N2FS4L sanitizer lid kit (includes suction tube and foot strainer) (1) 48 oz. container (1) Model N2FM metering tip kit with 14 colored tips (see chart below)</g:description>
+        <g:link>https://www.cellarsupply.com/product/sanitizer-foamer-gun/?utm_source=Google%20Shopping&amp;amp;utm_campaign=Cellar%20Supply%20Google%20Feeds&amp;amp;utm_medium=cpc&amp;amp;utm_term=1428</g:link>
+        <g:image_link>https://www.cellarsupply.com/wp-content/uploads/2016/03/Sanitizer-Foamer-Gun.png</g:image_link>
+        <g:availability>in stock</g:availability>
+        <g:price>USD 104.25</g:price>
+        <g:google_product_category>3577</g:google_product_category>
+        <g:condition>New</g:condition>
+        <g:shipping/>
+      </item>
+```
+
+Now I need to figure out why there are only 31 products being exported when we have 64 products.

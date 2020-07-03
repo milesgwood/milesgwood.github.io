@@ -1210,3 +1210,13 @@ foreach ($lost as $line){
 ```
 
 Had to change the roles that are allowed to see the /import-lost-form forom within the .routing.yml file. administrator+editor means OR. Using a + means they must have both roles.
+
+# News Updates on coopercenter.org site
+
+Adding all the `new-twig-elelments` folder to the main cooper center site. There are some duplicates that need to be removed.
+
+Importing the config from the latest demographics config failed. Need to swap out the theme name in all of the config files.
+
+After adding media.type.file.yml the import suceeded.
+
+# Core updates and view_unpublished module
