@@ -1218,5 +1218,3 @@ Adding all the `new-twig-elelments` folder to the main cooper center site. There
 Importing the config from the latest demographics config failed. Need to swap out the theme name in all of the config files.
 
 After adding media.type.file.yml the import suceeded.
-
-# Core updates and view_unpublished module
