@@ -80,7 +80,9 @@ Go to chart of accounts and right click on the account you're interested in. The
 - Make sure to set the Item to `Build Cooper Center Websites`
 - Print the invoice and save it as a PDF to send it.
 
-Current invoice has paid out 5k of the
+Current invoice has paid out 5k of the.
+
+PayPal invoices may deduct a fee from the total payment. Make sure to only record payment for the portion that you receive. In the payment entry (you can navigate to already saved payments through the Customer shortcut) you should set the payment to what you actually received and then select the "write off the extra amount" in the Underpayment box that appears.
 
 # Sync with Bank account
 
@@ -101,8 +103,10 @@ In the CC transactions (not the checking account) set the Account to `NFCU Check
 - In that window select the matching invoices that are paid
 - If you go to income tracker now you should see the bill is no longer overdue
 
-# How to handle PPP loan in quickbooks 
+# How to handle PPP loan in quickbooks
 
 [PPP Quickbooks Tutorial](https://quickbooks.intuit.com/learn-support/en-us/banking/how-do-i-enter-the-ppp-loan-into-my-deposit/00/542685)
 
 Get PPP forgiven and [decrease the liability in QB with a journal entry](https://www.youtube.com/watch?v=2eTJBceecuM)
+
+I transferred money from Savings to Checking. I set the account of those 3 transactions to NFCU Savings since that is the account the payment came from. Payee got left blank. It's simply logged as a tranfer from Savings to checking. The transfer to checking has PPP in the memo.
