@@ -26,3 +26,14 @@ echo $PATH
 
 export PATH="$PATH:whatever/path/you/want"
 ```
+
+# Giant Letter Links
+
+Miles is 5 letters
+Greatwood is 9 letters
+
+Root html element font-size is set to 10px so I can use rem sizing to change the size of the fonts.
+
+Sourced fonts from fontspace.com. Turned them into woff files using fontsquirrel.
+
+Setting a background gradience from gradienta.io.
