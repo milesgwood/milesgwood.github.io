@@ -184,7 +184,7 @@ On cloud9 I ran
 composer self-update
 
 Updating to version 1.9.2 (stable channel).
-   Downloading (100%)         
+   Downloading (100%)
 Use composer self-update --rollback to return to version 1.8.0
 
 composer remove symfony/filesystem --update-with-dependencies
@@ -307,19 +307,19 @@ Group altered config into a folder.
 ```
 "block.block.views_block__news_updates_block_1"
 "block.block.views_block__news_updates_full_grid_block_1"
-"core.entity_form_display.node.news_update.default"     
+"core.entity_form_display.node.news_update.default"
 "core.entity_form_display.paragraph.flex_grid.default"
 "core.entity_form_display.paragraph.flex_grid_1_4.default"
 "core.entity_form_display.paragraph.flex_grid_child.default"
 "core.entity_form_display.paragraph.remote_video.default"
 "core.entity_form_display.paragraph.spotlight.default"
-"core.entity_view_display.node.news_update.default"  
-"core.entity_view_display.node.news_update.teaser"      
+"core.entity_view_display.node.news_update.default"
+"core.entity_view_display.node.news_update.teaser"
 "core.entity_view_display.paragraph.flex_grid.default"
 "core.entity_view_display.paragraph.flex_grid_1_4.default"
 "core.entity_view_display.paragraph.flex_grid_child.default"
-"core.entity_view_display.paragraph.remote_video.default"         
-"core.entity_view_display.paragraph.spotlight.default"             
+"core.entity_view_display.paragraph.remote_video.default"
+"core.entity_view_display.paragraph.spotlight.default"
 "editor.editor.basic_html"
 "editor.editor.full_html"
 "field.field.media.audio.field_media_audio_file"
@@ -328,9 +328,9 @@ Group altered config into a folder.
 "field.field.media.video.field_media_video_file"
 "field.field.node.news_update.body"
 "field.field.node.news_update.field_news_update_additional_con"
-"field.field.node.news_update.field_news_update_image"  
+"field.field.node.news_update.field_news_update_image"
 "field.field.node.page.field_paragraphs"
-"field.field.paragraph.bp_columns.bp_column_content"              
+"field.field.paragraph.bp_columns.bp_column_content"
 "field.field.paragraph.bp_columns_two_uneven.bp_column_content_2"
 "field.field.paragraph.flex_grid.field_flex_grid_child"
 "field.field.paragraph.flex_grid_1_4.field_flex_grid_child"
@@ -341,37 +341,37 @@ Group altered config into a folder.
 "field.field.paragraph.flex_grid_child.field_flex_link"
 "field.field.paragraph.remote_video.field_youtube_video"
 "field.field.paragraph.spotlight.field_spotlight_background_color"
-"field.field.paragraph.spotlight.field_spotlight_body"             
-"field.field.paragraph.spotlight.field_spotlight_image"            
-"field.field.paragraph.spotlight.field_spotlight_link"             
-"field.field.paragraph.spotlight.field_spotlight_section_title"    
+"field.field.paragraph.spotlight.field_spotlight_body"
+"field.field.paragraph.spotlight.field_spotlight_image"
+"field.field.paragraph.spotlight.field_spotlight_link"
+"field.field.paragraph.spotlight.field_spotlight_section_title"
 "field.storage.media.field_media_audio_file"
 "field.storage.media.field_media_file"
 "field.storage.media.field_media_image  "
 "field.storage.media.field_media_video_file"
-"field.storage.node.field_news_update_additional_con"                     
-"field.storage.node.field_news_update_image"            
+"field.storage.node.field_news_update_additional_con"
+"field.storage.node.field_news_update_image"
 "field.storage.paragraph.bp_column_content"
-"field.storage.paragraph.bp_column_content_2"                     
+"field.storage.paragraph.bp_column_content_2"
 "field.storage.paragraph.field_flex_body"
 "field.storage.paragraph.field_flex_child"
 "field.storage.paragraph.field_flex_grid_child"
 "field.storage.paragraph.field_flex_image"
 "field.storage.paragraph.field_flex_link"
-"field.storage.paragraph.field_spotlight_background_color"         
-"field.storage.paragraph.field_spotlight_body"                     
-"field.storage.paragraph.field_spotlight_image"                    
-"field.storage.paragraph.field_spotlight_link"                     
-"field.storage.paragraph.field_spotlight_section_title"            
+"field.storage.paragraph.field_spotlight_background_color"
+"field.storage.paragraph.field_spotlight_body"
+"field.storage.paragraph.field_spotlight_image"
+"field.storage.paragraph.field_spotlight_link"
+"field.storage.paragraph.field_spotlight_section_title"
 "field.storage.paragraph.field_youtube_video"
 "filter.format.basic_html"
 "filter.format.full_html"
-"node.type.news_update"                                 
+"node.type.news_update"
 "paragraphs.paragraphs_type.flex_grid"
 "paragraphs.paragraphs_type.flex_grid_1_4"
 "paragraphs.paragraphs_type.flex_grid_child"
-"paragraphs.paragraphs_type.remote_video"    
-"paragraphs.paragraphs_type.spotlight"                             
+"paragraphs.paragraphs_type.remote_video"
+"paragraphs.paragraphs_type.spotlight"
 "views.view.news_updates"
 "views.view.news_updates_full_grid"
 "views.view.pages_with_advanced_html"
@@ -421,7 +421,7 @@ The banner needs to be 1600x300
 
 This works on demographics site because of this javascript
 
-```  
+```
   function replace_large_banner(e) {
         var url = $(".banner--top-replace").css("background-image");
         $(".main-container .page-title-wrapper").css("background-image", url);
@@ -474,7 +474,7 @@ The node is the render array element.
       <figure><img src="{{ file_url(node.field_news_update_image.entity.field_media_image.entity.fileuri) }}"/></figure>
     </div>
     <div class="news-update-content"><h2>{{ label }}</h2></div>
-  </a>    
+  </a>
 {% else %}
   <a class="news-update-container bounce-on-hover" href="{{ url }}" rel="bookmark">
     <div class="news-update-img-wrapper">
@@ -497,7 +497,7 @@ This is one of those rare occasions when drupal is actually satisfying.
 
 # Sorensen config first attempt
 
-The import failed due to the following reasons:           
+The import failed due to the following reasons:
 
 The Basic Page content type on demographics has a file attachment field that needs to get deleted. Sorensen lacked a Editor site role. Those two issues were the only things stopping the config sync from working.
 
@@ -507,12 +507,12 @@ Export current support site config. `drush config-export vcs`
 
 Enabled Media and Media Library modules.
 
-The import failed due to the following reasons:  
+The import failed due to the following reasons:
 
 Missing Profile Content type `large-support` created
 
 ```
-"node.type.profile"         
+"node.type.profile"
 "media.type.file"
 "field.storage.node.field_profile_facebook"
 "field.storage.node.field_profile_linkedin"
@@ -746,7 +746,7 @@ jQuery(".js-webform-image-file label").append("<div class='loader'></div>");
 jQuery(".js-webform-video-file label").append("<div class='loader'></div>");
 
 ```
-(function($, document, window) {    
+(function($, document, window) {
 
     function addLoadingSpinner(inputFile) {
   inputFile.append("<div class='loader'></div>");
@@ -1218,3 +1218,9 @@ Adding all the `new-twig-elelments` folder to the main cooper center site. There
 Importing the config from the latest demographics config failed. Need to swap out the theme name in all of the config files.
 
 After adding media.type.file.yml the import suceeded.
+
+# Module defined menu links
+
+[Documentation](https://www.drupal.org/docs/drupal-apis/menu-api/providing-module-defined-menu-links)
+
+Generate a new module called `submit_support_request` using drupal console `drupal genereate:module`.

@@ -104,13 +104,11 @@ xdebug.remote_enable = 1
 xdebug.remote_autostart = 1
 ```
 
-## PHP Intelephense
+## [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
 
-[Direct Link](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
+Code autocompletion.
 
-## Composer
-
-[Composer](https://marketplace.visualstudio.com/items?itemName=ikappas.composer)
+## [Composer](https://marketplace.visualstudio.com/items?itemName=ikappas.composer)
 
 You must specify the path to composer `/usr/local/bin/composer` in the extension settings.
 
@@ -136,3 +134,27 @@ export PHP_ID=php7_2; export PATH="/Applications/DevDesktop/$PHP_ID/bin:/Applica
 
 Gives you twig language support and some quick twig snippets.
 
+# Drupal Console
+
+You must install Drupal Console Launcher globally first. These commands will move the launcher into your /usr/local/bin directory and set it to be executable by everyone. You may need to use "sudo" with the "mv" command. Lastly we test the install with `drupal about`.
+```
+curl https://drupalconsole.com/installer -L -o drupal.phar
+mv drupal.phar /usr/local/bin/drupal
+chmod +x /usr/local/bin/drupal
+```
+
+Now we must install drupal console on each specific site using composer and test with `drupal site:status`.
+
+```
+composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader --sort-packages
+```
+
+## Updating Drupal Console
+
+To update the global launcher, navigate to somewhere outside of your Drupal 8 site and run `drupal self-update`.
+
+To update your site's Drupal Console navigate to each site root and run the following:
+
+```
+composer update drupal/console --with-dependencies
+```

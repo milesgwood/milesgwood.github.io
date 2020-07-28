@@ -259,3 +259,33 @@ Line 266 image has a backspace char in it - CHAR 8 or %08 in address bar.
 ```
 
 Now I need to figure out why there are only 31 products being exported when we have 64 products.
+
+# Google Shopping Ads
+
+**Ad Campaigns** are organized around a theme, in our case `Shopping Ads` focused on the Search Network. We're selling physical items, not trying to generate calls etc.
+
+You have Ad Groups within a campaign perhaps representing a specific type of item you sell.
+
+Keywords connect to Ad Groups. A good keyword indicates intent to purchase like "bulk carbonation stones". "Appliance repair service" is far better than "appliances" as a keyword.
+
+Avoid single-term keywords.
+
+You can use automatic bidding to start and then switch once you have some data to see how much clicks cost.
+
+## Conversion Tracking
+
+These are conversion action sets. Two actions were already setup on 2/12/20 regarding sales and phone calls. I updated the sales tracking to just reflect if they added the item to their cart.
+
+I need to setup a conversion tracking tag. The GA property ID isn't listed on my google analytics account anymore. Eric must have set it up with his GA account ending in `619-1`
+
+[Loves Data - Tutorial](https://www.youtube.com/watch?v=VxFJcfqsbFE)
+
+[Google Ads Conversion Tracking with Google Analytics](https://youtu.be/rH6YQ2MbX30)
+
+Within Google Analytics you can set goals that announce their completion on a confirmation page loading. `https://www.cellarsupply.com/checkout/order-received/8521/?key=` is the current goal setup in February.
+
+8521 is the order that Eric Setup with him on february 12th as an example.
+
+In analytics I created a new goal that will report anytime someone hits the order received page - `https://www.cellarsupply.com/checkout/order-received` and it's called **Reached Order Received Page - Sales Tracking July, 26 2020 - Miles**. Upon verifying the goal I get a 4.5% conversion rate for the last 7 days.
+
+Now in ads I go to tools > Conversions and click the plus arrow and select Import from google analytics. Now the conversion tracking should be working.
