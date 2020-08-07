@@ -9,14 +9,15 @@ layout: default
 
 
 
-[AWS Spot Request](https://console.aws.amazon.com/ec2sp/v1/spot/launch?region=us-east-1)
-Amazon Linux 2 AMI
-minecraft pem key
-m3.medium instance type
-1vCPU 3.75GB
-Capacity optimized fleet
+[AWS Spot Request](https://console.aws.amazon.com/ec2sp/v1/spot/launch?region=us-east-1):
 
-Created custom minecraft security group with ssh traffic from my IP and custom TCP traffic from anywhere on port 25565.
+- Amazon Linux 2 AMI
+- minecraft pem key
+- m3.medium instance type
+- 1vCPU 3.75GB
+- Capacity optimized fleet
+
+Created custom  minecraft security group with ssh traffic from my IP and custom TCP traffic from anywhere on port 25565.
 
 Vanilla Install
 ```
@@ -118,7 +119,6 @@ I created a subdomain `mc.dilatory.fun` which points to the server IP. All you n
 
 # See how you can restore EC2 instance from EBS volume that was saved 20GiB.
 
-
 Login and reattach volume. You must put the instance in the same Availability Zone.
 
 `lsblk` to show disks
@@ -153,3 +153,64 @@ sudo umount -d /dev/nvme1n1p1
 Instance Type - m4Large - on demand pricing is 0.1 USD per Hour.
 
 Yes M4 large works. Make sure to lauch using the m4Large
+
+
+# Restoring Again August 1 2020 - on mac
+
+Launched from template. On next launch make sure to use the Launch Template version 5- below the Selected launch template it will show the version 5 title which should be `Minecraft M4-Large 10GB EBS volume `.
+
+Set the cloudflare DNS A record to the new instance IP.
+
+Open hyper
+
+```
+cd ~/.ssh
+cp ~/Dropbox/Keys/minecraft.pem .
+chmod 400 minecraft.pem
+ssh -i "minecraft.pem" ec2-user@ec2-54-236-17-181.compute-1.amazonaws.com
+sudo yum update -y
+
+yum list available java\*
+sudo yum -y install java-1.8.0
+
+sudo mkdir /minecraft
+sudo chown -R ec2-user:ec2-user /minecraft
+cd /minecraft
+
+Get link - https://www.minecraft.net/en-us/download/server/
+wget https://launcher.mojang.com/v1/objects/a412fd69db1f81db3f511c1463fd304675244077/server.jar
+
+java -Xmx4G -Xms2G -jar server.jar nogui
+
+echo '#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
+#Mon Aug 06 18:11:14 UTC 2018
+eula=true' > eula.txt
+
+
+Find your backup - https://s3.console.aws.amazon.com/s3/buckets/picard2020/backups
+
+aws s3 cp s3://picard2020/backups/Immateria-20200801.zip .
+unzip Immateria-20200801.zip
+cp backup/* .
+unzip Immateria.zip
+
+screen -S "Minecraft server"
+java -Xmx8G -Xms8G -jar server.jar nogui
+
+ctrl + a + d (detach)
+```
+
+On next launch set it so that the launch template is the 5th variant of the launch template `Minecraft M4-Large 10GB EBS volume `. Then set the availability zone to `us-east-1e` so you can reattach the volume on the subsequent launch.
+
+
+## Backing Up
+
+```
+zip -r backup/Immateria.zip Immateria
+zip -r 20200801-Immateria.zip backup
+aws s3 cp 20200801-Immateria.zip s3://picard2020/backups/
+```
+
+# Amazon Lightsail
+
+https://aws.amazon.com/getting-started/hands-on/run-your-own-minecraft-server/

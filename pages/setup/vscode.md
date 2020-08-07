@@ -149,6 +149,8 @@ Now we must install drupal console on each specific site using composer and test
 composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader --sort-packages
 ```
 
+If you have trouble running this command simply add `"drupal/console": "^1.9"` directly to your composer.json.
+
 ## Updating Drupal Console
 
 To update the global launcher, navigate to somewhere outside of your Drupal 8 site and run `drupal self-update`.
@@ -158,3 +160,4 @@ To update your site's Drupal Console navigate to each site root and run the foll
 ```
 composer update drupal/console --with-dependencies
 ```
+

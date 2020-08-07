@@ -1224,3 +1224,18 @@ After adding media.type.file.yml the import suceeded.
 [Documentation](https://www.drupal.org/docs/drupal-apis/menu-api/providing-module-defined-menu-links)
 
 Generate a new module called `submit_support_request` using drupal console `drupal genereate:module`.
+
+Then I added a file for the menu link `submit_support_request.links.menu.yml` with the following contents:
+
+```
+submit_support_request.admin:
+  title: 'Report Website Problem'
+  description: 'Report a problem or submit a website work request through the support.coopercenter.org site'
+  parent: system.admin
+  url: https://support.coopercenter.org/request
+  weight: 100
+```
+
+Now on the theme style I added the following style:
+
+
