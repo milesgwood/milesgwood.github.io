@@ -2,7 +2,7 @@
 layout: default
 ---
 
-# Need to install sass --watch
+# Need to install sass --watch SCSS:css
 
 ```
 npm --version
