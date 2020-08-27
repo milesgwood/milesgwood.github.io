@@ -44,3 +44,5 @@ You know what, I'm just going to record what extensions I'm using when I notice 
 `ctrl + Space` See css attributes
 
 `F2` - Rename Variable
+
+Complete Function from auto complete using the `(` commit key.

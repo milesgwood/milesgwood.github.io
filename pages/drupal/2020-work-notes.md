@@ -1238,4 +1238,39 @@ submit_support_request.admin:
 
 Now on the theme style I added the following style:
 
+# Exporting VDOT data to CSV
 
+Navigate to the [VDOT survey Webform results download page](https://vdot.coopercenter.org/admin/structure/webform/manage/2018_vdot_survey/results/download) 
+
+## Format Options
+
+Export as `Delimited Text` using a comma as the Delimiter. Check the Generate Excel compatible file.
+
+## Element Options 
+
+Semicolon delimiter for multiples since we're creating a CSV and we want them in one column. 
+I saved these options but you want to show the labels whenever possible.
+
+## Header Options
+
+Show the Element titles (label) and use a comma delimiter. 
+
+## Download Options
+
+Submitted to: `Content` with the ID of the webform content ID `16241` for 2019. This is the Webform content page you created. You'll get the ID by going to the Content overview and finding the Node ID for the most recent Webform. 
+
+Limit to All Completed submissions only. 
+
+# 2020 VDOT form setup
+
+First you need a CSV of VDOT receipts for the previous year. This file gets uploaded to the custom modules folder `/docroot/modules/custom/2019_VDOT_receipts.csv`. 
+
+Create a new migration source yaml file `/docroot/modules/custom/vdot_user_csv_migration/config/install/migrate_plus.migration.vdot_receipts_2019.yml` in the install profile for your custom vdot module. 
+
+Update the full path of the VDOT receipts csv file in the yaml file which looks like this presently `"/mnt/gfs/uvacooperdev/livedev/docroot/modules/custom/2019_VDOT_receipts.csv"`.
+
+Import the new vdot migration using drush.
+
+```
+drush config-import -y --partial --source=modules/custom/vdot_user_csv_migration/config/install
+```
