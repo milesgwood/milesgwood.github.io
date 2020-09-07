@@ -1275,5 +1275,5 @@ Import the new vdot migration using drush.
 drush config-import -y --partial --source=modules/custom/vdot_user_csv_migration/config/install
 ```
 
-# Generating New Minimal
+# Generating New Minimal Theme
 
