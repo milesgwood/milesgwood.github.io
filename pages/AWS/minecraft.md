@@ -214,3 +214,6 @@ aws s3 cp 20200801-Immateria.zip s3://picard2020/backups/
 # Amazon Lightsail
 
 https://aws.amazon.com/getting-started/hands-on/run-your-own-minecraft-server/
+
+ssh -i "minecraft.pem" ec2-user@ec2-54-236-17-181.compute-1.amazonaws.com
+
