@@ -99,4 +99,4 @@ console.log(people.name);
 const people = {name: 'Steve', height: 100, weight: 500};
 const measurment = 'height';
 console.log(people[measurment]);
-```
+``` 
