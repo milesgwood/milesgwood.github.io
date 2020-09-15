@@ -1275,6 +1275,6 @@ Import the new vdot migration using drush.
 drush config-import -y --partial --source=modules/custom/vdot_user_csv_migration/config/install
 ```
 
-# Generating New Minimal
+# Generating New Minimal Theme
 
 php -d memory_limit=-1 /home/uvacooper/.c9/node/bin/composer require drupal/views_bootstrap drupal/entity_browser drupal/redirect
