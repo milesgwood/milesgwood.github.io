@@ -42,7 +42,7 @@ img {
 You can update the variable's value through a form control using javascript. You have to update the documentElement like so
 
 ```js
-document.documentElement.style.setProperty("--blur", "20px");
+document.documentElement.style.setProperty('--blur', '20px');
 ```
 
 # JS30-4 Array functions
@@ -87,18 +87,18 @@ Notice that the callback function takes in two parameters, an accumulator and th
 You can destructure arrays automatically putting them into variable names.
 
 ```js
-const parts = fullName.split(", ");
-const [last, first] = fullName.split(", ");
+const parts = fullName.split(', ');
+const [last, first] = fullName.split(', ');
 ```
 
 When accessing a object key value pair use `obj.key` when you have the actual string key. When you're using a variable that stores the key, you use obj[myVariableName].
 
 ```js
-const people = { name: "Steve", height: 100, weight: 500 };
+const people = { name: 'Steve', height: 100, weight: 500 };
 console.log(people.name);
 
-const people = { name: "Steve", height: 100, weight: 500 };
-const measurment = "height";
+const people = { name: 'Steve', height: 100, weight: 500 };
+const measurment = 'height';
 console.log(people[measurment]);
 ```
 
@@ -107,7 +107,64 @@ console.log(people[measurment]);
 You can toggle classes on an element with the toggle function. Notice that I'm using `event.target` to access the element. You could also use `this.classList` since our eventListener is added to the panel element we want to add a class to.
 
 ```js
-event.target.classList.toggle("open-active");
+event.target.classList.toggle('open-active');
 ```
 
 New on the CSS front, you can set the transition duration for a specific css attribute. The panel class takes 0.5s to do transforms like translateY(100%) because of this line `transition: transform 0.5s;`. You can set the transition properties for any css attribute you're changing (margin-right, height, width etc.) The changes occour when some event occours like hover or an attached event listener like onclick.
+
+# JS30-6 Promises and Ajax Form List
+
+The following fetches json data from an endpoint. The fetch funtion returns a promise which gets resolved as a stream of data. We then need to turn the returned data into JSON using the json function. Finally we take the JSON object and spread the data into our already declared citites array.
+
+```js
+const endpoint =
+  'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+const cities = [];
+fetch(endpoint)
+  .then((blob) => blob.json())
+  .then((data) => cities.push(...data));
+```
+
+Regular expressions are used in the match function which determines if there is a match in the string. The `g` and `i` flags match globally in the string and search case insensitivley.
+
+```js
+const regex = new RegExp(wordToMatch, 'gi');
+```
+
+Using regex we can easily wrap certain sections in highlighting spans. Note the es6 syntax requires back ticks.
+
+```js
+const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+```
+
+# break vs continue
+
+Break takes you out of your current loop. Continute just increases the iterator once.
+
+# Console Log variable with name
+
+You can log the variable with the name by adding the es6 {}.
+
+```js
+console.log({ allAdults });
+```
+
+# JS30 - 7 Array Methods
+
+`array.some()` returns true if some of the elements pass a condition.
+`array.every()` returns true if every element of the array passes a condition.
+`array.find()` reuturns the object that matches the callback function criteria.
+`array.findIndex()` returns the index so you can delete it or do something else with it
+`array.splice(index, 1)` returns a new array with the 1 element removed
+
+# JS30 - 8 Canvas
+
+To get VS code reccomendations on elements, you need to add a `@type` comment declaration.
+
+```js
+/**
+ * @type CanvasRenderingContext2D
+ */
+const ctx = canvas.getContext('2d');
+```
