@@ -24,6 +24,10 @@ Complete Function from auto complete using the `(` commit key.
 
 YOu can create multiples of an element by typing ul5
 
+# React Icons - Free to use icons
+
+Open command pallette `Shift + Ctrl + P ` and type React Icons
+
 # VS Code setup for javascript
 
 ## Extensions
