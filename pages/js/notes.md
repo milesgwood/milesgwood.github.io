@@ -150,7 +150,7 @@ You can log the variable with the name by adding the es6 {}.
 console.log({ allAdults });
 ```
 
-# JS30 - 7 Array Methods
+# Array Methods - JS30-7
 
 `array.some()` returns true if some of the elements pass a condition.
 `array.every()` returns true if every element of the array passes a condition.
@@ -158,7 +158,7 @@ console.log({ allAdults });
 `array.findIndex()` returns the index so you can delete it or do something else with it
 `array.splice(index, 1)` returns a new array with the 1 element removed
 
-# JS30 - 8 Canvas
+# Canvas - JS30-8
 
 To get VS code reccomendations on elements, you need to add a `@type` comment declaration.
 
@@ -168,3 +168,51 @@ To get VS code reccomendations on elements, you need to add a `@type` comment de
  */
 const ctx = canvas.getContext('2d');
 ```
+
+# Console Methods - JS30-9
+
+[MDN Reference on Console Methods](https://developer.mozilla.org/en-US/docs/Web/API/Console)
+
+Most useful of them is `console.dir()` which displays an interactive list of the properties of the specified JavaScript object. Using `console.log()` only gives you the HTML element.
+
+```js
+const x = document.querySelector('p');
+console.log('String');
+console.info('Info');
+console.warn('Warning');
+console.error('Fuck!');
+```
+
+You can run tests through the console to check if your code breaks things.
+
+```js
+console.assert(1 === 2, "One doesn't Equal 2");
+```
+
+If you are logging a lot of messages, you can group them together. You just have to specify the same string for group and groupEnd. You can also have the data as collapsed by default with `console.groupCollapsed()`.
+
+```js
+const instrument = 'bass';
+
+console.group('Primus');
+console.log(`Lex Claypool plays ${instrument}`);
+console.log(`Larry plays Guitar`);
+console.log(`Jay plays Drums`);
+console.groupEnd('Primus');
+```
+
+`console.table()` displays an Array as a nicely formatted table.
+
+You can time how long things take to run using `console.time('Timer Name')` and `console.timeEnd('Timer Name')`.
+
+Both the time and group functions require strings for names.
+
+### Fun console logging
+
+You can apply css styles to the console using `%c` at the front of the string.
+
+```js
+console.info('%c My cat is the best cat!', 'font-size: 30px; color: red;');
+```
+
+# Hold shift to select multiple checkboxes - JS30-10
