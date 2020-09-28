@@ -215,4 +215,25 @@ You can apply css styles to the console using `%c` at the front of the string.
 console.info('%c My cat is the best cat!', 'font-size: 30px; color: red;');
 ```
 
-# Hold shift to select multiple checkboxes - JS30-10
+# Video Player - JS30-11
+
+You can select elements by their data attributes that you set on them. This is useful for attaching event listeners to lots of elements that need similar functionality throughout the page.
+
+```js
+const skipButtons = document.querySelector('[data-skip]');
+```
+
+This checks if the mousedown flag is set to true and if it is then it runs scrub(). This is similar to bash scripting.
+
+```js
+progressBar.addEventListener('mousemove', mousedownFlag && scrub(e));
+```
+
+You can create full screen videos using css and teh request full screen function.
+
+```js
+function toggleFullscreen() {
+  document.body.requestFullscreen();
+  player.classList.toggle('fullscreen');
+}
+```

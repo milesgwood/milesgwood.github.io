@@ -158,6 +158,7 @@ PATH before change
 ```
 
 After change
+
 ```
 /home/e52089674/.local/bin:/home/e52089674/.nvm/versions/node/v10.10.0/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/jdk/bin:/home/e52089674/perl5/bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/cpanel/3rdparty/lib/path-bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/cpanel/composer/bin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin:/usr/local/bin:/usr/X11R6/bin:/home/e52089674/bin:/usr/local/bin:/usr/X11R6/bin:/home/e52089674/.local/bin:/home/e52089674/bin:/usr/local/bin:/usr/X11R6/bin::/home/e52089674/bin
 ```
@@ -210,15 +211,16 @@ Currently the site is on PHP 5.6.. WooCommerce 3.8.1, WordPress 5.3
 Updating your PHP version shouldn't be a problem, however we can't guarantee that it's not. To protect your site, perform all of the following as part of changing the PHP version:
 
 [update instructions](https://www.godaddy.com/help/recommended-php-version-for-wordpress-32201)
+
 1. Backup WordPress.
 2. Update WordPress.
 3. Update WordPress Theme.
 4. Update WordPress Plugins.
 5. Check PHP 7 compatibility of WordPress plugins and themes.
 6. Install the "PHP Compatibility Checker" plugin in WordPress.
-Change the PHP version by selecting the steps that correspond to the hosting platform your WordPress site is hosted on:
-cPanel
-Verify that your site is running on the correct version of PHP by using a phpinfo file.
+   Change the PHP version by selecting the steps that correspond to the hosting platform your WordPress site is hosted on:
+   cPanel
+   Verify that your site is running on the correct version of PHP by using a phpinfo file.
 
 # Errors in Cellar Supply Products Feeds
 
@@ -289,3 +291,12 @@ Within Google Analytics you can set goals that announce their completion on a co
 In analytics I created a new goal that will report anytime someone hits the order received page - `https://www.cellarsupply.com/checkout/order-received` and it's called **Reached Order Received Page - Sales Tracking July, 26 2020 - Miles**. Upon verifying the goal I get a 4.5% conversion rate for the last 7 days.
 
 Now in ads I go to tools > Conversions and click the plus arrow and select Import from google analytics. Now the conversion tracking should be working.
+
+# Fixing Purchase button on Hoses
+
+const buy = document.querySelector('.woocommerce-variation-add-to-cart button');
+if(buyButton){
+buyButton.style.width = "200px";
+buyButton.innerText = "Call For Shipping Quote";
+buyButton.disabled = true;
+}
