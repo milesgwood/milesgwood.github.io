@@ -1277,4 +1277,69 @@ drush config-import -y --partial --source=modules/custom/vdot_user_csv_migration
 
 # Generating New Minimal Theme
 
+```
 php -d memory_limit=-1 /home/uvacooper/.c9/node/bin/composer require drupal/views_bootstrap drupal/entity_browser drupal/redirect
+
+composer require drupal/var_dumper:^2.0
+```
+
+With vardumper now I can write `{{ vardumper(variable_name) }}` and get a useful output of current variables.
+
+## Twig Field Value to access fields - FAILED
+
+Twig Field Value allows Drupal 8 themers to get partial data from field render arrays. It gives them more control over the output without drilling deep into the render array or using preprocess functions.
+
+Single field value
+
+```twig
+<strong>{{ content.field_name|field_label }}</strong>: {{ content.field_name|field_value }}
+```
+
+
+Multiple field values
+
+```
+<strong>{{ content.field_name|field_label }}</strong>: {{ content.field_name|field_value|safe_join(', ') }}
+```
+
+Single field properties
+
+```
+<span>Text format: {{ content.field_body|field_raw('text_format') }}.</span>
+```
+
+Referenced entities
+
+```
+<img src={{ file_url(content.field_image|field_target_entity.uri.value) }} alt={{ content.field_image|field_raw('alt') }} />
+```
+
+
+Filters:
+- field_label : Returns the field label value.
+- field_value : Returns the render array of the field value(s) without the field wrappers.
+- field_raw: Returns raw field properties value(s).
+- field_target_entity: Returns the referenced entity object(s) of an entity reference field.
+
+Cache warning
+The field_raw and field_target_entity filters do not provide any cache information. Without additional measures content printed with these filters will not be update when changed in the backend. You can workaround this by rendering the field in your template but not display the result. For example:  {% set catch_cache = content.field_image|render %}
+
+# Xdebug setup
+
+Follow the instructions that PHPDebug VScode extension offers. Xdebug does not come installed with Acquia Dev Desktop so you have to install it yourself. Then you need to uncomment the zend_extension in php.ini.
+
+XDebug doesn't run consistently at all. Half the time it doesn't hit my breakpoints.
+
+# Sync local with remote site
+
+Install the missing modules
+
+```
+php -d memory_limit=-1 /home/uvacooper/.c9/node/bin/composer require drupal/views_bootstrap drupal/entity_browser drupal/redirect drupal/twig_vardumper:^2.0 drupal/twig_field_value drupal/field_group
+```
+
+Use backup restore module to move the database config and content changes to the live site.
+
+Copy any image files or other files you added to the site.
+
+Copy the templates, css, scss, and js folder contents to Cloud9.
