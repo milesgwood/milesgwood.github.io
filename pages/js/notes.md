@@ -237,3 +237,44 @@ function toggleFullscreen() {
   player.classList.toggle('fullscreen');
 }
 ```
+
+# JS30-13 Slide animation and Debounce
+
+A debounce method improves performance by avoiding running a function but ever so often, for example waiting until a user stops typing to fetch typeahead search results.
+
+```js
+function debounce(func, wait = 20, immediate = true) {
+  var timeout;
+  return function () {
+    var context = this,
+      args = arguments;
+    var later = function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
+
+const images = document.querySelectorAll('img');
+// debounce returns a function that executes slideIn after a wait period
+document.addEventListener('scroll', debounce(slideIn));
+
+function slideIn(e) {
+  const topOfPage = window.pageYOffset;
+  const bottomOfPage = topOfPage + window.innerHeight;
+
+  images.forEach((image) => {
+    const imageTop = image.offsetTop;
+    const imageHeight = image.height;
+    const middleOfImage = imageTop + image.height / 2;
+    if (bottomOfPage > middleOfImage) {
+      image.classList.add('active');
+    }
+  });
+  console.log(e);
+}
+```

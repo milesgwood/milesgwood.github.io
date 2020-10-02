@@ -72,8 +72,6 @@ Add the following to settings.json to get PHP to validate your code as you type.
     "php.validate.run": "onType"
 ```
 
-
-
 ## phpbcf PHP Code Beautifier and Fixer
 
 ```
@@ -116,7 +114,7 @@ To run a command you hit `F1` and then type the command for example clear cache.
 
 Running these commands created and issue where I had to choose the project folder after typing the command. To get aroud this I created a symbolic link to the folder where my markdown notes are.
 
-```ln -s /Users/miles/Documents/milesgwood.github.io/pages/ notes```
+`ln -s /Users/miles/Documents/milesgwood.github.io/pages/ notes`
 
 ### Editing ~./bash_profile
 
@@ -137,6 +135,7 @@ Gives you twig language support and some quick twig snippets.
 # Drupal Console
 
 You must install Drupal Console Launcher globally first. These commands will move the launcher into your /usr/local/bin directory and set it to be executable by everyone. You may need to use "sudo" with the "mv" command. Lastly we test the install with `drupal about`.
+
 ```
 curl https://drupalconsole.com/installer -L -o drupal.phar
 mv drupal.phar /usr/local/bin/drupal
@@ -160,4 +159,3 @@ To update your site's Drupal Console navigate to each site root and run the foll
 ```
 composer update drupal/console --with-dependencies
 ```
-

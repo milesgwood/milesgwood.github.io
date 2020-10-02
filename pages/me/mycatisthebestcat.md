@@ -33,5 +33,3 @@ sudo service httpd status
 # Star Trek font
 
 Pulled font from [fontspace](https://www.fontspace.com/stardate-81316-font-f28430) which was created by emwedo.
-
-# Get a picture of Picard on the site
