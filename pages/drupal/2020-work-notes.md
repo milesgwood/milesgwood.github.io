@@ -1343,3 +1343,32 @@ Use backup restore module to move the database config and content changes to the
 Copy any image files or other files you added to the site.
 
 Copy the templates, css, scss, and js folder contents to Cloud9.
+
+
+# Attaching Dropzone JS library to site
+
+Added the dropzone github repo to my composer.json
+
+```
+"enyo/dropzone": {
+            "type": "package",
+            "package": {
+                "name": "enyo/dropzone",
+                "version": "5.7.1",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/enyo/dropzone/archive/v5.7.1.zip",
+                    "type": "zip"
+                }
+            }
+        },
+```
+
+`php -d memory_limit=-1 /Applications/DevDesktop/tools/composer.phar require enyo/dropzone`
+
+Now I'm running composer to see if it installs the files somewhere other than where I copied the files `/libraries/dropzone/dist/` which doesn't allow for me to intall the modules. It did install the files in a very different location.
+
+Lesson learned - DO NOT MANUALLY INSTALL LIBRARIES!!! Let composer do it. If composer can't find the library then you need to add the repository required.
+
+# Populate Projects Page
+
