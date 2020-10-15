@@ -278,3 +278,53 @@ function slideIn(e) {
   console.log(e);
 }
 ```
+
+# JS30 14 - Objects vs Arrays Reference vs Deep Copy
+
+Strings nubers and booleans are replaced directly if you reassign them.
+
+Arrays and objects are passed as a reference to the associated data structure. They are not deep copies. Notice if we change elements in our players2 array the changes are also reflected in the original players array.
+
+```js
+const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+const players2 = players;
+players2[1] = 'changed';
+```
+
+There is only one array in this situation above.
+
+To make a deep copy of an array you must copy all the elements into a new array, not just copy a reference to an already existing array. There are numerous ways to do this. I prefer the es6 spread and the slice method. Concat has you create a new array and concatenate all the elements to the new empty array you made.
+
+```js
+const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+const playersSliceCopy = players.slice();
+const playersConcatCopy = [].concat(players);
+const playersSpreadCopy = [...players];
+```
+
+Objects work similarly but only do a **shallow copy**! You only get one level deep within the object. If our person object contains
+
+```js
+const person = {
+  name: 'Wes Bos',
+  age: 80,
+  socials: { facebook: 'wesbos', twitter: 'wesbos' },
+};
+
+const personCopy = Object.assign({}, person);
+personCopy.name = 'Fucker'; //Only replaces the name in the copy
+personCopy.socials.facebook = 'Changed In Both'; //Alters BOTH the original and the shallow copy since it is a nested object.
+```
+
+# JS30 -15 Local Storage andEvent Delegation
+
+On a form you want to have an event listener attached to the `submit` event! Not click or anything else.
+
+```js
+myForm.addEventListener('submit', analyzeSubmission);
+
+function analyzeSubmission(e) {
+  e.preventDefault();
+  //Prevents the page refreshing and you can do something else.
+}
+```
