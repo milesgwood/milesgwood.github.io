@@ -328,3 +328,46 @@ function analyzeSubmission(e) {
   //Prevents the page refreshing and you can do something else.
 }
 ```
+
+Labels and inputs are linked together using the attributes `for` and `id`.
+
+```html
+<input id="item${i}" type="checkbox" /> <label for="item${i}">${plate.text}</label>
+```
+
+Local Storage can store key value pairs of strings (not objects). There are three methods we'll commonly use. You can view the storage in the `Application tab`.
+
+```js
+localStorage.setItem('key', 'value');
+localStorage.getItem('key');
+localStorage.removeItem('key');
+```
+
+You have to `stringify` your objects and `parse` the JSON to get objects into and out of localstorage.
+
+```js
+localStorage.setItem('items', JSON.stringify(items));
+JSON.parse(localStorage.getItem('items'));
+```
+
+When we initialize the page we need to check local storage to see if there is already data. We can take care of this where we declared our items array. This will either grap the local storage or create an empty array.
+
+```js
+const items = JSON.parse(localStorage.getItem('items')) || [];
+```
+
+We also need to populate our list with what we retreived in local storage so at the bottom of our script we add our populateList function.
+
+```js
+populateList(items, platesList);
+```
+
+# Event delegation
+
+Event delegation. Since we are creating the child list items using javascript we can't add event listeners to the children on page load. What we can do is add an event listener to the parent and then check which of the new children triggered the event. This is why we added a `data-index` attribute in our map function so we could identify which child is responsible for the event.
+
+```js
+if (!e.target.matches('input')) return;
+// We can use the matches function to check if the target is correct.
+console.log(e.target.dataset.index);
+```
