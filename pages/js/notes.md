@@ -2,6 +2,12 @@
 layout: default
 ---
 
+[Overview of the JS Development Space](https://medium.com/the-node-js-collection/modern-javascript-explained-for-dinosaurs-f695e9747b70)
+
+1. npm - node package manager
+2. module bundlers - Webpack
+3. Transpilers - Babel
+
 # Javascript 30 - 1 - Drum Kit
 
 You can select elements using custom `data-` attributes. The following selects audio elements with a data-key attribute. Also note the ES6 syntax.
@@ -371,3 +377,97 @@ if (!e.target.matches('input')) return;
 // We can use the matches function to check if the target is correct.
 console.log(e.target.dataset.index);
 ```
+
+## Chris Ferdinandi Event Delegation
+
+[Explanation](https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/)
+
+Attaching an event listener to the document to listen for all events is actually performant and easier than attaching loads of other event listeners.
+
+The `closest()` method works like the `matches()` method. But instead of checking to see if the element matches a selector, it also checks to see if any parent element does.
+
+```js
+// Listen to all click events on the document
+document.addEventListener('click', function (event) {
+  // If the clicked element does not have the .click-me class, ignore it
+  if (!event.target.matches('.click-me')) return;
+
+  // Otherwise, do something...
+});
+```
+
+# JS-15 text Shadow and mousemove offsets
+
+The `conetenteditable` attribute allows users to alter the text however they want.
+
+```html
+<h1 contenteditable>🔥WOAH!</h1>
+```
+
+Tracking mousemove events can be tricky. We have an event listener on the entire screen. There are so many x and y coordinates to choose from:
+
+clientX : clientY
+layerX : layerY
+offsetX : offsetY
+movementX : movementY
+pageX : pageY
+screenX : screenY
+x : y
+
+All I can tell is screen seems to include the entire screen including the top bar and bookmark bar. `offset` seems to give you the distance from the deepest HTMLelement in the tree. So if you have an event listener on the parent div the offset will become (0, 0) when you cross over the left corner of a child div.
+
+`e.target` is the element that actually heard the event. So when going from the top of the page to the bottom we will increase our offsetY until we hit a child element. There our offsetY restarts at 0 so we must add `e.target.offsetTop` which is how far child element is from the top of the page. This makes this tutorial only useful if you're trying to animate something at the top of a page.
+
+# JS-17 String Replace and Regular Expressions
+
+We want to alphabetize an array while ignoring the article words like `An A And The`. The replace function can take in a regular expression `/^(a |the |an )/i`. This means it starts with any of those three words and is case insensitive. We are replacing any matches with an empty string and trimming off any extra spaces.
+
+```js
+function strip(bandName) {
+  return bandName.replace(/^(a |the |an )/i, '').trim();
+}
+
+const alphaBands = bands.sort(function (a, b) {
+  return strip(a) > strip(b) ? 1 : -1;
+});
+```
+
+# JS-18 Reduce Map and destructuring
+
+Here we're taking a timeString like "8:45" and destructuring it into a min and seconds variable.
+
+```js
+const [mins, secs] = timeString.split(':').map(parseFloat);
+```
+
+Note that strings are white text in console and numbers are purple. This is due to my dark theme. On any other machine strings are black and numbers are still purple.
+
+Call `Array.from(NodeList)` on a NodeList to turn it into an array that you can use map and reduce functions on.
+
+Trickiest part of all of this was needing to pass an initial value of 0 to my reduce function otherwise it would concatenate strings.
+
+[MDN Notes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
+
+Array.reduce(callbackfn(accumulator, currentArrayThing, index), `initialVal`)
+
+I also found that by writing cleaner code, my implementation actually ran faster.
+
+```js
+const videoSeconds = Array.from(document.querySelectorAll('[data-time]'))
+  .map((node) => node.dataset.time)
+  .map((timeString) => timeString.split(':').map(parseFloat))
+  .reduce((total, minSecArr) => total + minSecArr[0] * 60 + minSecArr[1], 0);
+```
+
+This above code ran faster than this below.
+
+```js
+const videoSeconds2 = Array.from(document.querySelectorAll('[data-time]')).reduce((total, node) => {
+  const [mins, secs] = node.dataset.time.split(':').map(parseFloat);
+  return total + mins * 60 + secs;
+}, 0);
+```
+
+# JS-19 Webcam and NPM basics
+
+Through either npm or your VS Code server, you are able to view the site you're working on through your local network as well. Navigate to [192.168.86.43:5500](192.168.86.43:5500) on your phone and you'll see a live phone version.

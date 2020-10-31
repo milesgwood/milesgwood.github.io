@@ -122,3 +122,15 @@ Within this new dialog where you see the QR code, scroll down to advanced and pa
 ssh root@192.168.86.45 -p
 sudo shutdown -h now
 ```
+
+# Manually Change your DNS records on Windows
+
+On Windows 10, the file is `C:\Windows\System32\drivers\etc\hosts`. On MacOS or Linux, the file is `/etc/hosts`
+
+Simply opent that file and add a line to change your DNS resolution.
+
+```
+128.143.125.97 shibidp.its.virginia.edu
+```
+
+Then in a command prompt flush your local DNS `ipconfig /flushdns`.

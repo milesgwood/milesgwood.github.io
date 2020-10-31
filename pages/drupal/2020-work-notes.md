@@ -16,7 +16,6 @@ height 600
 
 Make sure to use the m-0 and p-0 classes to get the images to display actual full width.
 
-
 Their actual height varies between 320 and 420.
 
 In the `theme.info.yml` file I added a new section `content_full_width: 'Full Width Content'`
@@ -58,7 +57,6 @@ Copy the `node.html.twig` template from the bootstrap templates folder. Name it 
 [Helpful](https://gbyte.co/blog/get-image-url-from-media-field-twig)
 
 The only peice you need to change is the `field_news_update_image` part. The second `field_media_image` comes from the image being uploaded as a Image media type.
-
 
 ```
 <img src="{{ file_url(node.field_news_update_image.entity.field_media_image.entity.fileuri) }}"/>
@@ -154,6 +152,7 @@ editor.editor.basic_html
 # VDOT Composer and Drush work
 
 Global Composer install
+
 ```
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
@@ -172,6 +171,7 @@ memory_limit => 128M => 128M
 ```
 
 Temporarily increase memory limit
+
 ```
 php -d memory_limit=512M /usr/local/bin/composer require drush/drush:~9
 ```
@@ -201,7 +201,8 @@ Then use the gui to actually run the migration.
 # phpStorm Setup
 
 ### 1
- [Follow Acquia Tutorial on PhPStorm Setup](https://docs.acquia.com/dev-desktop/sites/phpstorm/)
+
+[Follow Acquia Tutorial on PhPStorm Setup](https://docs.acquia.com/dev-desktop/sites/phpstorm/)
 
 In your current php.ini 7.2 make sure that this line has the semicolon at the beginning removed
 
@@ -407,11 +408,9 @@ Enter Dummy Text
 
 Add a custom small banner of dimensions 1600x300 with custom class as `banner--top-replace`
 
-
 ### Permission Changes
 
 1. Prune extra text formats - search `text formats`
-
 
 # Substitute Top Banner - Tutorial needed
 
@@ -734,7 +733,7 @@ json:
   desc: test
   idLabels: 5ab15ec14b8e8a87d266d7dd
   uri: /request/sorensen
-  ```
+```
 
 # Add loading icon to video and screenshot section of support form
 
@@ -815,8 +814,6 @@ Determines where your tabs show up (view edit clone delete etc.) and what region
 `field.field.paragraph.spotlight.field_spotlight_image`
 
 Added description to the image portion explaining how to edit the pictures. I created a page for the tutorial to exist in. [Direct Link](https://support.coopercenter.org/photo-editing)
-
-
 
 Copied all of these files from CSR to master set of config. They make the IMCE actually work for the specific image types people need.
 
@@ -1071,7 +1068,6 @@ font-family: franklin-gothic-urw, wingdings;
 
 Added fonts using adobe fonts:
 
-
 Added the html.html.twig
 
 <link rel="stylesheet" href="https://use.typekit.net/giv7wwf.css">
@@ -1085,7 +1081,6 @@ for i in *.mov;
   ffmpeg -i "$i" "${name}.mp4"
 done
 ```
-
 
 # Set spotlight section height through JS
 
@@ -1110,7 +1105,6 @@ $("#spotlight").css("height", $("#spotlight-img").css("height"));
 Within the Controller for my LOST form, I want to add some validation code.
 
 `/docroot/modules/custom/lost_to_csv/src/Controller/LostToCsv.php`
-
 
 ```php
 /**
@@ -1295,7 +1289,6 @@ Single field value
 <strong>{{ content.field_name|field_label }}</strong>: {{ content.field_name|field_value }}
 ```
 
-
 Multiple field values
 
 ```
@@ -1314,15 +1307,15 @@ Referenced entities
 <img src={{ file_url(content.field_image|field_target_entity.uri.value) }} alt={{ content.field_image|field_raw('alt') }} />
 ```
 
-
 Filters:
+
 - field_label : Returns the field label value.
 - field_value : Returns the render array of the field value(s) without the field wrappers.
 - field_raw: Returns raw field properties value(s).
 - field_target_entity: Returns the referenced entity object(s) of an entity reference field.
 
 Cache warning
-The field_raw and field_target_entity filters do not provide any cache information. Without additional measures content printed with these filters will not be update when changed in the backend. You can workaround this by rendering the field in your template but not display the result. For example:  {% set catch_cache = content.field_image|render %}
+The field_raw and field_target_entity filters do not provide any cache information. Without additional measures content printed with these filters will not be update when changed in the backend. You can workaround this by rendering the field in your template but not display the result. For example: {% set catch_cache = content.field_image|render %}
 
 # Xdebug setup
 
@@ -1343,7 +1336,6 @@ Use backup restore module to move the database config and content changes to the
 Copy any image files or other files you added to the site.
 
 Copy the templates, css, scss, and js folder contents to Cloud9.
-
 
 # Attaching Dropzone JS library to site
 
@@ -1370,5 +1362,278 @@ Now I'm running composer to see if it installs the files somewhere other than wh
 
 Lesson learned - DO NOT MANUALLY INSTALL LIBRARIES!!! Let composer do it. If composer can't find the library then you need to add the repository required.
 
-# Populate Projects Page
+# Analytics Changes for tracking referrals from other coopercenter.org sites
+
+For Each site go through the analytics admin panel. Select `Tracking Info` and then `Referral Exclusion List` and remove coopercenter.org from that list.
+
+# Drupal 9 upgrade attempt
+
+Need to check if the the current modules are compatible `composer require 'drupal/upgrade_status:^2.0'`.
+
+```
+composer update zaporylie/composer-drupal-optimizations --no-plugins && composer update --lock
+```
+
+Memory Exhausted
+
+## Updating Composer First
+
+`composer self-update`
+
+Updating from `1.9.2` to `2.0.4` and it seems to have suceeded.
+
+Now running the following update fails for 5 reasons.
+
+```
+composer update zaporylie/composer-drupal-optimizations --no-plugins && composer update --lock
+
+  Problem 1
+    - drupal-composer/drupal-scaffold is locked to version 2.6.1 and an update of this package was not requested.
+    - drupal-composer/drupal-scaffold 2.6.1 requires composer-plugin-api ^1.0.0 -> found composer-plugin-api[2.0.0] but it does not match the constraint.
+  Problem 2
+    - cweagans/composer-patches is locked to version 1.6.7 and an update of this package was not requested.
+    - cweagans/composer-patches 1.6.7 requires composer-plugin-api ^1.0 -> found composer-plugin-api[2.0.0] but it does not match the constraint.
+  Problem 3
+    - oomphinc/composer-installers-extender is locked to version v1.1.2 and an update of this package was not requested.
+    - oomphinc/composer-installers-extender v1.1.2 requires composer-plugin-api ^1.0 -> found composer-plugin-api[2.0.0] but it does not match the constraint.
+  Problem 4
+    - wikimedia/composer-merge-plugin is locked to version v1.4.1 and an update of this package was not requested.
+    - wikimedia/composer-merge-plugin v1.4.1 requires composer-plugin-api ^1.0 -> found composer-plugin-api[2.0.0] but it does not match the constraint.
+  Problem 5
+    - simplesamlphp/composer-module-installer v1.1.6 requires composer-plugin-api ^1.0 -> found composer-plugin-api[2.0.0] but it does not match the constraint.
+    - simplesamlphp/simplesamlphp v1.18.7 requires simplesamlphp/simplesamlphp-module-statistics ^0.9 -> satisfiable by simplesamlphp/simplesamlphp-module-statistics[v0.9.4].
+    - drupal/simplesamlphp_auth 3.0.0 requires simplesamlphp/simplesamlphp ~1.15 -> satisfiable by simplesamlphp/simplesamlphp[v1.18.7].
+    - simplesamlphp/simplesamlphp-module-statistics v0.9.4 requires simplesamlphp/composer-module-installer ~1.1 -> satisfiable by simplesamlphp/composer-module-installer[v1.1.6].
+    - drupal/simplesamlphp_auth is locked to version 3.0.0 and an update of this package was not requested.
+```
+
+`composer require 'drupal/upgrade_status:^2.0'` returns a similar error.
+
+## Resolving module update errors
+
+Current composer.json
+
+```
+{
+    "name": "acquia/acquia-ra-composer",
+    "type": "project",
+
+    "repositories": {
+        "enyo/dropzone": {
+            "type": "package",
+            "package": {
+                "name": "enyo/dropzone",
+                "version": "5.7.1",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/enyo/dropzone/archive/v5.7.1.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "asset-packagist": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    },
+    "require": {
+        "enyo/dropzone": "^5.7",
+        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "composer/installers": "^1.8",
+        "cweagans/composer-patches": "^1.6.4",
+        "oomphinc/composer-installers-extender": "^1.1",
+        "wikimedia/composer-merge-plugin": "^1.4.1",
+        "drupal/csv_serialization": "1.4.0",
+        "drupal/migrate_upgrade": "3.0.0-rc2",
+        "drupal/core": "^8.9",
+        "drush/drush": "9.7.1",
+        "drupal/admin_toolbar": "^2.3",
+        "drupal/backup_migrate": "~4.0",
+        "drupal/bootstrap_paragraphs": "2.0.0-beta6",
+        "drupal/bp_webform": "2.0.0-beta6",
+        "drupal/captcha": "^1.0",
+        "drupal/ctools": "~3.4",
+        "drupal/ctools_block": "^3.0.0",
+        "drupal/ctools_views": "^3.0.0",
+        "drupal/colorbox": "^1.6",
+        "drupal/composerize": "^1.0",
+        "drupal/config_update": "^1",
+        "drupal/contact_formatter": "^2.0",
+        "drupal/contribute": "^1",
+        "drupal/devel": "1.2.0",
+        "drupal/entity_reference_revisions": "^1",
+        "drupal/entity_usage": "2.0.0-alpha7",
+        "drupal/externalauth": "1.1",
+        "drupal/examples": "^1.0",
+        "drupal/features": "3.11",
+        "drupal/field_permissions": "^1",
+        "drupal/google_analytics": "^3.0",
+        "drupal/group": "^1",
+        "drupal/honeypot": "~1.30",
+        "drupal/image_widget_crop": "^2.3",
+        "drupal/imce": "^1.0",
+        "drupal/mailchimp": "^1.0",
+        "drupal/mailchimp_campaign": "^1.8.0",
+        "drupal/mailchimp_lists": "^1.8.0",
+        "drupal/mailchimp_signup": "^1.8.0",
+        "drupal/migrate_tools": "^4.5",
+        "drupal/paragraphs": "^1.0",
+        "drupal/paragraphs_type_permissions": "^1",
+        "drupal/pathauto": "^1.8",
+        "drupal/quick_node_clone": "1.8.0",
+        "drupal/recaptcha": "^2.3.0",
+        "drupal/redirect_after_login": "^2.6",
+        "drupal/simplesamlphp_auth": "3.0",
+        "drupal/shortcode": "^1",
+        "drupal/token": "~1.6",
+        "drupal/views_data_export": "^1.0",
+        "drupal/views_infinite_scroll": "^1.0",
+        "drupal/view_unpublished": "^1.0",
+        "drupal/viewsreference": "1.2.0",
+        "drupal/webform": "^5.0",
+        "drupal/webform_bootstrap": "^5.0",
+        "drupal/webform_devel": "~5.0",
+        "drupal/webform_node": "^5.0",
+        "drupal/webform_templates": "^5.0",
+        "drupal/webform_ui": "^5.0",
+        "npm-asset/jquery-ui": "1.12.1",
+        "drupal/bootstrap": "^3.23",
+        "phpunit/phpunit": "^8.4",
+        "symfony/filesystem": "^4.0",
+        "zaporylie/composer-drupal-optimizations": "^1.1",
+        "npm-asset/jquery-colorbox": "^1.6",
+        "drupal/views_bootstrap": "^4.3",
+        "drupal/entity_browser": "^2.5",
+        "drupal/redirect": "^1.6",
+        "drupal/twig_vardumper": "^2.0",
+        "drupal/twig_field_value": "^2.0",
+        "drupal/field_group": "^3.1",
+        "drupal/dropzonejs": "^2.3",
+        "drupal/ds": "^3.9",
+        "drupal/upgrade_status": "^2.0"
+    },
+    "require-dev": {},
+    "extra": {
+        "enable-patching": true,
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ],
+        "drupal-scaffold": {
+            "excludes": [
+                ".htaccess",
+                "robots.txt"
+            ]
+        },
+        "installer-paths": {
+            "drush/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "docroot/core": [
+                "type:drupal-core"
+            ],
+            "docroot/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "docroot/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "docroot/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "docroot/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
+            ],
+            "docroot/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "docroot/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
+            ]
+        },
+        "merge-plugin": {
+            "include": [
+                "docroot/modules/custom/*/composer.json"
+            ],
+            "replace": false,
+            "ignore-duplicates": true
+        },
+        "patches": {}
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@composer drupal-scaffold"
+        ],
+        "post-update-cmd": [
+            "@composer drupal-scaffold"
+        ],
+        "drupal-scaffold": [
+            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+        ]
+    },
+    "config": {
+        "vendor-dir": "vendor"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
+```
+
+Now I'm going to delete the following and test sites on dev:
+
+1. drupal-scaffold - is [deprecated in my current version.](https://github.com/drupal-composer/drupal-scaffold)
+2. cweagans/composer-patches - applies patches after composer runs - don't think I need it. I wasn't using it anyway
+3. oomphinc/composer-installers-extender - allows packages to be installed somewhere other than vendor.
+4. wikimedia/composer-merge-plugin - It allows the application's top level composer.json file to provide a list of optional additional configuration files
+5. zaporylie/composer-drupal-optimizations - github straight up says it's not needed
+
+Last Problem with simplesaml
+
+```
+composer require 'drupal/upgrade_status:^2.0'
+
+ Problem 1
+    - simplesamlphp/composer-module-installer v1.1.6 requires composer-plugin-api ^1.0 -> found composer-plugin-api[2.0.0] but it does not match the constraint.
+    - simplesamlphp/simplesamlphp v1.18.7 requires simplesamlphp/simplesamlphp-module-statistics ^0.9 -> satisfiable by simplesamlphp/simplesamlphp-module-statistics[v0.9.4].
+    - drupal/simplesamlphp_auth 3.0.0 requires simplesamlphp/simplesamlphp ~1.15 -> satisfiable by simplesamlphp/simplesamlphp[v1.18.7].
+    - simplesamlphp/simplesamlphp-module-statistics v0.9.4 requires simplesamlphp/composer-module-installer ~1.1 -> satisfiable by simplesamlphp/composer-module-installer[v1.1.6].
+    - drupal/simplesamlphp_auth is locked to version 3.0.0 and an update of this package was not requested.
+```
+
+/mnt/gfs/uvacooperdev/livedev/vendor/simplesamlphp/simplesamlphp (1.18.7)
+
+This is where my old version of simplesamlphp is installed. If I remove the version constraint on the drupal/simplesaml_auth I may get what I need.
+
+First I'll run `composer update --with-all-dependencies`
+
+Simplesamlphp got updated to `1.18.8`.
+
+Now the support configuration for simplesaml is in error. I need to copy the config files to where they belong. After copying `config cert log metadata` folders to where they were in the /vendor/simplesamlphp/simplesamlphp folder. Now the simplesamlphp installataion is working fine.
+
+Warning says I should run `composer update --no-plugins`. I haven't.
+
+Simplesaml is locked at 3.0 `"drupal/simplesamlphp_auth": "3.0",` when 3.2 is out. I'll change it to `^3.2` and test it on support.
+
+## Simplesaml is working with Drupal 8.9.7
+
+Here are the remaining modules to be updated:
+
+bootstrap_paragraphs 2.0-beta7
+externalauth 8.x-1.3
+imce 8.x-2.3
+quick_node_clone 8.x-1.13
+simplesamlphp_auth 8.x-3.2
+viewsreference 8.x-1.6
+
+Before updating these previously problematic modules I am going to get the DB updates done, move everything to Stage, and create yet a new branch.
 

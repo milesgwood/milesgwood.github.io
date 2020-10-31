@@ -49,4 +49,18 @@ git pull . master
 
 Execute this command in your local branch that is behind the current live version. This scenario happens when you create a new branch, go back to the live master branch to make some css changes needed immidiatley, and then you need to pull those changes you made into your now out of date local branch. You should really just create a new branch based off of the master branch. However this command will work if you were working on distinct files.
 
-It means pull changes from master into my local working branch. 
+It means pull changes from master into my local working branch.
+
+# Merge changes into your current checked out branch
+
+If you've already pulled the changes from the repo into your local version of that branch you're not on. You could checkout that branch pull the changes and then switch back to the branch you're on.
+
+```
+git merge branch-name
+```
+
+Or you can just merge the changes directly from that origin branch.
+
+```
+git merge origin/branch-name (this pulls the changes from an updated remote branch)
+```
