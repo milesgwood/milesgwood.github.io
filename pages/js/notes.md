@@ -471,3 +471,344 @@ const videoSeconds2 = Array.from(document.querySelectorAll('[data-time]')).reduc
 # JS-19 Webcam and NPM basics
 
 Through either npm or your VS Code server, you are able to view the site you're working on through your local network as well. Navigate to [192.168.86.43:5500](192.168.86.43:5500) on your phone and you'll see a live phone version.
+
+## Start a NPM server
+
+Here is the basic `package.json` file with a `start` command included.
+
+```json
+{
+  "name": "gum",
+  "version": "1.0.0",
+  "description": "NPM Server for JS30 Webcam Demo including browser-sync",
+  "main": "scripts.js",
+  "scripts": {
+    "start": "browser-sync start --server --files \"*.css, *.html, *.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.12.5 <2.23.2"
+  }
+}
+```
+
+I have npm installed on both the Windows Machine as well as the linux subsystem on windows. Since we're just starting a local server from the command line I'll use WSL for this.
+
+### Update node on WSL
+
+My node version is `v12.7.0` and I want to update to the Latest Long Term Support version of node which is `v14.15.0`. I found this information by running `nvm ls-remote`. Now I want to actaully install teh version with `nvm install 14.15.0`. I also wanted to clear up some disk space so I ran `nvm uninstall 12.7.0`.
+
+### Update npm on WSL
+
+First I updated npm with `npm install -g npm` which got me to version `6.14.8`. Then I ran `npm install` to install the browser-sync dependency listed in the package.json.
+
+List all of your globally installed packages vs your project specific packages with the -g variable.
+
+```
+npm list -g --depth=0
+npm list --depth=0
+
+/home/milesgwood/.nvm/versions/node/v14.15.0/lib
+└── npm@6.14.8
+
+gum@1.0.0 /mnt/w/JavaScript30/19 - Webcam Fun
+└── browser-sync@2.26.13
+```
+
+Now I can finally run `npm start` and the local server will run.
+
+We're updating the canvas context every so often using the `setTimeout` fucntion. setTimeout is similar to `setInterval` function except the timeout only waits once. Interval is for if you want to run something over and over.
+
+Creating new document elements in two syntaxes
+
+```js
+const img = document.createElement('img');
+img.src = imageData;
+img.alt = 'Fucking Alts';
+link.appendChild(img);
+
+vs.
+
+const link = document.createElement('a');
+link.innerHTML = `<img src="${imageData}"></img>`;
+```
+
+Then you can append or add the element either to the start or end of the parent element.
+
+```js
+//Adds photo to the end of the parent's Element List
+parentElement.appendChild(link);
+
+// Adds the photo to the front of the strip
+parentElement.insertBefore(link, strip.firstChild);
+```
+
+# Chrome Dev Tools and Console Tips
+
+Chrome console has a command pallette just like VS Code. `Cmd + Shift + P` shows the command pallette where you can switch between different tabs. They demonstrated how you can open up the media loading timeline by searching form media. It tells you the resolution as well.
+
+You can access an elements properties directly in the Elements pane. Just select Properites instead of Styles.
+
+# JS-20 Speech Recognition
+
+You can list sections as `contenteditable` and that allows the user to type to change the text. The [speech reconition API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition) lists the constructor, properties, methods, events, and examples.
+
+# JS-21 Compass and Geolocation
+
+The vscode server works better than the server that npm install sets up. I'm able to access my webapps on my phone more easily. If you wan to develop for mobile webapps, it's best to do so on a mac. You get access to xcode and geolocation data. You can simulate a phone as well. Not sure if there is an equivalent for android but iPhone users spend more.
+
+# JS-22 Follow Along Link Highlighting
+
+The difference between `append` and `appendChild` is as follows:
+
+ParentNode.append() has **no return** value, whereas Node.appendChild() **returns the appended** Node object.
+ParentNode.append() **can append several** nodes and strings, whereas Node.appendChild() can only append **one node**.
+
+## Keyboard notes
+
+`Shift Alt Arrow` selects the whole word you are presently in. `Shift Ctrl Aarow` selects the rest of the word from where your cursor is.
+`Shift Alt Down` Copies the line you're on.
+
+# JS - 23 Speech Senthesis
+
+`querySelectorAll` can select inputs using multiple attributes. It just needs to be a valid css string. Note that we are selecting two inputs and one textarea. They are **different HTML elements** being selecting using their attributes.
+
+```js
+
+<input name="rate" type="range" min="0" max="3" value="1" step="0.1" />
+<input name="pitch" type="range" min="0" max="2" step="0.1" />
+<textarea name="text">Hello! I love JavaScript 👍</textarea>
+
+const options = document.querySelectorAll('[type="range"], [name="text"]');
+```
+
+Setting an attribute on a variable when the attribute name is a string variable require `[]`.
+
+Normally you would set an attribute like so:
+
+```js
+msg.text = 'Hi Steve';
+```
+
+If you have a variable attribute you're trying to change the `.` can't be used.
+
+```js
+options.forEach((option) => option.addEventListener('change', setOption));
+
+function setOption() {
+  console.log(this.name, this.value);
+  //We set the name of the inputs to match the name of the attributes on our SpeechSythesisUtterance object called msg
+  msg[this.name] = this.value;
+}
+```
+
+This makes event listeners much better as we can use the attributes on the actual HTML input element. You should create your inputs based on the API that you're working with.
+
+## How to pass a variable to an event listener
+
+You **can't** do the following as it will run the toggle function on page load. So how do we pass in variables?
+
+```js
+stopButton.addEventListener('click', toggle(false));
+```
+
+Option 1 - use a global variable
+
+Option 2 - create an anonymous function which calls our toggle function and pass the variable in.
+
+```js
+stopButton.addEventListener('click', () => toggle(false));
+
+OR;
+
+stopButton.addEventListener('click', function () {
+  toggle(false);
+});
+```
+
+Option 3 - [Use Bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+
+The `bind()` method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.
+
+So you pass bind the context or "this" to run the function in (in this case we don't care about the context so we pass null).
+You follow the context with the list of arguments.
+
+```js
+stopButton.addEventListener('click', toggle.bind(null, false));
+```
+
+# JS30 - 24 fixed nav on scroll
+
+A `fixed` element doesn't take up any space on the page. It floats on top of the browser. So we must add padding to the body to offset the newly fixed nav.
+
+```css
+body.fixed-nav nav {
+  position: fixed;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+```
+
+Here's the actual js that adds the css classes and sets the padding programatically.
+
+```js
+function fixNav() {
+  if (scrollY >= topOfNav) {
+    document.body.classList.add('fixed-nav');
+    document.body.style.paddingTop = nav.offsetHeight + 'px';
+  } else {
+    document.body.classList.remove('fixed-nav');
+    document.body.style.paddingTop = '0px';
+  }
+}
+```
+
+You can't animate a width from anything to auto. You must use a px value.
+
+# JS30 - 25 Propagation Bubbling and Once - Event Listeners
+
+When an event listener fires, it first traverses down the HTML tree capturing all of the elements that contain the clicked element. If div 3 is clicked then all all of the following will capture that click. html > body > div 1 > div 2 > div 3. Pro
+
+If you add event listeners to all of the divs you the innermost div will fire it's event off first. Then we `bubble` up the tree. The event bubbles up from the most nested element.
+
+We can manipulate this behavior with the options object parameter of [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+
+```js
+target.addEventListener(type, listener [, options]);
+
+div.addEventListener('click', purchaseButton, {
+  capture: true,
+  once: ture,
+})
+```
+
+`Capture` causes the event listener to fire on the way down the HTML tree rather than while we are bubbling up. So the outermost containing element will fire it's event listener first.
+
+`Once` unbinds the event listener after it is fired once. This is useful for purchase buttons in internet shopping.
+
+You're also able to stop the event listener calls from propegating forward using `e.stopPropagation();`.
+
+To recap, you can either use very specific onclick events with specific event listeners OR you can utilize capture and once to filter which elements actually get to run the event listeners.
+
+# JS30- 26 Follow Along Hover Nav
+
+When you pass a funtion to setTimeout or a similar timing function, the context (`this`) will change. In this function we are handling an event and adding a class to the element that triggered the event. If you use an aarow function, you inherit the context (`this`) of the parent function.
+
+```js
+function handleEvent() {
+  this.classList.add('trigger-enter');
+  setTimeout(funciton(){
+      this.classList.add('trigger-enter-active')
+  }, 150);
+}
+
+function handleEvent(){
+  this.classList.add('trigger-enter');
+  setTimeout(() => this.classList.add('trigger-enter-active'), 150);
+}
+
+//With an aarow function settimeout inherits the context of the parent //
+```
+
+To get the position of our opacity 0 dropdowns we use [getBoundingClientRect()](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect) which returns a DomRect object. This tells us how far from the left and top of the viewport our element is. Remember, the viewport is the visible part of the screen so the values will change as you scroll. You can add `window.scrollX` and `window.scrollY` to get a bounding rectangle that is independent from the current scrolling position.
+
+```js
+bottom: 379.09375;
+height: 232;
+left: 821.453125;
+right: 992.625;
+top: 147.09375;
+width: 171.171875;
+x: 821.453125;
+y: 147.09375;
+```
+
+# JS30 - 27 slider move left
+
+Use the four mouse events to track the current position of the cursor and move the slider appropriatley. The four events we track are `mousedown`(set initial conditions of interaction), `mouseup` (stop), `mouseleave`(stop), and `mousemove` (perform the actual work).
+
+# JS30 - 28 Video Speed Slider
+
+In lesson 25 I learned that an aarow function preserves the context of the parent. This is true everywhere. That means if you use an aarow function as your event listener function then you get the context of the window, rather than the HTML element that the listener is attached to.
+
+```js
+video.addEventListener('mousemove', () => {
+  console.log(this);
+});
+
+video.addEventListener('mousemove', function (e) {
+  console.log(this);
+});
+```
+
+Aarow function gets the window as this. The proper function gets the video element as this.
+
+## Scroll Height vs clientHeight vs offsetHeight
+
+**scrollHeight:** The scrollHeight value is equal to the minimum height the element would require in order to fit all the content in the viewport without using a vertical scrollbar.
+`ENTIRE content & padding (visible or not)`
+
+**clientHeight**: it includes the element’s padding, but not its border, margin or horizontal scrollbar (if present). It can also include the height of pseudo-elements such as ::before or ::after. If the element's content can fit without a need for vertical scrollbar, its scrollHeight is equal toclientHeight.
+`VISIBLE content & padding`
+
+**offsetHeight**: is a measurement in pixels of the element’s CSS height, including border, padding and the element’s horizontal scrollbar (if present, if rendered). It does not include the height of pseudo-elements such as ::before or ::after.
+
+The following equivalence returns `true` if an element is at the end of its scroll, `false` if it isn't.
+
+```
+element.scrollHeight - element.scrollTop === element.clientHeight
+```
+
+If you surroud your console.log({var}) in brackets you'll see the variable name as well in the console.
+
+To convert a percent to a range of values use
+
+```js
+rate const = percent * (max - min) + min;
+```
+
+50% on a scale of 20 to 120 = 0.5 \* (120 - 20) + 20 = 70
+
+Note that 70 is indeed halfway between 20 and 120.
+
+# JS30-29 Countdown timer
+
+The Date object gives you the milliseconds elapsed since Jan 1 1970. You can get the current time as a timestamp and turn timestamps into text expressions of the date.
+
+```js
+const now = Date.now(); //get the current time using a new static method on Date
+const nowAgain = new Date(now); //turn a timestamp back into a date object
+```
+
+You can alter the title of the document and the tab title.
+
+```js
+document.title = `4:22`; //Set the title of the page and the text in the tab
+```
+
+Forms can be selected directly using the `document` object and the `name` of the form.
+
+```html
+<form name="customForm" id="custom">
+  <input type="text" name="minutes" placeholder="Enter Minutes" />
+</form>
+```
+
+```js
+const form = document.customForm;
+const minutes = document.customForm.minutes.value;
+```
+
+# JS30-30 - Whack a Mole
+
+Mouse Events have an isTrusted variable that let's you know if they triggered the event with javascript or if they actually clicked it.
+
+This formula gives a nice round integer between a min and max value:
+
+```js
+function randomTime(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+}
+```
+
+`setTimeout(()=>{}, duration)` runs once while `setInterval` runs repeatedly. 

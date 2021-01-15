@@ -1637,3 +1637,25 @@ viewsreference 8.x-1.6
 
 Before updating these previously problematic modules I am going to get the DB updates done, move everything to Stage, and create yet a new branch.
 
+# Config Sync
+
+I want to be able to run a script to show me the differences for the text editor.
+
+```
+editor.editor.basic_html.yml
+filter.format.basic_html.yml
+```
+
+What I really want to be able to do is run a suite of tests to check if cofig is set properly. Then I would at least know what is different about each site without having to test it manually each time.
+
+# Spam Filter
+
+Regular expression to limit the russian emails
+
+```
+.+\.(com|edu|gov)$
+```
+
+Not all of the emails are russian. Some of them are .com so I think I also need to enable the honeypot module.Regular expression to limit the russian emails
+
+# Check nvm-node-npm.md for issues with Cloud9 running nvm

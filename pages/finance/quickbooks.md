@@ -94,7 +94,7 @@ PayPal invoices may deduct a fee from the total payment. Make sure to only recor
 
 # Set account for Credit Card payments
 
-In the CC transactions (not the checking account) set the Account to `NFCU Checking Account` as that is the account that this payment came from. We are deducting a payment that came from the NFCU checking account. Leave the Payee blank.
+In the `CC transactions` (not the checking account) set the Account to `NFCU Checking Account` as that is the account that this payment came from. We are deducting a payment that came from the NFCU checking account. Leave the Payee blank.
 
 # Match Payment to already created invoice
 

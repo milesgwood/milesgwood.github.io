@@ -57,7 +57,13 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$HOME/.nvm:\$PATH
 ```
 
-I still can't execute any nvm commands.
+I still can't execute any nvm commands. I have to run the following portion of the fresh install to get NVM working again. I check it's status with `nvm --version`.
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+```
 
 # Reinstalling NVM
 
@@ -69,8 +75,8 @@ I moved the old `~/.nvm` hidden folder to `~/nvm-old` and ran the following:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
-uvacooper@staging-17490:~$ [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-uvacooper@staging-17490:~$ [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 ```
 
 Now I get a working version on nvm

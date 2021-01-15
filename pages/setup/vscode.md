@@ -4,6 +4,12 @@ layout: default
 
 # Shortcuts
 
+`Shift Alt Arrow` selects the whole word you are presently in.
+
+`Shift Ctrl Aarow` selects the rest of the word from where your cursor is.
+
+`Shift Alt Down` Copies the line you're on.
+
 `ctrl + click` - go to definition. Ctrl makes things links.
 
 `ctrl + Space` See css attributes
@@ -63,7 +69,6 @@ You can add external css files to the autocomplete. In settings add the bootstra
 [Video Explaining min-4](https://www.youtube.com/watch?v=t9kSTiqhUfg)
 
 You can create snippets and set which area the cursor jumps to using `$`.
-
 
 # Markdown Editing
 

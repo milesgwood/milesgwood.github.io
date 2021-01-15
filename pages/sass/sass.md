@@ -269,3 +269,32 @@ a {
   @extend %animate-underline;
 }
 ```
+
+# Use vs Import
+
+Both `@import` and `@use` load one css module into another file. You should use `@use` since it doesn't make all of the variables and mixins glabally available. For this reason SASS recommends using `@use`
+
+I want to create a `_animations.scss` file and inclue my fancy underline in it.
+
+Note that you can also define how to use the module with overridden variables. Below we override the \_buttons.scss variables.
+
+```scss
+@use 'buttons' with (
+  $color: red,
+  $style: 'flat',
+);
+```
+
+Here's the workflow. For each new project, copy over your base scss files. Then and `@use` statements and override any colors or variables. Keep all of your variables defined in the main `style.scss` file. Whenever possible use extended base classes to share common variables.
+
+```scss
+//base/_animations.scss
+%fancy-underline {
+  //define class
+}
+
+// style.scss
+a {
+  @extend %fancy_underline;
+}
+```
