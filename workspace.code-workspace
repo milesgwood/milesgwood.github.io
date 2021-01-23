@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\milesgreatwood.com"
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"activityBar.background": "#381673",
+			"titleBar.activeBackground": "#230e48",
+			"titleBar.activeForeground": "#e7e7e7",
+			"activityBar.activeBackground": "#381673",
+			"activityBar.activeBorder": "#a14e1f",
+			"activityBar.foreground": "#e7e7e7",
+			"activityBar.inactiveForeground": "#e7e7e799",
+			"activityBarBadge.background": "#a14e1f",
+			"activityBarBadge.foreground": "#e7e7e7",
+			"statusBar.background": "#230e48",
+			"statusBar.foreground": "#e7e7e7",
+			"statusBarItem.hoverBackground": "#381673",
+			"titleBar.inactiveBackground": "#230e4899",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#230e48"
+	}
+}
