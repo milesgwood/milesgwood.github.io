@@ -8,7 +8,6 @@ I purchased the domain sethrogendoyouwanttogoto.space so I can get his attention
 
 I want to free humanity and myself from delusions and superstitions. I want Seth to get on board with my no religion in space website. I think he'd find it funny.
 
-
 At setup before doing anything
 
 1. Name servers are default
@@ -25,9 +24,6 @@ Created the first version of the message to seth.
 
 This movie came out 6 years ago.
 
-Hello Seth! It's me, Miles! You don't know me but I love you. Call me if you want to go to space. 8048371166
-
-
 ```
 sudo vim /etc/httpd/conf/httpd.conf
 
@@ -43,3 +39,7 @@ sudo vim /etc/httpd/conf/httpd.conf
 sudo service httpd restart
 sudo service httpd status
 ```
+
+## This was a hysterically stupid idea. I'mn suprised I can launce a site on an amazon EC2 instane while drinking.
+
+Project abandoned... cause it's moronic.
