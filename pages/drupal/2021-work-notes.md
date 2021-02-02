@@ -103,7 +103,7 @@ IMPORTANT NOTES:
 
 Log into the Acquia Control panel, and go to the SSL section of any environment you want to protect. In the Label field, give the record any name you’d like. For example: something like ‘Letsencrypt-date’.
 
-SSL Field
+SSL Certificate Field
 `sudo cat /etc/letsencrypt/live/coopercenter.org/cert.pem | pbcopy`
 
 SSL Private Key Field
