@@ -38,3 +38,76 @@ Common Name: `coopercenter.org`
 Subject alternative name(s): `*.coopercenter.org`, `beheardcva.org`, `www.beheardcva.org`, `sorenseninstitute.org`, `www.sorenseninstitute.org`
 
 # Lets Encrypt Free SSL certificates
+
+[Tutorial from Acquia](https://support.acquia.com/hc/en-us/articles/360009491013-Using-Let-s-Encrypt-SSL-on-Acquia-Cloud)
+
+[Tutorial for DNS records](https://dev.acquia.com/blog/installing-lets-encrypt-wildcard-certificate-acquia-hosting)
+
+This second tutorial is preferred as it allows you to validate the certificate with a DNS TXT record rather than creating a directory on the server and modifying .htaccess.
+
+Install certbot on Mac `brew install certbot`
+
+Generate your certificate locally for the dev server.
+
+
+```
+sudo certbot certonly --manual --no-eff-email --agree-tos -m mg9jd@virginia.edu -d coopercenter.org -d *.coopercenter.org -d *.dev1.coopercenter.org --preferred-challenges=dns --server https://acme-v02.api.letsencrypt.org/directory
+```
+
+`manual` - Provide laborious manual instructions for obtaining a certificate (default: False)
+`no-eff-email` - Don't share your e-mail address with EFF
+`--server` - What Certificate Authority at Let's Encrypt should we use
+
+The Preferred Challenges flag tells letsencrypt that validation of the cert will happen at the DNS level, not through a special file added to our repo. That makes things much, much easier, since we’ll only need to add a single TXT record on our DNS, rather than having to generate new CSRs or new challenge directories on the server itself.
+
+## Enter DNS TXT Record
+
+Please deploy a DNS TXT record under the name
+_acme-challenge.dev1.coopercenter.org with the following value:
+
+-2dK5eXoG1C9ygHoc8NIlZ8tB5tge99dtZ2uWxbPgr4
+
+Please deploy a DNS TXT record under the name
+_acme-challenge.coopercenter.org with the following value:
+
+Q-3vzH9lz8eheI_g5IAh-A2tBIOevIlZE1GqQNO-CyQ
+
+In Network Solutions you only need to enter everything before the domain in the left side, keep the TTL as the default, and on the right side enter the value.
+
+`Control + C` the terminal before the verifications to let the TXT values propagate.
+
+Rerun the certbot command once the TXT records have had time to propagate.
+
+Enter these two TXT records at 2:53pm and check their propagation before continuing. Use dig to get the TXT records. The `sudo killall -HUP mDNSResponder` command clears local cache.
+
+```
+dig -t TXT _acme-challenge.dev1.coopercenter.org +short
+dig -t TXT _acme-challenge.coopercenter.org +short
+
+sudo killall -HUP mDNSResponder
+```
+
+Use [online tool to check TXT records.](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_acme-challenge.coopercenter.org&run=toolpage)
+
+## Install issued certificate in Acquia
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   `/etc/letsencrypt/live/coopercenter.org/fullchain.pem`
+   Your key file has been saved at:
+   `/etc/letsencrypt/live/coopercenter.org/privkey.pem`
+   Your certificate will expire on 2021-04-26. To obtain a new or
+   tweaked version of this certificate in the future, simply run
+   certbot again. To non-interactively renew *all* of your
+   certificates, run "certbot renew"
+
+Log into the Acquia Control panel, and go to the SSL section of any environment you want to protect. In the Label field, give the record any name you’d like. For example: something like ‘Letsencrypt-date’.
+
+SSL Field
+`sudo cat /etc/letsencrypt/live/coopercenter.org/cert.pem | pbcopy`
+
+SSL Private Key Field
+`sudo cat /etc/letsencrypt/live/coopercenter.org/privkey.pem | pbcopy`
+
+CA intermediate certificates field
+`sudo cat /etc/letsencrypt/live/coopercenter.org/chain.pem | pbcopy`
