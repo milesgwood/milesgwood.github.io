@@ -49,7 +49,6 @@ Install certbot on Mac `brew install certbot`
 
 Generate your certificate locally for the dev server.
 
-
 ```
 sudo certbot certonly --manual --no-eff-email --agree-tos -m mg9jd@virginia.edu -d coopercenter.org -d *.coopercenter.org -d *.dev1.coopercenter.org --preferred-challenges=dns --server https://acme-v02.api.letsencrypt.org/directory
 ```
@@ -63,12 +62,12 @@ The Preferred Challenges flag tells letsencrypt that validation of the cert will
 ## Enter DNS TXT Record
 
 Please deploy a DNS TXT record under the name
-_acme-challenge.dev1.coopercenter.org with the following value:
+\_acme-challenge.dev1.coopercenter.org with the following value:
 
 -2dK5eXoG1C9ygHoc8NIlZ8tB5tge99dtZ2uWxbPgr4
 
 Please deploy a DNS TXT record under the name
-_acme-challenge.coopercenter.org with the following value:
+\_acme-challenge.coopercenter.org with the following value:
 
 Q-3vzH9lz8eheI_g5IAh-A2tBIOevIlZE1GqQNO-CyQ
 
@@ -92,14 +91,15 @@ Use [online tool to check TXT records.](https://mxtoolbox.com/SuperTool.aspx?act
 ## Install issued certificate in Acquia
 
 IMPORTANT NOTES:
- - Congratulations! Your certificate and chain have been saved at:
-   `/etc/letsencrypt/live/coopercenter.org/fullchain.pem`
-   Your key file has been saved at:
-   `/etc/letsencrypt/live/coopercenter.org/privkey.pem`
-   Your certificate will expire on 2021-04-26. To obtain a new or
-   tweaked version of this certificate in the future, simply run
-   certbot again. To non-interactively renew *all* of your
-   certificates, run "certbot renew"
+
+- Congratulations! Your certificate and chain have been saved at:
+  `/etc/letsencrypt/live/coopercenter.org/fullchain.pem`
+  Your key file has been saved at:
+  `/etc/letsencrypt/live/coopercenter.org/privkey.pem`
+  Your certificate will expire on 2021-04-26. To obtain a new or
+  tweaked version of this certificate in the future, simply run
+  certbot again. To non-interactively renew _all_ of your
+  certificates, run "certbot renew"
 
 Log into the Acquia Control panel, and go to the SSL section of any environment you want to protect. In the Label field, give the record any name you’d like. For example: something like ‘Letsencrypt-date’.
 
@@ -111,3 +111,56 @@ SSL Private Key Field
 
 CA intermediate certificates field
 `sudo cat /etc/letsencrypt/live/coopercenter.org/chain.pem | pbcopy`
+
+# VDOT Receipts Improt 2021
+
+I need to import the VDOT recipts for 2020 into the site. First I'll make sure that the diff between the locality names between the two years shows no errors.
+
+Within the `vdot_user_csv_migration` module, clone the 2019 install `.yml` file named `migrate_plus.migration.vdot_receipts_2019.yml`. Change the path to the new vdot receipts csv file as well as the id name. The header row is ignored so the change doesn't matter.
+
+My two csv files are identical and have the same localities listed. The only change is from header FY19 ALLOC to FY20 ALLOC.
+
+Import the partial configuration change:
+
+```
+cd docroot/sites/vdot
+
+drush config-import -y --partial --source=modules/custom/vdot_user_csv_migration/config/install
+```
+
+Result:
+
+```
++------------+------------------------------------------------------+-----------+
+| Collection | Config                                               | Operation |
++------------+------------------------------------------------------+-----------+
+|            | migrate_plus.migration.vdot_receipts_2020            | Create    |
+|            | migrate_plus.migration.vdot_users_missing_localities | Update    |
+|            | migrate_plus.migration.vdot_users                    | Update    |
+|            | migrate_plus.migration.vdot_receipts_2019            | Update    |
+|            | migrate_plus.migration.vdot_receipts_2018            | Update    |
++------------+------------------------------------------------------+-----------+
+```
+
+Aftter visiting the VDOT migration page within the drupal admin theme I saw that there were 92 entries to be processed instead of 87 (which is the number of localites). There were some extra commas at the bottom of the csv file. After deleting them the migration page looks correct.
+
+I added an entry to the csv file to represtent my admin accounts receipt for 2020. Upon import it should update the receipt I see in the form. It worked!!!
+
+Now I need to clone the webform node to accept new submissions. I'll log into the test account under `sck7x@virginia.edu` to check that the form works.
+
+Within the webform, update all 2019 years to 2020. The current year field must have its default value set as well.
+
+Update the Redirect after login value to the correct cloned page.
+
+The Finished Submissions and Survey page always have a table when the user is logged in. I'll display a login message if they still need to login.
+
+```html
+<div class="alert alert-warning" id="login-message" style="display: none;">
+  Please <a href="/user/login">login</a> to view this page.
+</div>
+<script>
+  if (document.querySelector('th') == null) {
+    document.querySelector('#login-message').style.display = 'block';
+  }
+</script>
+```
