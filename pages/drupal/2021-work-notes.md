@@ -164,3 +164,11 @@ The Finished Submissions and Survey page always have a table when the user is lo
   }
 </script>
 ```
+
+# Getting SASS module working again in a fresh terminal
+
+If you run `sass --watch scss:css` and get an error check which version of node you are running `node --version`. If it is v4, then you need to run the following.
+
+```
+source ~/.bashrc && nvm use --delete-prefix v14.14.0 && sass --watch scss:css
+```
