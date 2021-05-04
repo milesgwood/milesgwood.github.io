@@ -122,7 +122,7 @@ Now using node v14.14.0 (npm v6.14.8)
 
 Here is all of the current versions:
 
-```
+```bash
 node --version
 v14.14.0
 
@@ -158,6 +158,23 @@ npm update -g
 
 If you run `sass --watch scss:css` and get an error check which version of node you are running `node --version`. If it is v4, then you need to run the following.
 
-```
+```bash
 source ~/.bashrc && nvm use --delete-prefix v14.14.0 && sass --watch scss:css
+```
+
+If nvm is not recognized you need to edit the bashrc file and make sure all the below lines are present.
+
+```bash
+vim ~/.bashrc
+
+export PATH=$HOME/.c9/node/bin:$PATH
+export PATH=$HOME/.c9/bin:$PATH
+export PATH=/mnt/gfs/uvacooperdev/livedev/node_modules:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+export PATH=$HOME/.nvm:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 ```

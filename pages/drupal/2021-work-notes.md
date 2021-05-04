@@ -165,4 +165,61 @@ The Finished Submissions and Survey page always have a table when the user is lo
 </script>
 ```
 
+# Getting SASS module working again in a fresh terminal
 
+If you run `sass --watch scss:css` and get an error check which version of node you are running `node --version`. If it is v4, then you need to run the following.
+
+```
+source ~/.bashrc && nvm use --delete-prefix v14.14.0 && sass --watch scss:css
+```
+
+# Defer javascript until jQuery is loaded
+
+This simple defer method will delay the execution of JS until jQuery is loaded and valid.
+
+<script>
+function defer(method) {
+    if (window.jQuery) {
+        method();
+    } else {
+        setTimeout(function() { defer(method) }, 50);
+    }
+}
+
+function appendOverview(){
+jQuery(".view-content").append(`<div class="card views-row special"><div class="views-field views-field-title"><h2 class="field-content card-header">OVERVIEW</h2></div><div class="views-field views-field-body"><div class="field-content card-body"><p>The Weldon Cooper Center for Public Service serves leaders and communities throughout the Commwealth by providing top quality research, innovative leadership development programs, and government support services. The Center is comprised of five units: three research units and two leadership &amp; government support units. </p></div></div></div>`);
+}
+defer(appendOverview);
+</script>
+
+# Full width 3 cards on homepage
+
+First add the `.only-3` class to the card-container within the view css. Then add this in the footer text area.
+
+```css
+<style type="text/css">
+.paragraph--id--666 .paragraph__column {
+    padding-left: 0;
+    padding-right: 0;
+}
+</style>
+```
+
+# Statchat Modify Hosts file for temporary domain work
+
+Edit your hosts file to force statchatva.org to direct to the correct IP.
+
+C:\Windows\System32\Drivers\etc\
+
+Backup and then open the hosts file in txt editor.
+
+```
+# Temporary direction of statchat to reclaim hosting
+206.81.7.108 statchatva.org
+```
+
+Then check the IP of the site in terminal.
+
+```
+dig statchatva.org
+```
