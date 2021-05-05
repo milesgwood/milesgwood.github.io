@@ -223,3 +223,79 @@ Then check the IP of the site in terminal.
 ```
 dig statchatva.org
 ```
+
+# Fix Cooper Center Footer
+
+Simplified scss and html
+
+```html
+<a class="fa-icon-link" href="https://www.twitter.com/UVACooperCenter"
+  ><i aria-hidden="true" class="fa fa-twitter-square"></i><b>Twitter</b></a
+>
+
+<a class="fa-icon-link" href="https://www.facebook.com/WCCPS/"
+  ><i aria-hidden="true" class="fa fa-facebook-square"></i><b>Facebook</b></a
+>
+
+<a class="fa-icon-link" href="https://anchor.fm/intersections"
+  ><i aria-hidden="true" class="fa fa-podcast"></i><b>Podcast</b></a
+>
+
+<a class="fa-icon-link" href="https://coopercenter.org/saml_login"
+  ><i class="fa fa-sign-in" aria-hidden="true"></i><b>Login</b></a
+>
+```
+
+## jQuery Adding links to News Update Cards
+
+We need to grab all of the links and all of the titles that have a card-link anchor element.
+
+```js
+let links = [
+  ...document.querySelectorAll('.card.views-row .field--name-field-news-update-external-link'),
+].map((node) => node.textContent);
+let cardLinks = document.querySelectorAll('.card.views-row a.card-link');
+for (let i = 0; i < links.length; i++) {
+  cardLinks[i].href = links[i];
+}
+```
+
+## Create additional Serrvices card using JS
+
+```js
+<script>
+function defer(method) {
+    if (window.jQuery) {
+        method();
+    } else {
+        setTimeout(function() { defer(method) }, 50);
+    }
+}
+
+function appendOverview(){
+jQuery(".view-content").append(`<div class="card views-row special"><div class="views-field views-field-title"><h2 class="field-content card-header">OVERVIEW</h2></div><div class="views-field views-field-body"><div class="field-content card-body"><p>The Weldon Cooper Center for Public Service serves leaders and communities throughout the Commonwealth by providing top quality research, innovative leadership development programs, and locality support and engagement. The Center is comprised of five units: three research units, one political leadership unit, and one government/locality leadership and engagement unit. </p></div></div></div>`);
+}
+defer(appendOverview);
+</script>
+```
+
+## Adding Our Services Header to Hompage
+
+```js
+function defer(method) {
+  if (window.jQuery) {
+    method();
+  } else {
+    setTimeout(function () {
+      defer(method);
+    }, 50);
+  }
+}
+
+function appendOverview() {
+  jQuery('.paragraph--id--711 .paragraph__column').prepend(
+    '<h2 class="prominent" style="margin-bottom: 20px;padding-left: 15px;">Our Services</h2>'
+  );
+}
+defer(appendOverview);
+```
