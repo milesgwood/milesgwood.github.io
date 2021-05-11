@@ -299,3 +299,75 @@ function appendOverview() {
 }
 defer(appendOverview);
 ```
+
+# Export of Cooper Config before launch
+
+```
++------------+---------------------------------------------------------------+-----------+
+| Collection | Config                                                        | Operation |
++------------+---------------------------------------------------------------+-----------+
+|            | image.style.square_300                                        | Create    |
+|            | core.entity_view_mode.media.square_300                        | Create    |
+|            | core.entity_view_mode.media.large                             | Create    |
+|            | core.entity_view_display.media.image.square_300               | Create    |
+|            | core.entity_view_display.media.image.large                    | Create    |
+|            | field.storage.node.field_intern_stories                       | Create    |
+|            | field.storage.node.field_intern_position                      | Create    |
+|            | field.storage.node.field_headshot_emp_contact_info            | Create    |
+|            | core.entity_view_mode.node.card_mode                          | Create    |
+|            | field.field.node.intern_stories.field_intern_position         | Create    |
+|            | field.field.node.internship_applications.field_intern_stories | Create    |
+|            | field.field.node.person.field_headshot_emp_contact_info       | Create    |
+|            | field.storage.node.field_teaser_content                       | Create    |
+|            | field.field.node.article.field_teaser_content                 | Create    |
+|            | field.field.node.news_update.field_tags                       | Create    |
+|            | core.entity_view_display.node.news_update.card_mode           | Create    |
+|            | core.entity_view_display.node.intern_stories.full             | Create    |
+|            | core.entity_view_display.node.intern_stories.card_mode        | Create    |
+|            | core.entity_view_display.node.article.search_index            | Create    |
+|            | core.entity_view_display.node.article.card_mode               | Create    |
+|            | views.view.cards_news_articles                                | Create    |
+|            | views.view.employee_contact_info_cards                        | Create    |
+|            | views.view.front_page_article                                 | Create    |
+|            | honeypot.settings                                             | Update    |
+|            | core.entity_view_mode.media.square                            | Update    |
+|            | filter.format.basic_html                                      | Update    |
+|            | core.entity_view_display.media.image.default                  | Update    |
+|            | field.field.node.news_update.field_news_update_external_link  | Update    |
+|            | core.entity_form_display.paragraph.bp_tabs.default            | Update    |
+|            | field.field.node.page.field_paragraphs                        | Update    |
+|            | field.field.node.article.field_additional_content_article     | Update    |
+|            | block.block.universitylinks_2                                 | Update    |
+|            | block.block.universitycontactinfo_2                           | Update    |
+|            | block.block.universityaddress_2                               | Update    |
+|            | block.block.photosliderleadershipcustomblock                  | Update    |
+|            | block.block.photosliderflowcustomblockuseforlotsofprofiles    | Update    |
+|            | core.entity_form_display.node.person.default                  | Update    |
+|            | field.field.node.news_update.body                             | Update    |
+|            | field.field.node.article.body                                 | Update    |
+|            | core.entity_form_display.node.news_update.default             | Update    |
+|            | core.entity_form_display.node.intern_stories.default          | Update    |
+|            | core.entity_form_display.node.internship_applications.default | Update    |
+|            | core.entity_form_display.node.article.default                 | Update    |
+|            | core.entity_view_display.node.person.teaser                   | Update    |
+|            | core.entity_view_display.node.person.default                  | Update    |
+|            | core.entity_view_display.node.news_update.teaser              | Update    |
+|            | core.entity_view_display.node.news_update.default             | Update    |
+|            | core.entity_view_display.node.intern_stories.teaser           | Update    |
+|            | core.entity_view_display.node.intern_stories.search_index     | Update    |
+|            | core.entity_view_display.node.intern_stories.rss              | Update    |
+|            | core.entity_view_display.node.intern_stories.default          | Update    |
+|            | core.entity_view_display.node.internship_applications.teaser  | Update    |
+|            | core.entity_view_display.node.internship_applications.default | Update    |
+|            | core.entity_view_display.node.article.teaser                  | Update    |
+|            | core.entity_view_display.node.article.rss                     | Update    |
+|            | core.entity_view_display.node.article.default                 | Update    |
+|            | views.view.cooper_center_units                                | Update    |
+|            | views.view.intern_stories                                     | Update    |
+|            | views.view.internship_applications_table                      | Update    |
+|            | block.block.views_block__news_updates_block_1                 | Update    |
+|            | block.block.views_block__news_updates_full_grid_block_1       | Update    |
+|            | block.block.views_block__people_block_2                       | Update    |
+|            | views.view.podcasts                                           | Update    |
+|            | views.view.taxonomy_term                                      | Update    |
+```
