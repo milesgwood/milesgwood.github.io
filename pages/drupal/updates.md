@@ -349,7 +349,7 @@ git push --set-upstream origin core-8-5-6
 ```
 3. Copy the core code for updates and extract it to the correct folders. Replace everything except sites, themes, .htaccess, and modules. (optional module updates here too)
 ```
-weget https://ftp.drupal.org/files/projects/drupal-8.5.6.tar.gz
+wget https://ftp.drupal.org/files/projects/drupal-8.5.6.tar.gz
 tar -xzf drupal-8.5.6.tar.gz
 ```
 4. Clear the cache with `drush cr` and then clear the varnish on acquia
