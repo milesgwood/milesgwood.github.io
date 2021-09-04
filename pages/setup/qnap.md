@@ -228,10 +228,10 @@ services:
       - /share/jellyfin-app-data/config:/config
       - /share/jellyfin-app-data/cache:/cache
       - /share/Media:/media
-      - /share/Public:/media2 #change this to Photography once ready
+      - /share/Photography:/media2
     restart: "unless-stopped"
     # Optional - alternative address used for autodiscovery
     environment:
-      - JELLYFIN_PublishedServerUrl=http://jellyfin.milesgreawtood.com
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.milesgreawtood.com
       - HOST_HOSTNAME=jellyfin
 ```

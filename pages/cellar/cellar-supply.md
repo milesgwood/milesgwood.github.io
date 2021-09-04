@@ -300,3 +300,7 @@ buyButton.style.width = "200px";
 buyButton.innerText = "Call For Shipping Quote";
 buyButton.disabled = true;
 }
+
+# FTP with CoreFTP
+
+Use CoreFTP to connect to cellarsupply.com. GoDaddy provides a configuration file to import into the site manager. Then use the password stored in lastpass.
